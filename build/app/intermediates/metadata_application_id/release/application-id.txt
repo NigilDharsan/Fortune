@@ -1,0 +1,1 @@
+com.fortune.powerfastening.fortune
