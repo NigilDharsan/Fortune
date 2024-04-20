@@ -26,9 +26,10 @@ class _Home_DashBoard_ScreenState extends State<Home_DashBoard_Screen> {
       body: Padding(
         padding: const EdgeInsets.only(left: 0,right: 0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

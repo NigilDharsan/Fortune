@@ -3,6 +3,7 @@ import 'package:fortune/Common_Widgets/Common_Button.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Common_Widgets/Text_Form_Field.dart';
 import 'package:fortune/Common_Widgets/Common_List.dart';
+import 'package:fortune/Src/Service_History_List_Ui/Service_Status_List_Screen.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Text_Style.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Screen.dart';
@@ -59,9 +60,9 @@ Widget _Service_List(context){
         padding: const EdgeInsets.only(bottom: 0),
         child: InkWell(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Service_Detail_Screen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Service_History_List_Screen()));
           },
-          child: Service_List(context,isTag:"Completed"),
+          child: Service_List(context,isTag:"Completed", isHistory: false),
         ),
       );
     },
