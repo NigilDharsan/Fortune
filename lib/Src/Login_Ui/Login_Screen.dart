@@ -1,11 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_Button.dart';
 import 'package:fortune/Common_Widgets/Image_Path.dart';
 import 'package:fortune/Common_Widgets/Text_Form_Field.dart';
+import 'package:fortune/Model/LoginModel.dart';
 import 'package:fortune/Src/Home_Dash_Board_Ui/Home_DashBoard_Screen.dart';
+import 'package:fortune/utilits/ApiService.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
+import 'package:fortune/utilits/ConstantsApi.dart';
+import 'package:fortune/utilits/Generic.dart';
+import 'package:fortune/utilits/Loading_Overlay.dart';
 import 'package:fortune/utilits/Text_Style.dart';
 
 class Login_Screen extends ConsumerStatefulWidget {
@@ -33,9 +39,9 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _employeeId.text = "9940820461";
-    // _passwordController.text = "password";
-    // _password = "password";
+    _employeeId.text = "sampath@fortunepowerfastening.com";
+    _passwordController.text = "password";
+    _password = "password";
   }
 
   @override
@@ -95,7 +101,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                   ),
                   //EMPLOYEE ID
                   textFormField2(
-                    // isEnabled: false,
+                      // isEnabled: false,
                       hintText: "Employee Id",
                       keyboardtype: TextInputType.name,
                       Controller: _employeeId,
@@ -140,13 +146,35 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                   ),
                   //BUTTON
                   Container(
-                      margin: EdgeInsets.only(left: 30, right: 30),
-                    child: CommonElevatedButton(context, "Log In", () {
-                       if(_formKey.currentState!.validate()){
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_DashBoard_Screen()));
-                       }
+                    margin: EdgeInsets.only(left: 30, right: 30),
+                    child: CommonElevatedButton(context, "Log In", () async {
+                      if (_formKey.currentState!.validate()) {
+                        LoadingOverlay.show(context);
+
+                        final apiService = ApiService(ref.read(dioProvider));
+
+                        var formData = FormData.fromMap(
+                            {"email": _employeeId.text, "password": _password});
+                        final postResponse = await apiService.login<LoginModel>(
+                            ConstantApi.loginUrl, formData);
+                        await LoadingOverlay.hide();
+
+                        if (postResponse.success == true) {
+                          ShowToastMessage(postResponse.message ?? "");
+                          accessToken(postResponse.data?.token ?? "");
+                          UserId(postResponse.data?.name ?? "");
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Home_DashBoard_Screen()));
+                        } else {
+                          ShowToastMessage(postResponse.message ?? "");
+                        }
+                      }
                     }),
-                      )
+                  )
                 ],
               ),
             )),

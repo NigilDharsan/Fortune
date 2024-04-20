@@ -4,7 +4,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'Common_Colors.dart';
 import 'Generic.dart';
 
-
 class LoadingOverlay {
   static OverlayEntry? _overlayEntry;
 
@@ -19,12 +18,12 @@ class LoadingOverlay {
               ),
             ),
             const Center(
-              child: SpinKitWaveSpinner(
-                trackColor: green1,
-                color: orange1,
-                size: 70,
-                waveColor: Colors.white,
-                curve: Curves.bounceInOut,
+              child: SpinKitWave(
+                // trackColor: green1,
+                color: brown1,
+                size: 50,
+                // waveColor: Colors.white,
+                // curve: Curves.bounceInOut,
               ),
             ),
           ],
