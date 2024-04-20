@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/LoginModel.dart';
+import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/utilits/MakeApiCall.dart';
 
 import 'ConstantsApi.dart';
 
@@ -46,7 +48,6 @@ class ApiService {
   }
 
   Future<T> _requestPOST<T>(
-    BuildContext context,
     String path, {
     FormData? data,
   }) async {
@@ -69,8 +70,8 @@ class ApiService {
     return _requestGET<T>(context, path);
   }
 
-  Future<T> post<T>(BuildContext context, String path, FormData data) async {
-    return _requestPOST<T>(context, path, data: data);
+  Future<T> post<T>(String path, FormData data) async {
+    return _requestPOST<T>(path, data: data);
   }
 
   Future<T> login<T>(String path, FormData data) async {
@@ -103,5 +104,46 @@ class ApiService {
         throw e;
       }
     }
+  }
+
+  Future<ServiceModel> getServiceDataApi() async {
+    final result = await requestGET(url: ConstantApi.servicesCreate, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ServiceModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ServiceModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ServiceModel();
+  }
+
+  Future<ServiceModel> getMarketingDataApi() async {
+    final result =
+        await requestGET(url: ConstantApi.marketingCreate, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ServiceModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ServiceModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ServiceModel();
   }
 }

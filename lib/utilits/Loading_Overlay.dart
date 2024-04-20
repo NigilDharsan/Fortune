@@ -44,4 +44,11 @@ class LoadingOverlay {
       _overlayEntry = null; // Set it to null after removing
     }
   }
+
+  static Future<void> forcedStop() async {
+    if (_overlayEntry != null) {
+      _overlayEntry!.remove();
+      _overlayEntry = null; // Set it to null after removing
+    }
+  }
 }

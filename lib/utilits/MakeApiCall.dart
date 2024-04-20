@@ -1,9 +1,23 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:fortune/utilits/Generic.dart';
+
 import 'ConstantsApi.dart';
 
 Future<dynamic> requestGET({required String url, required Dio dio}) async {
   try {
+    String? accessToken = await getToken();
+    // if (accessToken != "") {
+    //   options.headers['Authorization'] = 'Bearer $accessToken';
+    // }
+
+    dio.options.headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+
     final response = await dio.get(url);
     switch (response.statusCode) {
       case 200:
