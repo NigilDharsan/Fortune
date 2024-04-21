@@ -330,24 +330,13 @@ class _Service_Form_Edit_ScreenState
                         //BUTTON
                         CommonElevatedButton(context, "Submit", () {
                           if (_formKey.currentState!.validate()) {
-                            if (client_id == "") {
-                              ShowToastMessage("Select client name");
-                            } else if (company_id == "") {
-                              ShowToastMessage("Select company name");
-                            } else if (_selectedItems == []) {
-                              ShowToastMessage("Select executive");
-                            } else {
-                              List<int> idList = _selectedItems
-                                  .map((item) => item.id ?? 0)
-                                  .toList();
+                            var formData = FormData.fromMap({
+                              "status": selectStatus_id,
+                              "status_note": _StatusNote.text,
+                              "report_upload": _selectedFiles
+                            });
 
-                              var formData = FormData.fromMap({
-                                "status": selectStatus_id,
-                                "status_note": _StatusNote.text,
-                              });
-
-                              addServiceList(formData);
-                            }
+                            addServiceList(formData);
                           }
                         }),
 
@@ -375,13 +364,13 @@ class _Service_Form_Edit_ScreenState
 
     final apiService = ApiService(ref.read(dioProvider));
 
-    final postResponse = await apiService.post<SuccessModel>(
-        ConstantApi.servicesStore, formData);
+    final postResponse = await apiService.post2<SuccessModel>(
+        ConstantApi.servicesStore + "/${widget.service_id}", formData);
     LoadingOverlay.forcedStop();
 
     if (postResponse.success == true) {
       ShowToastMessage(postResponse.message ?? "");
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     } else {
       ShowToastMessage(postResponse.message ?? "");
     }

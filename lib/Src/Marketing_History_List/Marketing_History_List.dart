@@ -2,26 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_List.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
-import 'package:fortune/Model/MarketingListModel.dart';
+import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 
 class Marketing_History_List extends ConsumerStatefulWidget {
-  const Marketing_History_List({super.key});
+  String marketing_id = "";
+
+  Marketing_History_List({super.key, required this.marketing_id});
 
   @override
-  ConsumerState<Marketing_History_List> createState() => _Marketing_History_ListState();
+  ConsumerState<Marketing_History_List> createState() =>
+      _Marketing_History_ListState();
 }
 
-class _Marketing_History_ListState extends ConsumerState<Marketing_History_List> {
-
+class _Marketing_History_ListState
+    extends ConsumerState<Marketing_History_List> {
   @override
   Widget build(BuildContext context) {
+    final _MarketingListData =
+        ref.watch(marketingHistoryProvider(widget.marketing_id));
 
-    final _MarketingListData = ref.watch(marketingListProvider);
     return Scaffold(
       backgroundColor: white5,
-      appBar: Custom_AppBar(title: "Marketing History", actions: null, isGreen: false, isNav: true),
+      appBar: Custom_AppBar(
+          title: "Marketing History",
+          actions: null,
+          isGreen: false,
+          isNav: true),
       body: _MarketingListData.when(
         data: (data) {
           return SingleChildScrollView(
@@ -36,7 +44,7 @@ class _Marketing_History_ListState extends ConsumerState<Marketing_History_List>
                   ),
                   Container(
                     width: MediaQuery.sizeOf(context).width,
-                    child: _Marketing_List(data?.data?.marketings?.data ?? []),
+                    child: _Marketing_List(data?.data?.marketing?.data ?? []),
                   ),
                 ],
               ),
@@ -51,7 +59,8 @@ class _Marketing_History_ListState extends ConsumerState<Marketing_History_List>
     );
   }
 }
-Widget _Marketing_List(List<MarketingListData>? data) {
+
+Widget _Marketing_List(List<HistoryData>? data) {
   return ListView.builder(
     itemCount: data?.length ?? 0,
     shrinkWrap: true,
@@ -60,8 +69,10 @@ Widget _Marketing_List(List<MarketingListData>? data) {
     itemBuilder: (BuildContext context, int index) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 0),
-        child: Marketing_List(context,
-            isTag: data![index].status ?? "", data: data![index], isHistory: true),
+        child: Marketing_History(context,
+            isTag: data![index].status ?? "",
+            data: data[index],
+            isHistory: true),
       );
     },
   );

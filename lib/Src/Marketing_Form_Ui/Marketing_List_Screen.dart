@@ -80,7 +80,9 @@ Widget _Marketing_List(List<MarketingListData>? data) {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Marketing_History_List()));
+                    builder: (context) => Marketing_History_List(
+                          marketing_id: "${data[index].leadId}",
+                        )));
           },
           child: Marketing_List(context,
               isTag: data![index].status ?? "",
