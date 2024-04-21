@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/LoginModel.dart';
+import 'package:fortune/Model/MarketingListModel.dart';
+import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
 import 'package:fortune/utilits/MakeApiCall.dart';
@@ -135,6 +137,31 @@ class ApiService {
     return ServiceListModel();
   }
 
+  Future<ServiceHistoryModel> getServiceHistoryApi(String service_id) async {
+    var formData = FormData.fromMap({});
+
+    final result = await requestPOST(
+        url: ConstantApi.servicesHistory + service_id,
+        formData: formData,
+        dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ServiceHistoryModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ServiceHistoryModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ServiceHistoryModel();
+  }
+
   Future<ServiceModel> getServiceDataApi() async {
     final result = await requestGET(url: ConstantApi.servicesCreate, dio: _dio);
     if (result["success"] == true) {
@@ -153,6 +180,34 @@ class ApiService {
       }
     }
     return ServiceModel();
+  }
+
+  Future<MarketingListModel> getMarketingListApi() async {
+    var formData = FormData.fromMap({
+      "executive_id": "",
+      "client_id": "",
+      "status_id": "",
+      "daterange": ""
+    });
+
+    final result = await requestPOST(
+        url: ConstantApi.marketingList, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return MarketingListModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = MarketingListModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return MarketingListModel();
   }
 
   Future<ServiceModel> getMarketingDataApi() async {

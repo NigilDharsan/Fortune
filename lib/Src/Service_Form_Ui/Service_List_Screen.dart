@@ -75,7 +75,9 @@ Widget _Service_List(context, List<ServicesData>? data) {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Service_History_List_Screen()));
+                    builder: (context) => Service_History_List_Screen(
+                          service_id: "${data[index].serviceId ?? 0}",
+                        )));
           },
           child: Service_List(context,
               data: data![index],

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_List.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
-import 'package:fortune/Model/ServiceListModel.dart';
+import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 
 class Service_History_List_Screen extends ConsumerStatefulWidget {
-  const Service_History_List_Screen({super.key});
+  String service_id = "";
+
+  Service_History_List_Screen({super.key, required this.service_id});
 
   @override
   ConsumerState<Service_History_List_Screen> createState() =>
@@ -18,7 +20,8 @@ class _Service_History_List_ScreenState
     extends ConsumerState<Service_History_List_Screen> {
   @override
   Widget build(BuildContext context) {
-    final _ServiceListData = ref.watch(serviceListProvider);
+    final _ServiceListData =
+        ref.watch(serviceHistoryProvider(widget.service_id));
 
     return Scaffold(
         backgroundColor: white5,
@@ -54,7 +57,7 @@ class _Service_History_List_ScreenState
   }
 }
 
-Widget _Service_List(context, List<ServicesData>? data) {
+Widget _Service_List(context, List<ServicesData1>? data) {
   return ListView.builder(
     itemCount: data?.length ?? 0,
     shrinkWrap: true,
@@ -63,7 +66,7 @@ Widget _Service_List(context, List<ServicesData>? data) {
     itemBuilder: (BuildContext context, int index) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 0),
-        child: Service_List(context,
+        child: Service_HistoryList(context,
             data: data![index],
             isTag: data[index].status ?? "",
             isHistory: true),

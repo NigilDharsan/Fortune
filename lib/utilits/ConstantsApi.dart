@@ -9,6 +9,7 @@ class ConstantApi {
   static String servicesStore = SERVER_ONE + "services";
   static String servicesHistory = SERVER_ONE + "services/history/";
 
+  static String marketingList = SERVER_ONE + "marketings/list";
   static String marketingCreate = SERVER_ONE + "marketings/create";
   static String marketingStore = SERVER_ONE + "marketings";
   static String marketingHistory = SERVER_ONE + "marketings/history/";
