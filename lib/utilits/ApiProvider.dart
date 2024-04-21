@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
@@ -16,6 +17,11 @@ final serviceListProvider = FutureProvider<ServiceListModel?>((ref) async {
 
 final serviceDataProvider = FutureProvider<ServiceModel?>((ref) async {
   return ref.watch(apiServiceProvider).getServiceDataApi();
+});
+
+final serviceEditProvider =
+    FutureProvider.autoDispose.family<EditModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getServiceEditApi(id);
 });
 
 final serviceHistoryProvider = FutureProvider.autoDispose

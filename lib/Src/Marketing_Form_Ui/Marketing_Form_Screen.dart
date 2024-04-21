@@ -131,7 +131,8 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             setState(() {
                               companyName = newValue;
                               Companies? item = data?.data?.companies!
-                                  .firstWhere((item) => item.name == newValue);
+                                  .firstWhere(
+                                      (item) => item.companyBranch == newValue);
                               company_id = "${item?.companyId ?? 0}";
                             });
                           },
@@ -175,6 +176,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         //CLIENT ADDRESS
                         Title_Style(Title: "Client Address", isStatus: true),
                         textfieldDescription(
+                            readOnly: true,
                             Controller: _ClientAddress,
                             hintText: 'Enter Address',
                             validating: (value) {
@@ -192,6 +194,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             Title: 'Plan of action for the next meet',
                             isStatus: false),
                         textfieldDescription(
+                            readOnly: false,
                             Controller: _PlanofAction,
                             hintText: 'Plan of action for the next meet',
                             validating: (value) {
@@ -240,6 +243,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         //STATUS NOTE
                         Title_Style(Title: 'Status Note', isStatus: false),
                         textfieldDescription(
+                            readOnly: false,
                             Controller: _StatusNote,
                             hintText: 'Enter Status Note',
                             validating: (value) {

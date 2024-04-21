@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
+import 'package:fortune/Src/Service_Form_Ui/Service_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Screen.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Text_Style.dart';
@@ -89,7 +90,9 @@ Widget Service_List(context,
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Service_Form_Screen()));
+                                          Service_Form_Edit_Screen(
+                                              service_id:
+                                                  "${data.serviceId ?? 0}")));
                             },
                             child: Container(
                                 height: 30,

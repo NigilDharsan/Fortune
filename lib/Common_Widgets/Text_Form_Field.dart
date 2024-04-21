@@ -193,10 +193,12 @@ Widget textFieldPassword(
 Widget textfieldDescription(
     {TextEditingController? Controller,
     String? Function(String?)? validating,
-    required String hintText}) {
+    required String hintText,
+    required bool readOnly}) {
   return Container(
     // height: 50,
     child: TextFormField(
+      readOnly: readOnly,
       controller: Controller,
       textCapitalization: TextCapitalization.none,
       maxLines: 5,
