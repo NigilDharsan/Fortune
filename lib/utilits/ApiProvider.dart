@@ -1,4 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DashboardModel.dart';
+import 'package:fortune/Model/EditModel.dart';
+import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
@@ -10,12 +13,22 @@ final apiServiceProvider = Provider<ApiService>((ref) {
   return ApiService(dio);
 });
 
+final dashboardProvider =
+    FutureProvider.autoDispose<DashboardModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getDashboardApi();
+});
+
 final serviceListProvider = FutureProvider<ServiceListModel?>((ref) async {
   return ref.watch(apiServiceProvider).getServiceListApi();
 });
 
 final serviceDataProvider = FutureProvider<ServiceModel?>((ref) async {
   return ref.watch(apiServiceProvider).getServiceDataApi();
+});
+
+final serviceEditProvider =
+    FutureProvider.autoDispose.family<EditModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getServiceEditApi(id);
 });
 
 final serviceHistoryProvider = FutureProvider.autoDispose
@@ -29,4 +42,9 @@ final marketingListProvider = FutureProvider<MarketingListModel?>((ref) async {
 
 final marketingDataProvider = FutureProvider<ServiceModel?>((ref) async {
   return ref.watch(apiServiceProvider).getMarketingDataApi();
+});
+
+final marketingHistoryProvider = FutureProvider.autoDispose
+    .family<MarketingHistoryModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getMarketingHistoryApi(id);
 });

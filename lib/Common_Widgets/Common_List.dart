@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
+import 'package:fortune/Src/Service_Form_Ui/Service_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Screen.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Text_Style.dart';
@@ -90,7 +92,9 @@ Widget Service_List(context,
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Service_Form_Screen()));
+                                          Service_Form_Edit_Screen(
+                                              service_id:
+                                                  "${data.serviceId ?? 0}")));
                             },
                             child: Container(
                                 height: 30,
@@ -187,11 +191,12 @@ Widget Service_List(context,
   );
 }
 
-Widget Service_HistoryList(context,
-    {required ServicesData1 data,
-    required String isTag,
-    required bool isHistory,
-    }) {
+Widget Service_HistoryList(
+  context, {
+  required ServicesData1 data,
+  required String isTag,
+  required bool isHistory,
+}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -368,8 +373,12 @@ Widget Service_HistoryList(context,
 }
 
 //MARKETING LIST
-Widget Marketing_List(context,
-    {required MarketingListData data, required String isTag, required bool isHistory,}) {
+Widget Marketing_List(
+  context, {
+  required MarketingListData data,
+  required String isTag,
+  required bool isHistory,
+}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -398,29 +407,49 @@ Widget Marketing_List(context,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 15,),
-          isHistory == true?Container(): Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-            InkWell(
-              onTap: (){
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>Marketing_Form_Screen()));
-              },
-              child: Container(
-                height: 30,
-                  width: 30,
-                  child: Center(child: Icon(Icons.edit_rounded,))),
-            ),
-            const SizedBox(width: 15,),
-            InkWell(
-              onTap: (){
-
-              },
-              child: Container(height:30,width: 30,
-              child: Center(child: Icon(Icons.delete,))),
-            ),
-          ],),
-          isHistory == true?Container():  const SizedBox(height: 5,),
+          const SizedBox(
+            height: 15,
+          ),
+          isHistory == true
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Marketing_Form_Screen()));
+                      },
+                      child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Center(
+                              child: Icon(
+                            Icons.edit_rounded,
+                          ))),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Center(
+                              child: Icon(
+                            Icons.delete,
+                          ))),
+                    ),
+                  ],
+                ),
+          isHistory == true
+              ? Container()
+              : const SizedBox(
+                  height: 5,
+                ),
           //USER NAME
           Container(
               alignment: Alignment.topLeft,
@@ -431,7 +460,6 @@ Widget Marketing_List(context,
                     'Client Detail : ',
                     style: cardDetailT,
                   ),
-
                   const Spacer(),
                   Container(
                       alignment: Alignment.topLeft,
@@ -458,9 +486,15 @@ Widget Marketing_List(context,
           ),
           //detail
           Container(
-              width: MediaQuery.sizeOf(context).width/1.2,
-              child: Text("7708919494, 63/29 v,m,r nagar, meyyanoor, trichy",style: phoneHT,maxLines: 3,)),
-          const SizedBox(height: 5,),
+              width: MediaQuery.sizeOf(context).width / 1.2,
+              child: Text(
+                "7708919494, 63/29 v,m,r nagar, meyyanoor, trichy",
+                style: phoneHT,
+                maxLines: 3,
+              )),
+          const SizedBox(
+            height: 5,
+          ),
           //PREVIOUS FOLLOWED DATE
           Text(
             'Previous Followed on : ',
@@ -471,7 +505,9 @@ Widget Marketing_List(context,
             data.date ?? "",
             style: phoneHT,
           ),
-          const SizedBox(height: 5,),
+          const SizedBox(
+            height: 5,
+          ),
           //NEXT FOLLOW DATE
           Text(
             'Next Follow Up Date :  ',
@@ -481,7 +517,9 @@ Widget Marketing_List(context,
             data.nextFollowupDate ?? "",
             style: phoneHT,
           ),
-          const SizedBox(width: 5,),
+          const SizedBox(
+            width: 5,
+          ),
 
           //REPORTED BY
           Row(
@@ -497,22 +535,233 @@ Widget Marketing_List(context,
               ),
             ],
           ),
-          const SizedBox(width: 5,),
+          const SizedBox(
+            width: 5,
+          ),
           Text(
             'Plan on next : ',
             style: cardDetailT,
           ),
           Container(
-              width: MediaQuery.sizeOf(context).width/1.2,
-              child: Text("dsfdsf sdfsdf sdfsdf",style: phoneHT,maxLines: 3,)),
-          const SizedBox(width: 5,),
+              width: MediaQuery.sizeOf(context).width / 1.2,
+              child: Text(
+                "dsfdsf sdfsdf sdfsdf",
+                style: phoneHT,
+                maxLines: 3,
+              )),
+          const SizedBox(
+            width: 5,
+          ),
           Text(
             'Status Note : ',
             style: cardDetailT,
           ),
           Container(
-              width: MediaQuery.sizeOf(context).width/1.2,
-              child: Text("sdfdsf sdfsdfdsf sdfsfddsfdsf sdfsdfsf",style: phoneHT,maxLines: 3,)),
+              width: MediaQuery.sizeOf(context).width / 1.2,
+              child: Text(
+                "sdfdsf sdfsdfdsf sdfsfddsfdsf sdfsdfsf",
+                style: phoneHT,
+                maxLines: 3,
+              )),
+          const SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget Marketing_History(
+  context, {
+  required HistoryData data,
+  required String isTag,
+  required bool isHistory,
+}) {
+  Color? containerColor;
+  TextStyle? style;
+  switch (isTag) {
+    case "Hot":
+      containerColor = orange2;
+      style = red;
+      break;
+    case "completed":
+      containerColor = blue2;
+      style = blue;
+      break;
+    default:
+      containerColor = Colors.white;
+      break;
+  }
+  return Container(
+    // width: MediaQuery.of(context).size.width / 1.5,
+    margin: EdgeInsets.only(
+      bottom: 20,
+    ),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 15,
+          ),
+          isHistory == true
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Marketing_Form_Screen()));
+                      },
+                      child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Center(
+                              child: Icon(
+                            Icons.edit_rounded,
+                          ))),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Center(
+                              child: Icon(
+                            Icons.delete,
+                          ))),
+                    ),
+                  ],
+                ),
+          isHistory == true
+              ? Container()
+              : const SizedBox(
+                  height: 5,
+                ),
+          //USER NAME
+          Container(
+              alignment: Alignment.topLeft,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Client Detail : ',
+                    style: cardDetailT,
+                  ),
+                  const Spacer(),
+                  Container(
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: containerColor),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, top: 5, bottom: 5),
+                        child: Text(
+                          isTag,
+                          style: style,
+                        ),
+                      )),
+                ],
+              )),
+          Container(
+            width: MediaQuery.sizeOf(context).width / 3,
+            child: Text(
+              data.clientName ?? "",
+              style: phoneHT,
+              maxLines: 2,
+            ),
+          ),
+          //detail
+          Container(
+              width: MediaQuery.sizeOf(context).width / 1.2,
+              child: Text(
+                "7708919494, 63/29 v,m,r nagar, meyyanoor, trichy",
+                style: phoneHT,
+                maxLines: 3,
+              )),
+          const SizedBox(
+            height: 5,
+          ),
+          //PREVIOUS FOLLOWED DATE
+          Text(
+            'Previous Followed on : ',
+            style: cardDetailT,
+          ),
+
+          Text(
+            data.date ?? "",
+            style: phoneHT,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          //NEXT FOLLOW DATE
+          Text(
+            'Next Follow Up Date :  ',
+            style: cardDetailT,
+          ),
+          Text(
+            data.nextFollowupDate ?? "",
+            style: phoneHT,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+
+          //REPORTED BY
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Reported By : ',
+                style: cardDetailT,
+              ),
+              Text(
+                '${data.marketingExecutives?.map((item) => item.name).join(', ')}',
+                style: phoneHT,
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            'Plan on next : ',
+            style: cardDetailT,
+          ),
+          Container(
+              width: MediaQuery.sizeOf(context).width / 1.2,
+              child: Text(
+                "dsfdsf sdfsdf sdfsdf",
+                style: phoneHT,
+                maxLines: 3,
+              )),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            'Status Note : ',
+            style: cardDetailT,
+          ),
+          Container(
+              width: MediaQuery.sizeOf(context).width / 1.2,
+              child: Text(
+                "sdfdsf sdfsdfdsf sdfsfddsfdsf sdfsdfsf",
+                style: phoneHT,
+                maxLines: 3,
+              )),
           const SizedBox(
             height: 15,
           ),

@@ -25,7 +25,14 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
     return Scaffold(
       floatingActionButton: Floating_Button(context, onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Service_Form_Screen()));
+                MaterialPageRoute(builder: (context) => Service_Form_Screen()))
+            .then((value) {
+          if (value == true) {
+            setState(() {
+              ref.refresh(serviceListProvider);
+            });
+          }
+        });
       }, floatT: "Add Service"),
       backgroundColor: white5,
       appBar: Custom_AppBar(

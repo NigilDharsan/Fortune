@@ -223,7 +223,7 @@ Future<dynamic> requestMultiPart({
     };
     _dio.options.baseUrl = url;
 
-    final response = await _dio.post(url, data: formData);
+    final response = await _dio.put(url, data: formData);
     print(response);
     switch (response.statusCode) {
       case 200:

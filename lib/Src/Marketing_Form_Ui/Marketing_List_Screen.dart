@@ -24,8 +24,14 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
 
     return Scaffold(
       floatingActionButton: Floating_Button(context, onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Marketing_Form_Screen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Marketing_Form_Screen())).then((value) {
+          if (value == true) {
+            ref.refresh(marketingListProvider);
+          }
+        });
       }, floatT: "Add Marketing"),
       backgroundColor: white5,
       appBar: Custom_AppBar(
@@ -70,11 +76,18 @@ Widget _Marketing_List(List<MarketingListData>? data) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 0),
         child: InkWell(
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Marketing_History_List()));
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Marketing_History_List(
+                          marketing_id: "${data[index].leadId}",
+                        )));
           },
           child: Marketing_List(context,
-              isTag: data![index].status ?? "", data: data![index], isHistory: false),
+              isTag: data![index].status ?? "",
+              data: data![index],
+              isHistory: false),
         ),
       );
     },

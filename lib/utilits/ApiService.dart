@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DashboardModel.dart';
+import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/LoginModel.dart';
+import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/MakeApiCall.dart';
 
 import 'ConstantsApi.dart';
@@ -24,6 +28,8 @@ class ApiService {
     if (json != null) {
       if (T == LoginModel) {
         return LoginModel.fromJson(json) as T;
+      } else if (T == SuccessModel) {
+        return SuccessModel.fromJson(json) as T;
       }
     } else {
       final jsonResponse = {
@@ -69,12 +75,58 @@ class ApiService {
     }
   }
 
+  Future<T> _requestPOST1<T>(
+    String path, {
+    Map<String, dynamic>? data,
+  }) async {
+    try {
+      final response = await _dio.post(path, data: data);
+
+      return _fromJson<T>(response.data);
+    } on DioException catch (e) {
+      // Handle DioError, you can log or display an error message.
+
+      return _fromJson<T>(e.response?.data);
+    } catch (e) {
+      // Handle other exceptions here
+
+      throw e;
+    }
+  }
+
+  Future<T> _requestPOST2<T>(
+    String path, {
+    FormData? data,
+  }) async {
+    try {
+      final response = await _dio.put(path, data: data);
+
+      return _fromJson<T>(response.data);
+    } on DioException catch (e) {
+      // Handle DioError, you can log or display an error message.
+
+      return _fromJson<T>(e.response?.data);
+    } catch (e) {
+      // Handle other exceptions here
+
+      throw e;
+    }
+  }
+
   Future<dynamic> get<T>(BuildContext context, String path) async {
     return _requestGET<T>(context, path);
   }
 
   Future<T> post<T>(String path, FormData data) async {
     return _requestPOST<T>(path, data: data);
+  }
+
+  Future<T> post1<T>(String path, Map<String, dynamic> data) async {
+    return _requestPOST1<T>(path, data: data);
+  }
+
+  Future<T> post2<T>(String path, FormData data) async {
+    return _requestPOST2<T>(path, data: data);
   }
 
   Future<T> login<T>(String path, FormData data) async {
@@ -109,6 +161,26 @@ class ApiService {
     }
   }
 
+  Future<DashboardModel> getDashboardApi() async {
+    final result = await requestGET(url: ConstantApi.dashboardUrl, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return DashboardModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = DashboardModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return DashboardModel();
+  }
+
   Future<ServiceListModel> getServiceListApi() async {
     var formData = FormData.fromMap({
       "executive_id": "",
@@ -137,6 +209,27 @@ class ApiService {
     return ServiceListModel();
   }
 
+  Future<EditModel> getServiceEditApi(String service_id) async {
+    final result = await requestGET(
+        url: ConstantApi.servicesStore + "/${service_id}/" + "edit", dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return EditModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = EditModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return EditModel();
+  }
+
   Future<ServiceHistoryModel> getServiceHistoryApi(String service_id) async {
     var formData = FormData.fromMap({});
 
@@ -160,6 +253,32 @@ class ApiService {
       }
     }
     return ServiceHistoryModel();
+  }
+
+  Future<MarketingHistoryModel> getMarketingHistoryApi(
+      String service_id) async {
+    var formData = FormData.fromMap({});
+
+    final result = await requestPOST(
+        url: ConstantApi.marketingHistory + service_id,
+        formData: formData,
+        dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return MarketingHistoryModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = MarketingHistoryModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return MarketingHistoryModel();
   }
 
   Future<ServiceModel> getServiceDataApi() async {
