@@ -213,6 +213,9 @@ TextStyle WBlack1 = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w700);
 
+TextStyle refferalCountT =TextStyle( fontFamily: 'Inter', fontSize: 18, color: Black1, fontWeight: FontWeight.w500);
+
+
 //HEADING
 Widget Title_Style({required String Title, required bool? isStatus}) {
   return Padding(
