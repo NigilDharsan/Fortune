@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
+import 'package:fortune/Src/Login_Ui/Login_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Screen.dart';
@@ -21,7 +22,23 @@ class _Home_DashBoard_ScreenState extends State<Home_DashBoard_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Custom_AppBar(title: "Home Dash Board",
-          actions: null, isGreen: true, isNav: false),
+          actions: [
+            PopupMenuButton(
+                surfaceTintColor: white1,
+                icon: Icon(Icons.person_2_rounded,color: white1,),
+                itemBuilder: (BuildContext context) => [
+                  PopupMenuItem(
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Login_Screen()));
+                          },
+                          child: Text(
+                            'Log Out',
+                            style: refferalCountT,
+                          ))),
+                  // PopupMenuItem(child: Text('Download',style: refferalCountT,)),
+                ]),
+          ], isGreen: true, isNav: false),
       backgroundColor: white5,
       body: Padding(
         padding: const EdgeInsets.only(left: 0,right: 0),
