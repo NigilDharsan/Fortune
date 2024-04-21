@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:fortune/Common_Widgets/Common_Button.dart';
-import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
-import 'package:fortune/Common_Widgets/Text_Form_Field.dart';
-import 'package:fortune/Common_Widgets/Common_List.dart';
+import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Screen.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Text_Style.dart';
 
-
 //Transaction List
 Widget Service_List(context,
-    {required String isTag,required bool isHistory}) {
+    {required ServicesData data,
+    required String isTag,
+    required bool isHistory}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
-    case "Processing":
+    case "processing":
       containerColor = orange2;
       style = red;
       break;
     case "Completed":
       containerColor = blue2;
       style = blue;
+      break;
+    case "pending":
+      containerColor = blue5;
+      style = white;
       break;
     default:
       containerColor = Colors.white;
@@ -32,9 +34,8 @@ Widget Service_List(context,
       bottom: 20,
     ),
     decoration:
-    BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
-    child:
-    Column(
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
@@ -49,7 +50,7 @@ Widget Service_List(context,
                   child: Row(
                     children: [
                       Text(
-                        'test customer 1',
+                        data.clientName ?? "",
                         style: cardDetailT,
                       ),
                       const Spacer(),
@@ -70,95 +71,121 @@ Widget Service_List(context,
                   )),
               //DATE
               Padding(
-                padding: const EdgeInsets.only(top: 5,bottom: 5),
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
                 child: Row(
                   children: [
                     Text(
-                      '16/07/2023',
+                      data.date ?? "",
                       style: DateT,
                     ),
                     const Spacer(),
-                    isHistory == true?Container(): InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Service_Form_Screen()));
-                      },
-                      child: Container(
-                        height: 30,
-                          width: 30,
-                          child: Center(child: Icon(Icons.mode_edit,size: 25,))),
-                    ),
+                    isHistory == true
+                        ? Container()
+                        : InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Service_Form_Screen()));
+                            },
+                            child: Container(
+                                height: 30,
+                                width: 30,
+                                child: Center(
+                                    child: Icon(
+                                  Icons.mode_edit,
+                                  size: 25,
+                                ))),
+                          ),
                   ],
                 ),
               ),
               //PHONE NUMBER
               Container(
                 child: Text(
-                  '7708919494',
+                  data.contactNo ?? "",
                   style: phoneHT,
-                ) ,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  child: Text(
+                    data.statusNote ?? "",
+                    style: phoneHT,
+                    maxLines: 2,
+                  ),
+                ),
               ),
               //ADDRESS
               Padding(
                 padding: const EdgeInsets.only(bottom: 5),
                 child: Container(
-                  width: MediaQuery.of(context).size.width/1.2,
+                  width: MediaQuery.of(context).size.width / 1.2,
                   child: Text(
-                    '11, Aathiparasakthi Nagar 5th Street, Tiruppalai',
-                    style: phoneHT,maxLines: 2,
-                  ) ,
+                    data.address ?? "",
+                    style: phoneHT,
+                    maxLines: 2,
+                  ),
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.only(bottom: 5),
                 child: Container(
-                  width: MediaQuery.of(context).size.width/1.2,
+                  width: MediaQuery.of(context).size.width / 1.2,
                   child: Text(
-                    'Arun, Shyam, Shanu',
-                    style: phoneHT,maxLines: 2,
-                  ) ,
+                    'Service Rep: ${data.serviceExecutives?.map((item) => item.name).join(', ')}',
+                    style: phoneHT,
+                    maxLines: 2,
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Container(
-                  width: MediaQuery.of(context).size.width/1.2,
-                  child: Text(
-                    'This work has been done on next week',
-                    style: phoneHT,maxLines: 2,
-                  ) ,
-                ),
-              ),
-              isHistory == true? SizedBox(height: 5,):SizedBox(height: 15,),
+              isHistory == true
+                  ? SizedBox(
+                      height: 5,
+                    )
+                  : SizedBox(
+                      height: 15,
+                    ),
             ],
           ),
         ),
-        isHistory == true? Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-            ),
-            color: white3,
-          ),
-          height: 50,
-
-          child: Center(child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('View doc',style: cardDetailT,),
-              const SizedBox(width: 10,),
-              Icon(Icons.arrow_forward),
-            ],
-          )),
-        ):Container(),
+        isHistory == true
+            ? Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                  color: white3,
+                ),
+                height: 50,
+                child: Center(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'View doc',
+                      style: cardDetailT,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Icon(Icons.arrow_forward),
+                  ],
+                )),
+              )
+            : Container(),
       ],
     ),
   );
 }
 
 //MARKETING LIST
-Widget Marketing_List(context,
-    {required String isTag}) {
+Widget Marketing_List(context, {required String isTag}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -180,7 +207,7 @@ Widget Marketing_List(context,
       bottom: 20,
     ),
     decoration:
-    BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
     child: Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
@@ -189,7 +216,9 @@ Widget Marketing_List(context,
         children: [
           //USER NAME
           Container(
-              margin: EdgeInsets.only(top: 15,),
+              margin: EdgeInsets.only(
+                top: 15,
+              ),
               alignment: Alignment.topLeft,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,14 +228,14 @@ Widget Marketing_List(context,
                     style: cardDetailT,
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width/3,
-                    child:  Text(
+                    width: MediaQuery.sizeOf(context).width / 3,
+                    child: Text(
                       'Jhon',
-                      style: DateT,maxLines: 2,
+                      style: DateT,
+                      maxLines: 2,
                     ),
                   ),
-
-                   const Spacer(),
+                  const Spacer(),
                   Container(
                       alignment: Alignment.topLeft,
                       decoration: BoxDecoration(
@@ -229,7 +258,6 @@ Widget Marketing_List(context,
                 'Previous Followed on : ',
                 style: cardDetailT,
               ),
-
               Text(
                 '16/07/2023',
                 style: DateT,
@@ -242,7 +270,6 @@ Widget Marketing_List(context,
                 'Next Follow Up Date :  ',
                 style: cardDetailT,
               ),
-
               Text(
                 '16/07/2023',
                 style: DateT,
@@ -257,10 +284,15 @@ Widget Marketing_List(context,
                 'Reported By : ',
                 style: cardDetailT,
               ),
-              Text('Arun, Kumar',style: phoneHT,),
+              Text(
+                'Arun, Kumar',
+                style: phoneHT,
+              ),
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(
+            height: 15,
+          ),
         ],
       ),
     ),

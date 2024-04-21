@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/LoginModel.dart';
+import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
 import 'package:fortune/utilits/MakeApiCall.dart';
 
@@ -104,6 +105,34 @@ class ApiService {
         throw e;
       }
     }
+  }
+
+  Future<ServiceListModel> getServiceListApi() async {
+    var formData = FormData.fromMap({
+      "executive_id": "",
+      "client_id": "",
+      "status_id": "",
+      "daterange": ""
+    });
+
+    final result = await requestPOST(
+        url: ConstantApi.servicesList, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ServiceListModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ServiceListModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ServiceListModel();
   }
 
   Future<ServiceModel> getServiceDataApi() async {

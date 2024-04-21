@@ -72,9 +72,12 @@ Future<dynamic> requestGET({required String url, required Dio dio}) async {
 Future<dynamic> requestPOST(
     {required String url, required FormData formData, required Dio dio}) async {
   try {
+    String? accessToken = await getToken();
+
     dio.options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
     };
     dio.options.baseUrl = url;
 
