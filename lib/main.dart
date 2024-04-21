@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Src/Home_Dash_Board_Ui/Home_DashBoard_Screen.dart';
+import 'package:fortune/utilits/Landing.dart';
 import 'Src/Login_Ui/Login_Screen.dart';
 import 'Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
 import 'Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
@@ -22,6 +24,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes:
+      {
+        "/": (context) => Landing(),
+        "/login": (context) => Login_Screen(),
+        "/home": (context) => Home_DashBoard_Screen(),
+      },
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -41,6 +50,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      onGenerateRoute: (value){
+        return MaterialPageRoute(builder: (context)=>Login_Screen());
+      },
       home:  Login_Screen(),
     );
   }
