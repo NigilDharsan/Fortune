@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
@@ -9,6 +10,11 @@ import 'package:fortune/utilits/ApiService.dart';
 final apiServiceProvider = Provider<ApiService>((ref) {
   final dio = ref.read(dioProvider);
   return ApiService(dio);
+});
+
+final dashboardProvider =
+    FutureProvider.autoDispose<DashboardModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getDashboardApi();
 });
 
 final serviceListProvider = FutureProvider<ServiceListModel?>((ref) async {

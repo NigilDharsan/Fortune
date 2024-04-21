@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -278,15 +277,15 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                               ShowToastMessage("Select client name");
                             } else if (company_id == "") {
                               ShowToastMessage("Select company name");
-                            } else if (_selectedItems == []) {
+                            } else if (_selectedItems.length == 0) {
                               ShowToastMessage("Select executive");
                             } else {
                               List<int> idList = _selectedItems
                                   .map((item) => item.id ?? 0)
                                   .toList();
 
-                              var formData = FormData.fromMap({
-                                "is_new_client": "",
+                              Map<String, dynamic> data = {
+                                "is_new_client": "0",
                                 "client_id": client_id,
                                 "cus_mobile_no": _ContactNumber.text,
                                 "cus_first_name": _ClientName.text,
@@ -296,9 +295,9 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                                 "company_id": company_id,
                                 "plan_for_next_meet": _PlanofAction.text,
                                 "next_followup_date": _DatePicker.text
-                              });
+                              };
 
-                              addMarketingList(formData);
+                              addMarketingList(data);
                             }
                           }
                         }),
@@ -322,18 +321,18 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
     );
   }
 
-  void addMarketingList(FormData formData) async {
+  void addMarketingList(Map<String, dynamic> data) async {
     LoadingOverlay.show(context);
 
     final apiService = ApiService(ref.read(dioProvider));
 
-    final postResponse = await apiService.post<SuccessModel>(
-        ConstantApi.marketingStore, formData);
+    final postResponse =
+        await apiService.post1<SuccessModel>(ConstantApi.marketingStore, data);
     LoadingOverlay.forcedStop();
 
     if (postResponse.success == true) {
       ShowToastMessage(postResponse.message ?? "");
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     } else {
       ShowToastMessage(postResponse.message ?? "");
     }

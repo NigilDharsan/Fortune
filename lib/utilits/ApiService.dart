@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/LoginModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
@@ -134,6 +135,26 @@ class ApiService {
         throw e;
       }
     }
+  }
+
+  Future<DashboardModel> getDashboardApi() async {
+    final result = await requestGET(url: ConstantApi.dashboardUrl, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return DashboardModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = DashboardModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return DashboardModel();
   }
 
   Future<ServiceListModel> getServiceListApi() async {
