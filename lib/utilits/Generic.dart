@@ -92,6 +92,8 @@ class SingleTon {
   }
   SingleTon._internal();
   String setLocation = "";
+  String lattidue = "";
+  String longitude = "";
   bool isLoading = true;
 }
 

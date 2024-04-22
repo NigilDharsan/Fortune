@@ -71,7 +71,7 @@ TextStyle DateT = TextStyle(
 
 TextStyle ButtonT1 = TextStyle(
     fontFamily: 'Inter',
-    fontSize: 12,
+    fontSize: 14,
     color: blue3,
     fontWeight: FontWeight.w700);
 TextStyle profileT = TextStyle(

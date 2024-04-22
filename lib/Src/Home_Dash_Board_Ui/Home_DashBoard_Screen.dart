@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
+import 'package:fortune/Common_Widgets/Location_Picker.dart';
 import 'package:fortune/Src/Login_Ui/Login_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_List_Screen.dart';
@@ -63,6 +64,9 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                    height: 50,
+                      child: Booking_Map()),
                   const SizedBox(
                     height: 20,
                   ),
