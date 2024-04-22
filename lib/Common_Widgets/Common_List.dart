@@ -410,41 +410,41 @@ Widget Marketing_List(
           const SizedBox(
             height: 15,
           ),
-          isHistory == true
-              ? Container()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Marketing_Form_Screen()));
-                      },
-                      child: Container(
-                          height: 30,
-                          width: 30,
-                          child: Center(
-                              child: Icon(
-                            Icons.edit_rounded,
-                          ))),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                          height: 30,
-                          width: 30,
-                          child: Center(
-                              child: Icon(
-                            Icons.delete,
-                          ))),
-                    ),
-                  ],
-                ),
+          // isHistory == true
+          //     ? Container()
+          //     : Row(
+          //         mainAxisAlignment: MainAxisAlignment.end,
+          //         children: [
+          //           InkWell(
+          //             onTap: () {
+          //               Navigator.push(
+          //                   context,
+          //                   MaterialPageRoute(
+          //                       builder: (context) => Marketing_Form_Screen()));
+          //             },
+          //             child: Container(
+          //                 height: 30,
+          //                 width: 30,
+          //                 child: Center(
+          //                     child: Icon(
+          //                   Icons.edit_rounded,
+          //                 ))),
+          //           ),
+          //           const SizedBox(
+          //             width: 15,
+          //           ),
+          //           InkWell(
+          //             onTap: () {},
+          //             child: Container(
+          //                 height: 30,
+          //                 width: 30,
+          //                 child: Center(
+          //                     child: Icon(
+          //                   Icons.delete,
+          //                 ))),
+          //           ),
+          //         ],
+          //       ),
           isHistory == true
               ? Container()
               : const SizedBox(
