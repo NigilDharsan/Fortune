@@ -87,7 +87,7 @@ Widget _Marketing_List(List<MarketingListData>? data) {
           child: Marketing_List(context,
               isTag: data![index].status ?? "",
               data: data![index],
-              isHistory: false),
+              isHistory: true),
         ),
       );
     },

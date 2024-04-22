@@ -163,13 +163,15 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                           ShowToastMessage(postResponse.message ?? "");
                           accessToken(postResponse.data?.token ?? "");
                           UserId(postResponse.data?.name ?? "");
-                          String Boolvalue = "true";
-                          Routes(Boolvalue);
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
                                       Home_DashBoard_Screen()));
+                          String Boolvalue = "true";
+                          Routes(Boolvalue);
+                          print('ROUTES : ${Routes(Boolvalue)}');
                         } else {
                           ShowToastMessage(postResponse.message ?? "");
                         }

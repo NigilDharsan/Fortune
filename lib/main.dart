@@ -24,13 +24,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes:
-      {
-        "/": (context) => Landing(),
-        "/login": (context) => Login_Screen(),
-        "/home": (context) => Home_DashBoard_Screen(),
-      },
+      // initialRoute: '/',
+      // routes:
+      // {
+      //   "/": (context) => Landing(),
+      //   "/login": (context) => Login_Screen(),
+      //   "/home": (context) => Home_DashBoard_Screen(),
+      // },
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -50,9 +50,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      onGenerateRoute: (value){
-        return MaterialPageRoute(builder: (context)=>Login_Screen());
-      },
+      // onGenerateRoute: (value){
+      //   return MaterialPageRoute(builder: (context)=>Login_Screen());
+      // },
       home:  Login_Screen(),
     );
   }

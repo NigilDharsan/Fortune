@@ -6,6 +6,7 @@ import 'package:fortune/Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_List_Screen.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
+import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Text_Style.dart';
 
 class Home_DashBoard_Screen extends ConsumerStatefulWidget {
@@ -35,6 +36,9 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                         PopupMenuItem(
                             child: InkWell(
                                 onTap: () {
+                                  String Boolvalue = "false";
+                                  Routes(Boolvalue);
+                                  print('ROUTES : ${Routes(Boolvalue)}');
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
