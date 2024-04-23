@@ -77,6 +77,8 @@ class _Service_Form_Edit_ScreenState
   String? selectStatus;
   String? selectStatus_id;
 
+  bool isvalueUpdated = false;
+
   String? status;
   int? clientSelectedIndex;
 
@@ -118,17 +120,20 @@ class _Service_Form_Edit_ScreenState
                       (st) => st.companyId == data.data?.data?[0].companyId);
                   companyName = data.data!.companies![index].name ?? "";
 
-                  selectStatus_id = data.data?.data?[0].status ?? "";
+                  if (!isvalueUpdated) {
+                    isvalueUpdated = true;
+                    selectStatus_id = data.data?.data?[0].status ?? "";
 
-                  selectStatus = selectStatus_id == "1"
-                      ? "completed"
-                      : selectStatus_id == "2"
-                          ? "pending"
-                          : selectStatus_id == "3"
-                              ? "processing"
-                              : selectStatus_id == "4"
-                                  ? "cancelled"
-                                  : "";
+                    selectStatus = selectStatus_id == "1"
+                        ? "completed"
+                        : selectStatus_id == "2"
+                            ? "pending"
+                            : selectStatus_id == "3"
+                                ? "processing"
+                                : selectStatus_id == "4"
+                                    ? "cancelled"
+                                    : "";
+                  }
 
                   return Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
@@ -139,9 +144,9 @@ class _Service_Form_Edit_ScreenState
                         dropDownField(
                           context,
                           hintT: "Select Client",
-                          value: data?.data?.data?[0].cusFirstName ?? "",
+                          value: data.data?.data?[0].cusFirstName ?? "",
                           listValue: [
-                            "${data?.data?.data?[0].cusFirstName ?? ""}"
+                            "${data.data?.data?[0].cusFirstName ?? ""}"
                           ],
                           onChanged: (String? newValue) {},
                         ),
@@ -184,9 +189,6 @@ class _Service_Form_Edit_ScreenState
                           validating: (value) {
                             if (value!.isEmpty) {
                               return "Please enter a Contact Number";
-                            } else if (!RegExp(r"^[0-9]{10}$")
-                                .hasMatch(value)) {
-                              return "Please enter a valid 10-digit Contact Number";
                             }
                             return null;
                           },

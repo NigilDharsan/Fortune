@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,14 +16,18 @@ import 'package:fortune/utilits/Loading_Overlay.dart';
 import 'package:fortune/utilits/Text_Style.dart';
 import 'package:intl/intl.dart';
 
-class Marketing_Form_Screen extends ConsumerStatefulWidget {
-  const Marketing_Form_Screen({super.key});
+class Marketing_Form_Edit_Screen extends ConsumerStatefulWidget {
+  String marketing_id = "";
+
+  Marketing_Form_Edit_Screen({super.key, required this.marketing_id});
 
   @override
-  ConsumerState<Marketing_Form_Screen> createState() => _Post_Job_ScreenState();
+  ConsumerState<Marketing_Form_Edit_Screen> createState() =>
+      _Marketing_Form_Edit_ScreenState();
 }
 
-class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
+class _Marketing_Form_Edit_ScreenState
+    extends ConsumerState<Marketing_Form_Edit_Screen> {
   TextEditingController _DatePicker = TextEditingController();
   TextEditingController _StatusNote = TextEditingController();
   TextEditingController _ClientAddress = TextEditingController();
@@ -58,12 +63,23 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
   List<String> _CompanyName = ['Zoho', 'wipro', 'Advance'];
   List<String> _Status = ['Pending', 'Processing', 'Cancelled', "Completed"];
   List<String> _AssignExecutive = ['Arun', 'Madhesh', 'Naveen', "Nivas"];
+  List<String> _selectState = [
+    'completed',
+    'pending',
+    'processing',
+    "cancelled"
+  ];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   List<Executives> _selectedItems = [];
   String client_id = "";
   String company_id = "";
   bool? isAddNewClient;
+
+  bool isvalueUpdated = false;
+
+  String? selectStatus;
+  String? selectStatus_id;
 
   String? Degree;
   String? clientName;
@@ -79,7 +95,8 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    final _MarketingData = ref.watch(marketingDataProvider);
+    final _MarketingData =
+        ref.watch(marketingEditProvider(widget.marketing_id));
 
     return Scaffold(
       backgroundColor: white5,
@@ -93,66 +110,59 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
             children: [
               _MarketingData.when(
                 data: (data) {
+                  clientName = data?.data?.data?.clientName ?? "";
+                  _ClientName.text = data?.data?.data?.clientName ?? "";
+                  _ClientAddress.text = data?.data?.data?.address ?? "";
+                  _ContactNumber.text = data?.data?.data?.contactNo ?? "";
+                  _StatusNote.text = data?.data?.data?.instructions ?? "";
+
+                  int index = data!.data!.companies!.indexWhere((st) =>
+                      st.companyId ==
+                      int.parse(data.data?.data?.companyId ?? "0"));
+
+                  companyName = data.data!.companies![index].name ?? "";
+
+                  if (!isvalueUpdated) {
+                    isvalueUpdated = true;
+                    selectStatus_id = data.data?.data?.status ?? "";
+
+                    selectStatus = selectStatus_id == "1"
+                        ? "completed"
+                        : selectStatus_id == "2"
+                            ? "pending"
+                            : selectStatus_id == "3"
+                                ? "processing"
+                                : selectStatus_id == "4"
+                                    ? "cancelled"
+                                    : "";
+                  }
+
                   return Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       children: [
                         //CLIENT NAME
                         Title_Style(Title: 'Select Client', isStatus: true),
-                        dropDownField1(
+                        dropDownField(
                           context,
                           hintT: "Select Client",
                           value: clientName,
-                          listValue: data?.data?.clients ?? [],
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              if (newValue == "Add New") {
-                                isAddNewClient = true;
-                                clientName = newValue;
-                                _ClientName.text = "";
-                                _ContactNumber.text = "";
-                                _ClientAddress.text = "";
-                                client_id = "0";
-                              } else {
-                                isAddNewClient = false;
-                                clientName = newValue;
-                                int index = data!.data!.clients!.indexWhere(
-                                    (st) => st.cusFirstName == newValue);
-                                _ClientName.text =
-                                    data.data!.clients![index].cusFirstName ??
-                                        "";
-                                _ContactNumber.text =
-                                    data.data!.clients![index].cusMobileNo ??
-                                        "";
-                                _ClientAddress.text =
-                                    data.data!.clients![index].address ?? "";
-                                client_id =
-                                    "${data.data!.clients![index].customerId ?? 0}";
-                              }
-                            });
-                          },
+                          listValue: ["${clientName}"],
+                          onChanged: (String? newValue) {},
                         ),
                         //COMPANY NAME
                         Title_Style(Title: "Company Name", isStatus: true),
-                        dropDownField2(
+                        dropDownField(
                           hintT: 'Select Company Name',
                           context,
                           value: companyName,
-                          listValue: data?.data?.companies ?? [],
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              companyName = newValue;
-                              Companies? item = data?.data?.companies!
-                                  .firstWhere(
-                                      (item) => item.companyBranch == newValue);
-                              company_id = "${item?.companyId ?? 0}";
-                            });
-                          },
+                          listValue: ["${companyName}"],
+                          onChanged: (String? newValue) {},
                         ),
                         //CLIENT NAME
                         Title_Style(Title: 'Client Name', isStatus: true),
                         textFormField(
-                            isEnabled: isAddNewClient == true ? true : false,
+                            isEnabled: false,
                             hintText: "Client Name",
                             keyboardtype: TextInputType.text,
                             Controller: _ClientName,
@@ -169,7 +179,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         Title_Style(
                             Title: 'Client Mobile Number', isStatus: true),
                         textFormField(
-                          isEnabled: isAddNewClient == true ? true : false,
+                          isEnabled: false,
                           hintText: 'Mobile Number',
                           keyboardtype: TextInputType.phone,
                           inputFormatters: [
@@ -190,7 +200,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         //CLIENT ADDRESS
                         Title_Style(Title: "Client Address", isStatus: true),
                         textfieldDescription(
-                            readOnly: isAddNewClient == true ? false : true,
+                            readOnly: true,
                             Controller: _ClientAddress,
                             hintText: 'Enter Address',
                             validating: (value) {
@@ -257,7 +267,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         //STATUS NOTE
                         Title_Style(Title: 'Status Note', isStatus: false),
                         textfieldDescription(
-                            readOnly: false,
+                            readOnly: true,
                             Controller: _StatusNote,
                             hintText: 'Enter Status Note',
                             validating: (value) {
@@ -271,13 +281,25 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             }),
 
                         //ASSIGN EXECUTIVE
-                        Title_Style(Title: "Assign to", isStatus: true),
-                        MultiSelectDropdown(
-                          items: data?.data?.executives ?? [],
-                          selectedItems: _selectedItems,
-                          onChanged: (List<Executives> selectedItems) {
+                        Title_Style(Title: "Select Status", isStatus: true),
+                        dropDownField(
+                          context,
+                          hintT: 'Select Status',
+                          value: selectStatus,
+                          listValue: _selectState,
+                          onChanged: (String? newValue) {
                             setState(() {
-                              _selectedItems = selectedItems;
+                              selectStatus = newValue;
+
+                              selectStatus_id = selectStatus == "completed"
+                                  ? "1"
+                                  : selectStatus == "pending"
+                                      ? "2"
+                                      : selectStatus == "processing"
+                                          ? "3"
+                                          : selectStatus == "cancelled"
+                                              ? "4"
+                                              : "";
                             });
                           },
                         ),
@@ -288,33 +310,15 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         //BUTTON
                         CommonElevatedButton(context, "Submit", () {
                           if (_formKey.currentState!.validate()) {
-                            if (client_id == "") {
-                              ShowToastMessage("Select client name");
-                            } else if (company_id == "") {
-                              ShowToastMessage("Select company name");
-                            } else if (_selectedItems.length == 0) {
-                              ShowToastMessage("Select executive");
-                            } else {
-                              List<int> idList = _selectedItems
-                                  .map((item) => item.id ?? 0)
-                                  .toList();
+                            var formData = FormData.fromMap({
+                              "status_note": _StatusNote.text,
+                              "status": selectStatus_id,
+                              "_method": "PUT",
+                              "plan_for_next_meet": _PlanofAction.text,
+                              "next_followup_date": _DatePicker.text
+                            });
 
-                              Map<String, dynamic> data = {
-                                "is_new_client":
-                                    isAddNewClient == true ? "1" : "0",
-                                "client_id": client_id,
-                                "cus_mobile_no": _ContactNumber.text,
-                                "cus_first_name": _ClientName.text,
-                                "address": _ClientAddress.text,
-                                "status_note": _StatusNote.text,
-                                "assign_executive": idList,
-                                "company_id": company_id,
-                                "plan_for_next_meet": _PlanofAction.text,
-                                "next_followup_date": _DatePicker.text
-                              };
-
-                              addMarketingList(data);
-                            }
+                            addMarketingList(formData);
                           }
                         }),
 
@@ -337,13 +341,13 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
     );
   }
 
-  void addMarketingList(Map<String, dynamic> data) async {
+  void addMarketingList(FormData data) async {
     LoadingOverlay.show(context);
 
     final apiService = ApiService(ref.read(dioProvider));
 
-    final postResponse =
-        await apiService.post1<SuccessModel>(ConstantApi.marketingStore, data);
+    final postResponse = await apiService.post<SuccessModel>(
+        ConstantApi.marketingStore + "/${widget.marketing_id}", data);
     LoadingOverlay.forcedStop();
 
     if (postResponse.success == true) {

@@ -1,11 +1,11 @@
-class EditModel {
+class MarketingEditModel {
   bool? success;
   Data? data;
   String? message;
 
-  EditModel({this.success, this.data, this.message});
+  MarketingEditModel({this.success, this.data, this.message});
 
-  EditModel.fromJson(Map<String, dynamic> json) {
+  MarketingEditModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     message = json['message'];
@@ -25,7 +25,7 @@ class EditModel {
 class Data {
   List<Companies>? companies;
   Status? status;
-  List<EditData>? data;
+  MarketingEditData? data;
 
   Data({this.companies, this.status, this.data});
 
@@ -38,12 +38,9 @@ class Data {
     }
     status =
         json['status'] != null ? new Status.fromJson(json['status']) : null;
-    if (json['data'] != null) {
-      data = <EditData>[];
-      json['data'].forEach((v) {
-        data!.add(new EditData.fromJson(v));
-      });
-    }
+    data = json['data'] != null
+        ? new MarketingEditData.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -55,7 +52,7 @@ class Data {
       data['status'] = this.status!.toJson();
     }
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
@@ -187,177 +184,117 @@ class Status {
   }
 }
 
-class EditData {
-  int? serviceId;
-  int? companyId;
-  String? servicerepsInvolved;
-  Null? billeddoc;
-  Null? branchId;
-  Null? unitId;
+class MarketingEditData {
+  int? leadId;
+  String? salesrepInvolved;
   int? customerId;
-  Null? cusType;
-  Null? hsn;
-  Null? ticketNo;
-  String? cusFirstName;
-  Null? cusState;
-  Null? cusLastName;
-  Null? gstVerified;
-  Null? gstNo;
+  String? clientName;
+  String? companyId;
   String? address;
-  Null? landmark;
-  Null? city;
-  Null? contactPerson;
-  String? cusMobileNo;
+  String? contactNo;
+  String? contactPerson;
+  String? contactPersonNo;
+  Null? architectDetails;
+  Null? consultant;
+  Null? builder;
+  Null? leadGivenBy;
   Null? typeOfUnit;
-  Null? unitCapacity;
-  Null? unitLocation;
-  Null? typeOfService;
-  Null? natureOfComplaint;
-  String? reportUpload;
-  String? reportDescription;
-  Null? technicianId;
-  Null? reportFromTechnician;
-  String? callTakenDate;
-  Null? technicianAllocateDate;
-  Null? technicianReportDate;
+  Null? tonnageExp;
+  String? leadEnteredDate;
+  Null? currentFollowDetails;
+  String? planForNextMeet;
+  String? nextFollowupDate;
+  Null? leadDocument;
+  String? instructions;
+  Null? enquiryType;
   String? addedby;
   String? status;
-  Null? paidStatus;
-  Null? advAmount;
-  Null? typeOfWork;
-  Null? serviceType;
-  Null? amount;
   String? createdAt;
   String? updatedAt;
 
-  EditData(
-      {this.serviceId,
-      this.companyId,
-      this.servicerepsInvolved,
-      this.billeddoc,
-      this.branchId,
-      this.unitId,
+  MarketingEditData(
+      {this.leadId,
+      this.salesrepInvolved,
       this.customerId,
-      this.cusType,
-      this.hsn,
-      this.ticketNo,
-      this.cusFirstName,
-      this.cusState,
-      this.cusLastName,
-      this.gstVerified,
-      this.gstNo,
+      this.clientName,
+      this.companyId,
       this.address,
-      this.landmark,
-      this.city,
+      this.contactNo,
       this.contactPerson,
-      this.cusMobileNo,
+      this.contactPersonNo,
+      this.architectDetails,
+      this.consultant,
+      this.builder,
+      this.leadGivenBy,
       this.typeOfUnit,
-      this.unitCapacity,
-      this.unitLocation,
-      this.typeOfService,
-      this.natureOfComplaint,
-      this.reportUpload,
-      this.reportDescription,
-      this.technicianId,
-      this.reportFromTechnician,
-      this.callTakenDate,
-      this.technicianAllocateDate,
-      this.technicianReportDate,
+      this.tonnageExp,
+      this.leadEnteredDate,
+      this.currentFollowDetails,
+      this.planForNextMeet,
+      this.nextFollowupDate,
+      this.leadDocument,
+      this.instructions,
+      this.enquiryType,
       this.addedby,
       this.status,
-      this.paidStatus,
-      this.advAmount,
-      this.typeOfWork,
-      this.serviceType,
-      this.amount,
       this.createdAt,
       this.updatedAt});
 
-  EditData.fromJson(Map<String, dynamic> json) {
-    serviceId = json['service_id'];
-    companyId = json['company_id'];
-    servicerepsInvolved = json['servicereps_involved'];
-    billeddoc = json['billeddoc'];
-    branchId = json['branch_id'];
-    unitId = json['unit_id'];
+  MarketingEditData.fromJson(Map<String, dynamic> json) {
+    leadId = json['lead_id'];
+    salesrepInvolved = json['salesrep_involved'];
     customerId = json['customer_id'];
-    cusType = json['cus_type'];
-    hsn = json['hsn'];
-    ticketNo = json['ticket_no'];
-    cusFirstName = json['cus_first_name'];
-    cusState = json['cus_state'];
-    cusLastName = json['cus_last_name'];
-    gstVerified = json['gst_verified'];
-    gstNo = json['gst_no'];
+    clientName = json['client_name'];
+    companyId = json['company_id'];
     address = json['address'];
-    landmark = json['landmark'];
-    city = json['city'];
+    contactNo = json['contact_no'];
     contactPerson = json['contact_person'];
-    cusMobileNo = json['cus_mobile_no'];
+    contactPersonNo = json['contact_person_no'];
+    architectDetails = json['architect_details'];
+    consultant = json['consultant'];
+    builder = json['builder'];
+    leadGivenBy = json['lead_given_by'];
     typeOfUnit = json['type_of_unit'];
-    unitCapacity = json['unit_capacity'];
-    unitLocation = json['unit_location'];
-    typeOfService = json['type_of_service'];
-    natureOfComplaint = json['nature_of_complaint'];
-    reportUpload = json['report_upload'];
-    reportDescription = json['report_description'];
-    technicianId = json['technician_id'];
-    reportFromTechnician = json['report_from_technician'];
-    callTakenDate = json['call_taken_date'];
-    technicianAllocateDate = json['technician_allocate_date'];
-    technicianReportDate = json['technician_report_date'];
+    tonnageExp = json['tonnage_exp'];
+    leadEnteredDate = json['lead_entered_date'];
+    currentFollowDetails = json['current_follow_details'];
+    planForNextMeet = json['plan_for_next_meet'];
+    nextFollowupDate = json['next_followup_date'];
+    leadDocument = json['lead_document'];
+    instructions = json['instructions'];
+    enquiryType = json['enquiry_type'];
     addedby = json['addedby'];
     status = json['status'];
-    paidStatus = json['paid_status'];
-    advAmount = json['adv_amount'];
-    typeOfWork = json['type_of_work'];
-    serviceType = json['service_type'];
-    amount = json['amount'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['service_id'] = this.serviceId;
-    data['company_id'] = this.companyId;
-    data['servicereps_involved'] = this.servicerepsInvolved;
-    data['billeddoc'] = this.billeddoc;
-    data['branch_id'] = this.branchId;
-    data['unit_id'] = this.unitId;
+    data['lead_id'] = this.leadId;
+    data['salesrep_involved'] = this.salesrepInvolved;
     data['customer_id'] = this.customerId;
-    data['cus_type'] = this.cusType;
-    data['hsn'] = this.hsn;
-    data['ticket_no'] = this.ticketNo;
-    data['cus_first_name'] = this.cusFirstName;
-    data['cus_state'] = this.cusState;
-    data['cus_last_name'] = this.cusLastName;
-    data['gst_verified'] = this.gstVerified;
-    data['gst_no'] = this.gstNo;
+    data['client_name'] = this.clientName;
+    data['company_id'] = this.companyId;
     data['address'] = this.address;
-    data['landmark'] = this.landmark;
-    data['city'] = this.city;
+    data['contact_no'] = this.contactNo;
     data['contact_person'] = this.contactPerson;
-    data['cus_mobile_no'] = this.cusMobileNo;
+    data['contact_person_no'] = this.contactPersonNo;
+    data['architect_details'] = this.architectDetails;
+    data['consultant'] = this.consultant;
+    data['builder'] = this.builder;
+    data['lead_given_by'] = this.leadGivenBy;
     data['type_of_unit'] = this.typeOfUnit;
-    data['unit_capacity'] = this.unitCapacity;
-    data['unit_location'] = this.unitLocation;
-    data['type_of_service'] = this.typeOfService;
-    data['nature_of_complaint'] = this.natureOfComplaint;
-    data['report_upload'] = this.reportUpload;
-    data['report_description'] = this.reportDescription;
-    data['technician_id'] = this.technicianId;
-    data['report_from_technician'] = this.reportFromTechnician;
-    data['call_taken_date'] = this.callTakenDate;
-    data['technician_allocate_date'] = this.technicianAllocateDate;
-    data['technician_report_date'] = this.technicianReportDate;
+    data['tonnage_exp'] = this.tonnageExp;
+    data['lead_entered_date'] = this.leadEnteredDate;
+    data['current_follow_details'] = this.currentFollowDetails;
+    data['plan_for_next_meet'] = this.planForNextMeet;
+    data['next_followup_date'] = this.nextFollowupDate;
+    data['lead_document'] = this.leadDocument;
+    data['instructions'] = this.instructions;
+    data['enquiry_type'] = this.enquiryType;
     data['addedby'] = this.addedby;
     data['status'] = this.status;
-    data['paid_status'] = this.paidStatus;
-    data['adv_amount'] = this.advAmount;
-    data['type_of_work'] = this.typeOfWork;
-    data['service_type'] = this.serviceType;
-    data['amount'] = this.amount;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

@@ -64,9 +64,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 50,
-                      child: Booking_Map()),
+                  Container(height: 50, child: Booking_Map()),
                   const SizedBox(
                     height: 20,
                   ),

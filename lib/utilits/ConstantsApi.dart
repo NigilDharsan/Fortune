@@ -6,6 +6,7 @@ class ConstantApi {
   static String loginUrl = SERVER_ONE + "login";
 
   static String dashboardUrl = SERVER_ONE + "dashboard";
+  static String usersLogdUrl = SERVER_ONE + "users/log";
 
   static String servicesList = SERVER_ONE + "services/list";
   static String servicesCreate = SERVER_ONE + "services/create";

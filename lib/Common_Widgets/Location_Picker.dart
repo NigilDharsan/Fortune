@@ -1,28 +1,35 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/SuccessModel.dart';
+import 'package:fortune/utilits/ApiService.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
+import 'package:fortune/utilits/ConstantsApi.dart';
 import 'package:fortune/utilits/Generic.dart';
+import 'package:fortune/utilits/Loading_Overlay.dart';
 import 'package:fortune/utilits/Text_Style.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 import 'Image_Path.dart';
 
-class Booking_Map extends StatefulWidget {
+class Booking_Map extends ConsumerStatefulWidget {
   const Booking_Map({super.key});
 
   @override
-  State<Booking_Map> createState() => _Booking_MapState();
+  ConsumerState<Booking_Map> createState() => _Booking_MapState();
 }
 
-class _Booking_MapState extends State<Booking_Map> {
+class _Booking_MapState extends ConsumerState<Booking_Map> {
   Position? currentPosition;
   String currentAddress = "";
   var isLoading = false;
+  var isCheckIN = "false";
+
   String? CurrentLocation;
-  final Completer<GoogleMapController> _controller = Completer();
   Future<Position> getPosition() async {
     LocationPermission? Permision;
     Permision = await Geolocator.checkPermission();
@@ -38,7 +45,8 @@ class _Booking_MapState extends State<Booking_Map> {
 //MAP
   Future<void> getAddress(double latitude, double longitude) async {
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(latitude, longitude);
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks[0]; // Access the first element
         String locality = place.locality ?? "";
@@ -91,65 +99,129 @@ class _Booking_MapState extends State<Booking_Map> {
     });
     return await Geolocator.getCurrentPosition();
   }
+
   @override
   void initState() {
     super.initState();
     // Fetch current location when the page loads
     getCurrentLocation();
+    getCheck();
   }
+
+  void getCheck() async {
+    isCheckIN = await getUsercheckIN() ?? "false";
+    print(isCheckIN);
+  }
+
+  Future<void> postCheckIN() async {
+    SingleTon singleton = SingleTon();
+
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('dd/MM/yyyy hh:mm a').format(now);
+//"The check in date time field must match the format d/m/Y h:i A."
+
+    final apiService = ApiService(ref.read(dioProvider));
+
+    var formData;
+
+    if (isCheckIN == "true") {
+      formData = FormData.fromMap({
+        "check_in_date_time": formattedDate,
+        "check_out_date_time": formattedDate,
+        "curr_location": singleton.setLocation,
+        "curr_lat": singleton.lattidue,
+        "curr_long": singleton.longitude
+      });
+    } else {
+      formData = FormData.fromMap({
+        "check_in_date_time": formattedDate,
+        "check_out_date_time": formattedDate,
+        "curr_location": singleton.setLocation,
+        "curr_lat": singleton.lattidue,
+        "curr_long": singleton.longitude
+      });
+    }
+
+    LoadingOverlay.show(context);
+
+    final postResponse =
+        await apiService.post<SuccessModel>(ConstantApi.usersLogdUrl, formData);
+    LoadingOverlay.forcedStop();
+
+    if (postResponse.success == true) {
+      setState(() async {
+        if (isCheckIN == "true") {
+          UsercheckIN("false");
+          isCheckIN = await getUsercheckIN();
+        } else {
+          UsercheckIN("true");
+          isCheckIN = await getUsercheckIN();
+        }
+      });
+      ShowToastMessage(postResponse.message ?? "");
+    } else {
+      ShowToastMessage(postResponse.message ?? "");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
-        backgroundColor: white1,
-        body: Container(
-          width: MediaQuery.sizeOf(context).width,
-          color: white1,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5,bottom: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ImgPathSvg("Pin.svg"),
-                          const SizedBox(width: 5,),
-                          Container(
-                              width: MediaQuery.of(context).size.width /1.8,
-                              child: Text(currentAddress == ""
-                                  ? "Location not found"
-                                  : currentAddress)),
-                          const Spacer(),
-                          InkWell(
-                            onTap: (){
-
-                            },
-                            child: Row(
-                              children: [
-                                Text('Check In',style: ButtonT1,),
-                                Icon(Icons.arrow_forward,color: blue3,)
-                              ],
-                            ),
+    return Scaffold(
+      backgroundColor: white1,
+      body: Container(
+        width: MediaQuery.sizeOf(context).width,
+        color: white1,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ImgPathSvg("Pin.svg"),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                            width: MediaQuery.of(context).size.width / 1.8,
+                            child: Text(currentAddress == ""
+                                ? "Location not found"
+                                : currentAddress)),
+                        const Spacer(),
+                        InkWell(
+                          onTap: () {
+                            // postCheckIN();
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                '${isCheckIN == true ? "Check Out" : "Check In"}',
+                                style: ButtonT1,
+                              ),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: blue3,
+                              )
+                            ],
                           ),
-
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
   }
-
 }

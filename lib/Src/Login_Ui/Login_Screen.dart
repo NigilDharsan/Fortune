@@ -39,9 +39,9 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _employeeId.text = "sampath@fortunepowerfastening.com";
-    _passwordController.text = "password";
-    _password = "password";
+    // _employeeId.text = "sampath@fortunepowerfastening.com";
+    // _passwordController.text = "password";
+    // _password = "password";
   }
 
   @override
@@ -163,6 +163,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                           ShowToastMessage(postResponse.message ?? "");
                           accessToken(postResponse.data?.token ?? "");
                           UserId(postResponse.data?.name ?? "");
+                          UserRole(postResponse.data?.role ?? "");
 
                           Navigator.push(
                               context,

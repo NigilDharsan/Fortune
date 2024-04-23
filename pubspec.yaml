@@ -48,7 +48,7 @@ dependencies:
   flutter_speed_dial:
   geocoding:
   geolocator:
-  google_maps_flutter: ^2.5.0
+  # google_maps_flutter:
 
 
 dev_dependencies:

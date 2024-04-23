@@ -8,6 +8,9 @@ import 'Common_Colors.dart';
 final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 String? accesstokens = 'accessToken';
 String? userId = 'user_id';
+String? userRole = 'user_role';
+String? usercheckIN = 'user_checkin';
+
 String Storage = 'storage';
 String? routes = "routes_Log";
 
@@ -42,6 +45,32 @@ UserId(dynamic val) async {
 Future<dynamic> getuserId() async {
   dynamic user_id =
       await _secureStorage.read(key: userId!, aOptions: _androidOptions());
+  print("valuesss:$user_id");
+  return user_id;
+}
+
+UserRole(dynamic val) async {
+  await _secureStorage.write(
+      key: userRole!, value: val!, aOptions: _androidOptions());
+  print("value!:${val!}" + "$userRole");
+}
+
+Future<dynamic> getUserRole() async {
+  dynamic user_id =
+      await _secureStorage.read(key: userRole!, aOptions: _androidOptions());
+  print("valuesss:$user_id");
+  return user_id;
+}
+
+UsercheckIN(dynamic val) async {
+  await _secureStorage.write(
+      key: usercheckIN!, value: val!, aOptions: _androidOptions());
+  print("value!:${val!}" + "$usercheckIN");
+}
+
+Future<dynamic> getUsercheckIN() async {
+  dynamic user_id =
+      await _secureStorage.read(key: usercheckIN!, aOptions: _androidOptions());
   print("valuesss:$user_id");
   return user_id;
 }

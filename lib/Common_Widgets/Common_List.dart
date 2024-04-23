@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
+import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Screen.dart';
+import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
+import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Text_Style.dart';
 
 //Transaction List
 Widget Service_List(context,
     {required ServicesData data,
     required String isTag,
-    required bool isHistory}) {
+    required bool isHistory,
+    required WidgetRef ref,
+    required String user_role}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -27,6 +33,10 @@ Widget Service_List(context,
       break;
     case "pending":
       containerColor = blue5;
+      style = white;
+      break;
+    case "cancelled":
+      containerColor = red1;
       style = white;
       break;
     default:
@@ -84,17 +94,22 @@ Widget Service_List(context,
                       style: DateT,
                     ),
                     const Spacer(),
-                    isHistory == true
+                    isHistory == true && user_role != "Admin"
                         ? Container()
                         : InkWell(
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Service_Form_Edit_Screen(
-                                              service_id:
-                                                  "${data.serviceId ?? 0}")));
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Service_Form_Edit_Screen(
+                                                  service_id:
+                                                      "${data.serviceId ?? 0}")))
+                                  .then((value) {
+                                if (value == true) {
+                                  ref.refresh(serviceListProvider);
+                                }
+                              });
                             },
                             child: Container(
                                 height: 30,
@@ -210,6 +225,10 @@ Widget Service_HistoryList(
       break;
     case "pending":
       containerColor = blue5;
+      style = white;
+      break;
+    case "cancelled":
+      containerColor = red1;
       style = white;
       break;
     default:
@@ -342,29 +361,34 @@ Widget Service_HistoryList(
           ),
         ),
         isHistory == true
-            ? Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+            ? InkWell(
+                onTap: () {
+                  ShowToastMessage("No Document Found!");
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                    color: white3,
                   ),
-                  color: white3,
+                  height: 50,
+                  child: Center(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'View doc',
+                        style: cardDetailT,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Icon(Icons.arrow_forward),
+                    ],
+                  )),
                 ),
-                height: 50,
-                child: Center(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'View doc',
-                      style: cardDetailT,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Icon(Icons.arrow_forward),
-                  ],
-                )),
               )
             : Container(),
       ],
@@ -373,12 +397,12 @@ Widget Service_HistoryList(
 }
 
 //MARKETING LIST
-Widget Marketing_List(
-  context, {
-  required MarketingListData data,
-  required String isTag,
-  required bool isHistory,
-}) {
+Widget Marketing_List(context,
+    {required MarketingListData data,
+    required String isTag,
+    required bool isHistory,
+    required WidgetRef ref,
+    required String user_role}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -389,6 +413,18 @@ Widget Marketing_List(
     case "completed":
       containerColor = blue2;
       style = blue;
+      break;
+    case "processing":
+      containerColor = orange2;
+      style = red;
+      break;
+    case "pending":
+      containerColor = blue5;
+      style = white;
+      break;
+    case "cancelled":
+      containerColor = red1;
+      style = white;
       break;
     default:
       containerColor = Colors.white;
@@ -476,13 +512,43 @@ Widget Marketing_List(
                       )),
                 ],
               )),
-          Container(
-            width: MediaQuery.sizeOf(context).width / 3,
-            child: Text(
-              data.clientName ?? "",
-              style: phoneHT,
-              maxLines: 2,
-            ),
+          Row(
+            children: [
+              Container(
+                width: MediaQuery.sizeOf(context).width / 3,
+                child: Text(
+                  data.clientName ?? "",
+                  style: phoneHT,
+                  maxLines: 2,
+                ),
+              ),
+              const Spacer(),
+              user_role == "Admin"
+                  ? InkWell(
+                      onTap: () {
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Marketing_Form_Edit_Screen(
+                                            marketing_id:
+                                                "${data.leadId ?? 0}")))
+                            .then((value) {
+                          if (value == true) {
+                            ref.refresh(marketingListProvider);
+                          }
+                        });
+                      },
+                      child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Center(
+                              child: Icon(
+                            Icons.edit_rounded,
+                          ))),
+                    )
+                  : Container(),
+            ],
           ),
           //detail
           Container(
@@ -585,9 +651,21 @@ Widget Marketing_History(
       containerColor = orange2;
       style = red;
       break;
-    case "completed":
+    case "processing":
+      containerColor = orange2;
+      style = red;
+      break;
+    case "Completed":
       containerColor = blue2;
       style = blue;
+      break;
+    case "pending":
+      containerColor = blue5;
+      style = white;
+      break;
+    case "cancelled":
+      containerColor = red1;
+      style = white;
       break;
     default:
       containerColor = Colors.white;

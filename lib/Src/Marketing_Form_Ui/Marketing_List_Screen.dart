@@ -8,6 +8,7 @@ import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
 import 'package:fortune/Src/Marketing_History_List/Marketing_History_List.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
+import 'package:fortune/utilits/Generic.dart';
 
 class Marketing_List_Screen extends ConsumerStatefulWidget {
   const Marketing_List_Screen({super.key});
@@ -18,6 +19,20 @@ class Marketing_List_Screen extends ConsumerStatefulWidget {
 }
 
 class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
+  var user_Role = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getRole();
+  }
+
+  void getRole() async {
+    user_Role = await getUserRole();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _MarketingListData = ref.watch(marketingListProvider);
@@ -50,7 +65,8 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                   ),
                   Container(
                     width: MediaQuery.sizeOf(context).width,
-                    child: _Marketing_List(data?.data?.marketings?.data ?? []),
+                    child: _Marketing_List(
+                        ref, data?.data?.marketings?.data ?? [], user_Role),
                   ),
                 ],
               ),
@@ -66,7 +82,8 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
   }
 }
 
-Widget _Marketing_List(List<MarketingListData>? data) {
+Widget _Marketing_List(
+    WidgetRef ref, List<MarketingListData>? data, String user_Role) {
   return ListView.builder(
     itemCount: data?.length ?? 0,
     shrinkWrap: true,
@@ -87,7 +104,9 @@ Widget _Marketing_List(List<MarketingListData>? data) {
           child: Marketing_List(context,
               isTag: data![index].status ?? "",
               data: data![index],
-              isHistory: true),
+              isHistory: true,
+              ref: ref,
+              user_role: user_Role),
         ),
       );
     },

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/LoginModel.dart';
+import 'package:fortune/Model/MarketingEditModel.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
@@ -142,7 +143,7 @@ class ApiService {
     );
 
     try {
-      Response response = await dio.post(ConstantApi.loginUrl, data: data);
+      Response response = await dio.post(path, data: data);
       // Handle successful response
 
       print(response.data);
@@ -159,6 +160,27 @@ class ApiService {
         throw e;
       }
     }
+  }
+
+  Future<SuccessModel> getUserLogApi(FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.usersLogdUrl, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
   }
 
   Future<DashboardModel> getDashboardApi() async {
@@ -327,6 +349,28 @@ class ApiService {
       }
     }
     return MarketingListModel();
+  }
+
+  Future<MarketingEditModel> getMarketingEditApi(String service_id) async {
+    final result = await requestGET(
+        url: ConstantApi.marketingStore + "/${service_id}/" + "edit",
+        dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return MarketingEditModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = MarketingEditModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return MarketingEditModel();
   }
 
   Future<ServiceModel> getMarketingDataApi() async {
