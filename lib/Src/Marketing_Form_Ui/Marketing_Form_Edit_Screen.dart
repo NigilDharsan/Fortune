@@ -101,7 +101,10 @@ class _Marketing_Form_Edit_ScreenState
     return Scaffold(
       backgroundColor: white5,
       appBar: Custom_AppBar(
-          title: "Marketing Form", actions: null, isGreen: false, isNav: true),
+          title: "Edit Marketing Form",
+          actions: null,
+          isGreen: false,
+          isNav: true),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -114,7 +117,6 @@ class _Marketing_Form_Edit_ScreenState
                   _ClientName.text = data?.data?.data?.clientName ?? "";
                   _ClientAddress.text = data?.data?.data?.address ?? "";
                   _ContactNumber.text = data?.data?.data?.contactNo ?? "";
-                  _StatusNote.text = data?.data?.data?.instructions ?? "";
 
                   int index = data!.data!.companies!.indexWhere((st) =>
                       st.companyId ==
@@ -125,7 +127,9 @@ class _Marketing_Form_Edit_ScreenState
                   if (!isvalueUpdated) {
                     isvalueUpdated = true;
                     selectStatus_id = data.data?.data?.status ?? "";
-
+                    _StatusNote.text = data.data?.data?.instructions ?? "";
+                    _PlanofAction.text = data.data?.data?.planForNextMeet ?? "";
+                    _DatePicker.text = data.data?.data?.nextFollowupDate ?? "";
                     selectStatus = selectStatus_id == "1"
                         ? "completed"
                         : selectStatus_id == "2"
@@ -246,28 +250,72 @@ class _Marketing_Form_Edit_ScreenState
                             },
                             onTap: () async {
                               FocusScope.of(context).unfocus();
-                              DateTime? pickdate = await showDatePicker(
+
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2101),
+                              );
+                              if (pickedDate != null) {
+                                final TimeOfDay? pickedTime =
+                                    await showTimePicker(
                                   context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime.now(),
-                                  lastDate: DateTime(2050));
-                              if (pickdate != null) {
-                                String formatdate =
-                                    DateFormat("yyyy/MM/dd").format(pickdate!);
-                                if (mounted) {
+                                  initialTime: TimeOfDay.now(),
+                                );
+                                if (pickedTime != null) {
+                                  final DateTime selectedDateTime = DateTime(
+                                    pickedDate.year,
+                                    pickedDate.month,
+                                    pickedDate.day,
+                                    pickedTime.hour,
+                                    pickedTime.minute,
+                                  );
                                   setState(() {
-                                    _DatePicker.text = formatdate;
-                                    print(_DatePicker.text);
+                                    _DatePicker.text =
+                                        DateFormat('dd/MM/yyyy hh:mm a')
+                                            .format(selectedDateTime);
                                   });
                                 }
                               }
+                              // DateTime? pickdate = await showDatePicker(
+                              //     context: context,
+                              //     initialDate: DateTime.now(),
+                              //     firstDate: DateTime.now(),
+                              //     lastDate: DateTime(2050));
+                              // if (pickdate != null) {
+                              //   String formatdate =
+                              //       DateFormat("dd/MM/yyyy").format(pickdate!);
+                              //   if (mounted) {
+                              //     if (formatdate != null) {
+                              //       showTimePicker(
+                              //         context: context,
+                              //         initialTime: TimeOfDay.now(),
+                              //       ).then((selectedTime) {
+                              //         // Handle the selected date and time here.
+                              //         if (selectedTime != null) {
+                              //           DateTime selectedDateTime = DateTime(
+                              //             selectedTime.hour,
+                              //             selectedTime.minute,
+                              //           );
+                              //           print(
+                              //               selectedDateTime); // You can use the selectedDateTime as needed.
+                              //         }
+                              //       });
+                              //     }
+                              //     setState(() {
+                              //       _DatePicker.text = formatdate;
+                              //       print(_DatePicker.text);
+                              //     });
+                              //   }
+                              // }
                             },
                             hintText: 'dd/MM/yyyy'),
 
                         //STATUS NOTE
                         Title_Style(Title: 'Status Note', isStatus: false),
                         textfieldDescription(
-                            readOnly: true,
+                            readOnly: false,
                             Controller: _StatusNote,
                             hintText: 'Enter Status Note',
                             validating: (value) {

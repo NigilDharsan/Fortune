@@ -30,7 +30,10 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
   }
 
   void getRole() async {
-    user_Role = await getUserRole();
+    final qww = await getUserRole();
+    setState(() {
+      user_Role = qww;
+    });
   }
 
   @override

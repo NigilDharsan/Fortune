@@ -19,6 +19,22 @@ class Home_DashBoard_Screen extends ConsumerStatefulWidget {
 }
 
 class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
+  var username = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getUsername();
+  }
+
+  getUsername() async {
+    var getname = await getuserId();
+    setState(() {
+      username = getname;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final _dashbaordData = ref.watch(dashboardProvider);
@@ -40,11 +56,12 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                   String Boolvalue = "false";
                                   Routes(Boolvalue);
                                   print('ROUTES : ${Routes(Boolvalue)}');
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Login_Screen()));
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login_Screen()),
+                                    ModalRoute.withName('/'),
+                                  );
                                 },
                                 child: Text(
                                   'Log Out',
@@ -66,7 +83,26 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                 children: [
                   Container(height: 50, child: Booking_Map()),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 20, bottom: 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Hello, ",
+                          style: TBlack1,
+                        ),
+                        Text(
+                          "${username}",
+                          style: appTitle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,10 +110,11 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       InkWell(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Marketing_List_Screen()));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Marketing_List_Screen()))
+                              .then((value) => ref.refresh(dashboardProvider));
                         },
                         child: _CountCard(
                             countT: "${data?.data?.marketingCount ?? 0}",
@@ -88,9 +125,11 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       InkWell(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Service_List_Screen()));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Service_List_Screen()))
+                              .then((value) => ref.refresh(dashboardProvider));
                         },
                         child: _CountCard(
                             countT: "${data?.data?.servicesCount ?? 0}",

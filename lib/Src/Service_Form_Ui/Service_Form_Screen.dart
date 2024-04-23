@@ -342,7 +342,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                 "address": _ClientAddress.text,
                                 "status_note": _StatusNote.text,
                                 "assign_executive": idList,
-                                "company_id": company_id
+                                "company_id": company_id,
                               };
 
                               addServiceList(data);

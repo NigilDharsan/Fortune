@@ -27,9 +27,9 @@ Widget Service_List(context,
       containerColor = orange2;
       style = red;
       break;
-    case "Completed":
-      containerColor = blue2;
-      style = blue;
+    case "completed":
+      containerColor = green1;
+      style = white;
       break;
     case "pending":
       containerColor = blue5;
@@ -219,9 +219,9 @@ Widget Service_HistoryList(
       containerColor = orange2;
       style = red;
       break;
-    case "Completed":
-      containerColor = blue2;
-      style = blue;
+    case "completed":
+      containerColor = green1;
+      style = white;
       break;
     case "pending":
       containerColor = blue5;
@@ -411,8 +411,8 @@ Widget Marketing_List(context,
       style = red;
       break;
     case "completed":
-      containerColor = blue2;
-      style = blue;
+      containerColor = green1;
+      style = white;
       break;
     case "processing":
       containerColor = orange2;
@@ -554,7 +554,7 @@ Widget Marketing_List(context,
           Container(
               width: MediaQuery.sizeOf(context).width / 1.2,
               child: Text(
-                "7708919494, 63/29 v,m,r nagar, meyyanoor, trichy",
+                "${data.address}",
                 style: phoneHT,
                 maxLines: 3,
               )),
@@ -595,9 +595,12 @@ Widget Marketing_List(context,
                 'Reported By : ',
                 style: cardDetailT,
               ),
-              Text(
-                '${data.marketingExecutives?.map((item) => item.name).join(', ')}',
-                style: phoneHT,
+              Flexible(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  '${data.marketingExecutives?.map((item) => item.name).join(', ')}',
+                  style: phoneHT,
+                ),
               ),
             ],
           ),
@@ -611,7 +614,7 @@ Widget Marketing_List(context,
           Container(
               width: MediaQuery.sizeOf(context).width / 1.2,
               child: Text(
-                "dsfdsf sdfsdf sdfsdf",
+                "${data.planForNextMeet}",
                 style: phoneHT,
                 maxLines: 3,
               )),
@@ -625,7 +628,7 @@ Widget Marketing_List(context,
           Container(
               width: MediaQuery.sizeOf(context).width / 1.2,
               child: Text(
-                "sdfdsf sdfsdfdsf sdfsfddsfdsf sdfsdfsf",
+                "${data.statusNote ?? ""}",
                 style: phoneHT,
                 maxLines: 3,
               )),
@@ -655,9 +658,9 @@ Widget Marketing_History(
       containerColor = orange2;
       style = red;
       break;
-    case "Completed":
-      containerColor = blue2;
-      style = blue;
+    case "completed":
+      containerColor = green1;
+      style = white;
       break;
     case "pending":
       containerColor = blue5;
@@ -765,7 +768,7 @@ Widget Marketing_History(
           Container(
               width: MediaQuery.sizeOf(context).width / 1.2,
               child: Text(
-                "7708919494, 63/29 v,m,r nagar, meyyanoor, trichy",
+                "${data.address}",
                 style: phoneHT,
                 maxLines: 3,
               )),
@@ -806,9 +809,12 @@ Widget Marketing_History(
                 'Reported By : ',
                 style: cardDetailT,
               ),
-              Text(
-                '${data.marketingExecutives?.map((item) => item.name).join(', ')}',
-                style: phoneHT,
+              Flexible(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  '${data.marketingExecutives?.map((item) => item.name).join(', ')}',
+                  style: phoneHT,
+                ),
               ),
             ],
           ),
@@ -822,7 +828,7 @@ Widget Marketing_History(
           Container(
               width: MediaQuery.sizeOf(context).width / 1.2,
               child: Text(
-                "dsfdsf sdfsdf sdfsdf",
+                "${data.planForNextMeet}",
                 style: phoneHT,
                 maxLines: 3,
               )),
@@ -836,7 +842,7 @@ Widget Marketing_History(
           Container(
               width: MediaQuery.sizeOf(context).width / 1.2,
               child: Text(
-                "sdfdsf sdfsdfdsf sdfsfddsfdsf sdfsdfsf",
+                "${data.statusNote}",
                 style: phoneHT,
                 maxLines: 3,
               )),

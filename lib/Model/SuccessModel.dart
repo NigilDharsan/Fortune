@@ -1,20 +1,20 @@
 class SuccessModel {
   bool? success;
-  String? data;
+  // String? data;
   String? message;
 
-  SuccessModel({this.success, this.data, this.message});
+  SuccessModel({this.success, this.message});
 
   SuccessModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'];
+    // data = json['data'];
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
-    data['data'] = this.data;
+    // data['data'] = this.data;
     data['message'] = this.message;
     return data;
   }

@@ -30,14 +30,17 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
   }
 
   void getRole() async {
-    user_Role = await getUserRole();
+    final qww = await getUserRole();
+    setState(() {
+      user_Role = qww;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final _ServiceListData = ref.watch(serviceListProvider);
 
-    return userRole == "Admin"
+    return user_Role == "Admin"
         ? Scaffold(
             floatingActionButton: Floating_Button(context, onTap: () {
               Navigator.push(

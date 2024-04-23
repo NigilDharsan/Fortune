@@ -113,14 +113,15 @@ class _Service_Form_Edit_ScreenState
                   _ClientName.text = data?.data?.data?[0].cusFirstName ?? "";
                   _ClientAddress.text = data?.data?.data?[0].address ?? "";
                   _ContactNumber.text = data?.data?.data?[0].cusMobileNo ?? "";
-                  _StatusNote.text =
-                      data?.data?.data?[0].reportDescription ?? "";
 
                   int index = data!.data!.companies!.indexWhere(
                       (st) => st.companyId == data.data?.data?[0].companyId);
                   companyName = data.data!.companies![index].name ?? "";
 
                   if (!isvalueUpdated) {
+                    _StatusNote.text =
+                        data.data?.data?[0].reportDescription ?? "";
+
                     isvalueUpdated = true;
                     selectStatus_id = data.data?.data?[0].status ?? "";
 
@@ -335,7 +336,8 @@ class _Service_Form_Edit_ScreenState
                             var formData = FormData.fromMap({
                               "status": selectStatus_id,
                               "status_note": _StatusNote.text,
-                              "report_upload": _selectedFiles
+                              "report_upload": _selectedFiles,
+                              "_method": "PUT",
                             });
 
                             addServiceList(formData);
@@ -366,7 +368,7 @@ class _Service_Form_Edit_ScreenState
 
     final apiService = ApiService(ref.read(dioProvider));
 
-    final postResponse = await apiService.post2<SuccessModel>(
+    final postResponse = await apiService.post<SuccessModel>(
         ConstantApi.servicesStore + "/${widget.service_id}", formData);
     LoadingOverlay.forcedStop();
 

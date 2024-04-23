@@ -109,7 +109,11 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
   }
 
   void getCheck() async {
-    isCheckIN = await getUsercheckIN() ?? "false";
+    var isCheckValue = await getUsercheckIN() ?? "false";
+
+    setState(() {
+      isCheckIN = isCheckValue;
+    });
     print(isCheckIN);
   }
 
@@ -126,7 +130,7 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
 
     if (isCheckIN == "true") {
       formData = FormData.fromMap({
-        "check_in_date_time": formattedDate,
+        "date_time_for": "check-out",
         "check_out_date_time": formattedDate,
         "curr_location": singleton.setLocation,
         "curr_lat": singleton.lattidue,
@@ -134,8 +138,8 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
       });
     } else {
       formData = FormData.fromMap({
+        "date_time_for": "check-in",
         "check_in_date_time": formattedDate,
-        "check_out_date_time": formattedDate,
         "curr_location": singleton.setLocation,
         "curr_lat": singleton.lattidue,
         "curr_long": singleton.longitude
@@ -149,19 +153,21 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
     LoadingOverlay.forcedStop();
 
     if (postResponse.success == true) {
-      setState(() async {
-        if (isCheckIN == "true") {
-          UsercheckIN("false");
-          isCheckIN = await getUsercheckIN();
-        } else {
-          UsercheckIN("true");
-          isCheckIN = await getUsercheckIN();
-        }
-      });
+      if (isCheckIN == "true") {
+        UsercheckIN("false");
+      } else {
+        UsercheckIN("true");
+      }
       ShowToastMessage(postResponse.message ?? "");
     } else {
+      if (isCheckIN == "true") {
+        await UsercheckIN("false");
+      } else {
+        await UsercheckIN("true");
+      }
       ShowToastMessage(postResponse.message ?? "");
     }
+    getCheck();
   }
 
   @override
@@ -177,14 +183,14 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ImgPathSvg("Pin.svg"),
                         const SizedBox(
@@ -198,12 +204,12 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
                         const Spacer(),
                         InkWell(
                           onTap: () {
-                            // postCheckIN();
+                            postCheckIN();
                           },
                           child: Row(
                             children: [
                               Text(
-                                '${isCheckIN == true ? "Check Out" : "Check In"}',
+                                '${isCheckIN == "true" ? "Check Out" : "Check In"}',
                                 style: ButtonT1,
                               ),
                               Icon(

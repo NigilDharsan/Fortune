@@ -19,7 +19,8 @@ final dashboardProvider =
   return ref.watch(apiServiceProvider).getDashboardApi();
 });
 
-final serviceListProvider = FutureProvider<ServiceListModel?>((ref) async {
+final serviceListProvider =
+    FutureProvider.autoDispose<ServiceListModel?>((ref) async {
   return ref.watch(apiServiceProvider).getServiceListApi();
 });
 
@@ -37,7 +38,8 @@ final serviceHistoryProvider = FutureProvider.autoDispose
   return ref.watch(apiServiceProvider).getServiceHistoryApi(id);
 });
 
-final marketingListProvider = FutureProvider<MarketingListModel?>((ref) async {
+final marketingListProvider =
+    FutureProvider.autoDispose<MarketingListModel?>((ref) async {
   return ref.watch(apiServiceProvider).getMarketingListApi();
 });
 

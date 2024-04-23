@@ -50,7 +50,7 @@ class Services {
   int? lastPage;
   String? lastPageUrl;
   List<Links>? links;
-  Null? nextPageUrl;
+  String? nextPageUrl;
   String? path;
   int? perPage;
   Null? prevPageUrl;
