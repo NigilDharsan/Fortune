@@ -252,6 +252,49 @@ class ApiService {
     return EditModel();
   }
 
+  Future<SuccessModel> EditServiceData(
+      String service_id, FormData formData) async {
+    final result = await requestMultiPart(
+        url: ConstantApi.servicesStore + "/${service_id}", formData: formData);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
+  Future<SuccessModel> AddServiceData(FormData formData) async {
+    final result = await requestMultiPart(
+        url: ConstantApi.servicesStore, formData: formData);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
   Future<ServiceHistoryModel> getServiceHistoryApi(String service_id) async {
     var formData = FormData.fromMap({});
 

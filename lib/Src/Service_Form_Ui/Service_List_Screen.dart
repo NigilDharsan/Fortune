@@ -40,7 +40,7 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
   Widget build(BuildContext context) {
     final _ServiceListData = ref.watch(serviceListProvider);
 
-    return user_Role == "Admin"
+    return user_Role != "Marketing-And-Service-Executives"
         ? Scaffold(
             floatingActionButton: Floating_Button(context, onTap: () {
               Navigator.push(
@@ -76,8 +76,8 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                         ),
                         Container(
                           width: MediaQuery.sizeOf(context).width,
-                          child: _Service_List(ref, context,
-                              data?.data?.services?.data ?? [], user_Role),
+                          child: _Service_List(
+                              ref, context, data?.data?.services?.data ?? []),
                         ),
                       ],
                     ),
@@ -112,8 +112,8 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                         ),
                         Container(
                           width: MediaQuery.sizeOf(context).width,
-                          child: _Service_List(ref, context,
-                              data?.data?.services?.data ?? [], user_Role),
+                          child: _Service_List(
+                              ref, context, data?.data?.services?.data ?? []),
                         ),
                       ],
                     ),
@@ -129,8 +129,7 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
   }
 }
 
-Widget _Service_List(
-    WidgetRef ref, context, List<ServicesData>? data, String user_Role) {
+Widget _Service_List(WidgetRef ref, context, List<ServicesData>? data) {
   return ListView.builder(
     itemCount: data?.length ?? 0,
     shrinkWrap: true,
@@ -152,8 +151,7 @@ Widget _Service_List(
               data: data![index],
               isTag: data[index].status ?? "",
               isHistory: false,
-              ref: ref,
-              user_role: user_Role),
+              ref: ref),
         ),
       );
     },

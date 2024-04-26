@@ -55,6 +55,10 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                 onTap: () {
                                   String Boolvalue = "false";
                                   Routes(Boolvalue);
+                                  accessToken("");
+                                  UserId("");
+                                  UserRole("");
+
                                   print('ROUTES : ${Routes(Boolvalue)}');
                                   Navigator.pushAndRemoveUntil(
                                     context,

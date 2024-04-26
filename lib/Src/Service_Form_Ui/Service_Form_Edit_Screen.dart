@@ -19,6 +19,9 @@ import 'package:fortune/utilits/ConstantsApi.dart';
 import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Loading_Overlay.dart';
 import 'package:fortune/utilits/Text_Style.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:tuple/tuple.dart';
 
 class Service_Form_Edit_Screen extends ConsumerStatefulWidget {
   String service_id = "";
@@ -37,27 +40,28 @@ class _Service_Form_Edit_ScreenState
   TextEditingController _ContactNumber = TextEditingController();
   TextEditingController _ClientAddress = TextEditingController();
 
-  List<File> _selectedFiles = [];
+  File? _selectedFiles;
   List<Executives> _selectedItems = [];
 
   Future<void> _pickFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
+      allowMultiple: false,
+      type: FileType.any,
+      // allowedExtensions: ['pdf'],
     );
 
     if (result != null) {
       setState(() {
-        _selectedFiles
-            .addAll(result.files.map((file) => File(file.path!)).toList());
+        _selectedFiles = File(result.files.single.path!);
       });
+    } else {
+      print("User canceled the file picker.");
     }
   }
 
   void _removeImage(int index) {
     setState(() {
-      _selectedFiles.removeAt(index);
+      _selectedFiles = null;
     });
   }
 
@@ -95,6 +99,30 @@ class _Service_Form_Edit_ScreenState
   Widget build(BuildContext context) {
     final _ServiceData = ref.watch(serviceEditProvider(widget.service_id));
 
+    Future<File?> downloadAndSaveImage(String imageUrl) async {
+      var response = await http.get(Uri.parse(imageUrl));
+      final documentDirectory = await getApplicationDocumentsDirectory();
+
+      final filename = documentDirectory.path != null
+          ? documentDirectory.path.split('/').last
+          : "file.jpg";
+
+      final file = File('${documentDirectory.path}/${filename}');
+      await file.writeAsBytes(response.bodyBytes);
+      print('Image downloaded and saved as ${file.path}');
+      return file;
+    }
+
+    getImagePath(String imageUrl) async {
+      if (imageUrl != "") {
+        File? _Filespath = await downloadAndSaveImage(imageUrl);
+
+        setState(() {
+          _selectedFiles = _Filespath;
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: white5,
       appBar: Custom_AppBar(
@@ -102,264 +130,304 @@ class _Service_Form_Edit_ScreenState
           actions: null,
           isGreen: false,
           isNav: true),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _ServiceData.when(
-                data: (data) {
-                  _ClientName.text = data?.data?.data?[0].cusFirstName ?? "";
-                  _ClientAddress.text = data?.data?.data?[0].address ?? "";
-                  _ContactNumber.text = data?.data?.data?[0].cusMobileNo ?? "";
+      body: Consumer(builder: (context, watch, _) {
+        return Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _ServiceData.when(
+                  data: (data) {
+                    _ClientName.text = data?.data?.data?[0].cusFirstName ?? "";
+                    _ClientAddress.text = data?.data?.data?[0].address ?? "";
+                    _ContactNumber.text =
+                        data?.data?.data?[0].cusMobileNo ?? "";
 
-                  int index = data!.data!.companies!.indexWhere(
-                      (st) => st.companyId == data.data?.data?[0].companyId);
-                  companyName = data.data!.companies![index].name ?? "";
+                    int index = data!.data!.companies!.indexWhere(
+                        (st) => st.companyId == data.data?.data?[0].companyId);
+                    companyName = data.data!.companies![index].name ?? "";
 
-                  if (!isvalueUpdated) {
-                    _StatusNote.text =
-                        data.data?.data?[0].reportDescription ?? "";
+                    if (!isvalueUpdated) {
+                      _StatusNote.text =
+                          data.data?.data?[0].reportDescription ?? "";
 
-                    isvalueUpdated = true;
-                    selectStatus_id = data.data?.data?[0].status ?? "";
+                      isvalueUpdated = true;
+                      selectStatus_id = data.data?.data?[0].status ?? "";
 
-                    selectStatus = selectStatus_id == "1"
-                        ? "completed"
-                        : selectStatus_id == "2"
-                            ? "pending"
-                            : selectStatus_id == "3"
-                                ? "processing"
-                                : selectStatus_id == "4"
-                                    ? "cancelled"
-                                    : "";
-                  }
+                      selectStatus = selectStatus_id == "1"
+                          ? "completed"
+                          : selectStatus_id == "2"
+                              ? "pending"
+                              : selectStatus_id == "3"
+                                  ? "processing"
+                                  : selectStatus_id == "4"
+                                      ? "cancelled"
+                                      : "";
+                      getImagePath(data.data?.data?[0].reportUpload ?? "");
+                    }
 
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Column(
-                      children: [
-                        //CLIENT NAME
-                        Title_Style(Title: 'Select Client', isStatus: true),
-                        dropDownField(
-                          context,
-                          hintT: "Select Client",
-                          value: data.data?.data?[0].cusFirstName ?? "",
-                          listValue: [
-                            "${data.data?.data?[0].cusFirstName ?? ""}"
-                          ],
-                          onChanged: (String? newValue) {},
-                        ),
-                        //COMPANY NAME
-                        Title_Style(Title: "Company Name", isStatus: true),
-                        dropDownField(
-                          hintT: 'Select Company Name',
-                          context,
-                          value: companyName,
-                          listValue: [companyName ?? ""],
-                          onChanged: (String? newValue) {},
-                        ),
-                        //CLIENT NAME
-                        Title_Style(Title: 'Client Name', isStatus: true),
-                        textFormField(
-                            hintText: "Client Name",
-                            keyboardtype: TextInputType.text,
-                            Controller: _ClientName,
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
+                        children: [
+                          //CLIENT NAME
+                          Title_Style(Title: 'Select Client', isStatus: true),
+                          dropDownField(
+                            context,
+                            hintT: "Select Client",
+                            value: data.data?.data?[0].cusFirstName ?? "",
+                            listValue: [
+                              "${data.data?.data?[0].cusFirstName ?? ""}"
+                            ],
+                            onChanged: (String? newValue) {},
+                          ),
+                          //COMPANY NAME
+                          Title_Style(Title: "Company Name", isStatus: true),
+                          dropDownField(
+                            hintT: 'Select Company Name',
+                            context,
+                            value: companyName,
+                            listValue: [companyName ?? ""],
+                            onChanged: (String? newValue) {},
+                          ),
+                          //CLIENT NAME
+                          Title_Style(Title: 'Client Name', isStatus: true),
+                          textFormField(
+                              hintText: "Client Name",
+                              keyboardtype: TextInputType.text,
+                              Controller: _ClientName,
+                              isEnabled: false,
+                              validating: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please Enter ${'Client Name'}";
+                                }
+                                if (value == null) {
+                                  return "Please Enter ${'Client Name'}";
+                                }
+                                return null;
+                              }),
+                          //CLIENT CONTACT NUMBER
+                          Title_Style(
+                              Title: 'Client Mobile Number', isStatus: true),
+                          textFormField(
+                            hintText: 'Mobile Number',
                             isEnabled: false,
+                            keyboardtype: TextInputType.phone,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(10)
+                            ],
+                            Controller: _ContactNumber,
                             validating: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please Enter ${'Client Name'}";
-                              }
-                              if (value == null) {
-                                return "Please Enter ${'Client Name'}";
+                              if (value!.isEmpty) {
+                                return "Please enter a Contact Number";
                               }
                               return null;
-                            }),
-                        //CLIENT CONTACT NUMBER
-                        Title_Style(
-                            Title: 'Client Mobile Number', isStatus: true),
-                        textFormField(
-                          hintText: 'Mobile Number',
-                          isEnabled: false,
-                          keyboardtype: TextInputType.phone,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(10)
-                          ],
-                          Controller: _ContactNumber,
-                          validating: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter a Contact Number";
-                            }
-                            return null;
-                          },
-                          onChanged: null,
-                        ),
-                        //CLIENT ADDRESS
-                        Title_Style(Title: "Client Address", isStatus: true),
-                        textfieldDescription(
-                            readOnly: true,
-                            Controller: _ClientAddress,
-                            hintText: 'Enter Address',
-                            validating: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please Enter ${'Address'}";
-                              }
-                              if (value == null) {
-                                return "Please Enter ${'Address'}";
-                              }
-                              return null;
-                            }),
+                            },
+                            onChanged: null,
+                          ),
+                          //CLIENT ADDRESS
+                          Title_Style(Title: "Client Address", isStatus: true),
+                          textfieldDescription(
+                              readOnly: true,
+                              Controller: _ClientAddress,
+                              hintText: 'Enter Address',
+                              validating: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please Enter ${'Address'}";
+                                }
+                                if (value == null) {
+                                  return "Please Enter ${'Address'}";
+                                }
+                                return null;
+                              }),
 
-                        //STATUS NOTE
-                        Title_Style(Title: 'Status Note', isStatus: true),
-                        textfieldDescription(
-                            readOnly: false,
-                            Controller: _StatusNote,
-                            hintText: 'Enter Status Note',
-                            validating: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please Enter ${'Note'}";
-                              }
-                              if (value == null) {
-                                return "Please Enter ${'Note'}";
-                              }
-                              return null;
-                            }),
+                          //STATUS NOTE
+                          Title_Style(Title: 'Status Note', isStatus: true),
+                          textfieldDescription(
+                              readOnly: false,
+                              Controller: _StatusNote,
+                              hintText: 'Enter Status Note',
+                              validating: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please Enter ${'Note'}";
+                                }
+                                if (value == null) {
+                                  return "Please Enter ${'Note'}";
+                                }
+                                return null;
+                              }),
 
-                        Title_Style(Title: 'Spare Used List', isStatus: true),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 100, right: 100, bottom: 15),
-                          child: CommonElevatedButton(
-                              context, "Pick PDF", _pickFiles),
-                        ),
-                        Container(
-                          height: _selectedFiles.length * 90,
-                          child: ListView.builder(
-                            itemCount: _selectedFiles.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PDFViewerScreen(
-                                          pdfPath: _selectedFiles[index].path),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  height: 65,
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: white1),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 15),
-                                        child: Container(
-                                            height: 40,
-                                            width: 40,
-                                            child: Center(
-                                                child: ImgPathSvg("pdf.svg"))),
-                                      ),
-                                      Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2,
-                                          child: Text(
-                                            _selectedFiles[index]
-                                                .path
-                                                .split('/')
-                                                .last,
-                                            style: pdfT,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
-                                          )),
-                                      Spacer(),
-                                      InkWell(
-                                        onTap: () {
-                                          _removeImage(index);
-                                        },
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 20),
-                                          child: Icon(
-                                            Icons.cancel_outlined,
-                                            color: grey1,
+                          Title_Style(Title: 'Spare Used List', isStatus: true),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 100, right: 100, bottom: 15),
+                            child: CommonElevatedButton(
+                                context, "Pick PDF", _pickFiles),
+                          ),
+                          Container(
+                            height: (_selectedFiles?.path ?? "") == "" ? 0 : 90,
+                            child: ListView.builder(
+                              itemCount:
+                                  (_selectedFiles?.path ?? "") == "" ? 0 : 1,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => PDFViewerScreen(
+                                    //         pdfPath:
+                                    //             _selectedFiles?.path ?? ""),
+                                    //   ),
+                                    // );
+                                  },
+                                  child: Container(
+                                    height: 65,
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: white1),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10, right: 15),
+                                          child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              child: Center(
+                                                  child:
+                                                      ImgPathSvg("pdf.svg"))),
+                                        ),
+                                        Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2,
+                                            child: Text(
+                                              _selectedFiles?.path != null
+                                                  ? _selectedFiles!.path
+                                                      .split('/')
+                                                      .last
+                                                  : "",
+                                              style: pdfT,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                            )),
+                                        Spacer(),
+                                        InkWell(
+                                          onTap: () {
+                                            _removeImage(index);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 20),
+                                            child: Icon(
+                                              Icons.cancel_outlined,
+                                              color: grey1,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              },
+                            ),
+                          ),
+
+                          //ASSIGN EXECUTIVE
+                          Title_Style(Title: "Select Status", isStatus: true),
+                          dropDownField(
+                            context,
+                            hintT: 'Select Status',
+                            value: selectStatus,
+                            listValue: _selectState,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectStatus = newValue;
+
+                                selectStatus_id = selectStatus == "completed"
+                                    ? "1"
+                                    : selectStatus == "pending"
+                                        ? "2"
+                                        : selectStatus == "processing"
+                                            ? "3"
+                                            : selectStatus == "cancelled"
+                                                ? "4"
+                                                : "";
+                              });
                             },
                           ),
-                        ),
 
-                        //ASSIGN EXECUTIVE
-                        Title_Style(Title: "Select Status", isStatus: true),
-                        dropDownField(
-                          context,
-                          hintT: 'Select Status',
-                          value: selectStatus,
-                          listValue: _selectState,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectStatus = newValue;
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          //BUTTON
+                          CommonElevatedButton(context, "Update", () async {
+                            if (_formKey.currentState!.validate()) {
+                              var formData = FormData.fromMap({
+                                "status": selectStatus_id,
+                                "status_note": _StatusNote.text,
+                                // "report_upload": _selectedFiles,
+                                "_method": "PUT",
+                              });
 
-                              selectStatus_id = selectStatus == "completed"
-                                  ? "1"
-                                  : selectStatus == "pending"
-                                      ? "2"
-                                      : selectStatus == "processing"
-                                          ? "3"
-                                          : selectStatus == "cancelled"
-                                              ? "4"
-                                              : "";
-                            });
-                          },
-                        ),
+                              if (_selectedFiles != null) {
+                                List<int> fileBytes =
+                                    await _selectedFiles!.readAsBytes();
 
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        //BUTTON
-                        CommonElevatedButton(context, "Submit", () {
-                          if (_formKey.currentState!.validate()) {
-                            var formData = FormData.fromMap({
-                              "status": selectStatus_id,
-                              "status_note": _StatusNote.text,
-                              "report_upload": _selectedFiles,
-                              "_method": "PUT",
-                            });
+                                final filename = _selectedFiles?.path != null
+                                    ? _selectedFiles!.path.split('/').last
+                                    : "file.jpg";
+                                formData.files.addAll([
+                                  MapEntry(
+                                      'report_upload',
+                                      await MultipartFile.fromBytes(
+                                        fileBytes,
+                                        filename: filename,
+                                      )),
+                                ]);
+                              }
 
-                            addServiceList(formData);
-                          }
-                        }),
+                              LoadingOverlay.show(context);
 
-                        const SizedBox(
-                          height: 50,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                error: (Object error, StackTrace stackTrace) {
-                  return Text(error.toString());
-                },
-                loading: () => Center(child: CircularProgressIndicator()),
-              ),
-            ],
+                              final tuple = Tuple2(widget.service_id, formData);
+                              final result = await ref
+                                  .read(serviceUpdateProvider(tuple).future);
+                              LoadingOverlay.forcedStop();
+                              // Handle the result
+                              if (result != null) {
+                                ShowToastMessage(result.message ?? "");
+                                Navigator.pop(context, true);
+
+                                // Handle success
+                              } else {
+                                // Handle failure
+                                ShowToastMessage(result?.message ?? "");
+                              }
+                            }
+                          }),
+
+                          const SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  error: (Object error, StackTrace stackTrace) {
+                    return Text(error.toString());
+                  },
+                  loading: () => Center(child: CircularProgressIndicator()),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 

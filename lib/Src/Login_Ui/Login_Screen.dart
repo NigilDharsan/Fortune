@@ -39,11 +39,12 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _employeeId.text = "sampath@fortunepowerfastening.com";
-    // _passwordController.text = "password";
-    // _password = "password";
+    _employeeId.text = "sampath@fortunepowerfastening.com";
+    _passwordController.text = "password";
+    _password = "password";
   }
 
+//
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +166,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                           UserId(postResponse.data?.name ?? "");
                           UserRole(postResponse.data?.role ?? "");
 
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>

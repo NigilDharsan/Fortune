@@ -356,7 +356,7 @@ class _Marketing_Form_Edit_ScreenState
                           height: 30,
                         ),
                         //BUTTON
-                        CommonElevatedButton(context, "Submit", () {
+                        CommonElevatedButton(context, "Update", () {
                           if (_formKey.currentState!.validate()) {
                             var formData = FormData.fromMap({
                               "status_note": _StatusNote.text,

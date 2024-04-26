@@ -48,6 +48,10 @@ dependencies:
   flutter_speed_dial:
   geocoding:
   geolocator:
+  tuple:
+  url_launcher:
+  path_provider:
+  http:
   # google_maps_flutter:
 
 

@@ -40,53 +40,94 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
   Widget build(BuildContext context) {
     final _MarketingListData = ref.watch(marketingListProvider);
 
-    return Scaffold(
-      floatingActionButton: Floating_Button(context, onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Marketing_Form_Screen())).then((value) {
-          if (value == true) {
-            ref.refresh(marketingListProvider);
-          }
-        });
-      }, floatT: "Add Marketing"),
-      backgroundColor: white5,
-      appBar: Custom_AppBar(
-          title: "Marketing List", actions: null, isGreen: false, isNav: true),
-      body: _MarketingListData.when(
-        data: (data) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
+    return user_Role != "Marketing-And-Service-Executives"
+        ? Scaffold(
+            floatingActionButton: Floating_Button(context, onTap: () {
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Marketing_Form_Screen()))
+                  .then((value) {
+                if (value == true) {
+                  ref.refresh(marketingListProvider);
+                }
+              });
+            }, floatT: "Add Marketing"),
+            backgroundColor: white5,
+            appBar: Custom_AppBar(
+                title: "Marketing List",
+                actions: null,
+                isGreen: false,
+                isNav: true),
+            body: _MarketingListData.when(
+              data: (data) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, bottom: 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          child: _Marketing_List(
+                              ref, data?.data?.marketings?.data ?? []),
+                        ),
+                      ],
+                    ),
                   ),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    child: _Marketing_List(
-                        ref, data?.data?.marketings?.data ?? [], user_Role),
+                );
+              },
+              error: (Object error, StackTrace stackTrace) {
+                return Text(error.toString());
+              },
+              loading: () => Center(child: CircularProgressIndicator()),
+            ),
+          )
+        : Scaffold(
+            backgroundColor: white5,
+            appBar: Custom_AppBar(
+                title: "Marketing List",
+                actions: null,
+                isGreen: false,
+                isNav: true),
+            body: _MarketingListData.when(
+              data: (data) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, bottom: 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          child: _Marketing_List(
+                              ref, data?.data?.marketings?.data ?? []),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                );
+              },
+              error: (Object error, StackTrace stackTrace) {
+                return Text(error.toString());
+              },
+              loading: () => Center(child: CircularProgressIndicator()),
             ),
           );
-        },
-        error: (Object error, StackTrace stackTrace) {
-          return Text(error.toString());
-        },
-        loading: () => Center(child: CircularProgressIndicator()),
-      ),
-    );
   }
 }
 
-Widget _Marketing_List(
-    WidgetRef ref, List<MarketingListData>? data, String user_Role) {
+Widget _Marketing_List(WidgetRef ref, List<MarketingListData>? data) {
   return ListView.builder(
     itemCount: data?.length ?? 0,
     shrinkWrap: true,
@@ -108,8 +149,7 @@ Widget _Marketing_List(
               isTag: data![index].status ?? "",
               data: data![index],
               isHistory: true,
-              ref: ref,
-              user_role: user_Role),
+              ref: ref),
         ),
       );
     },

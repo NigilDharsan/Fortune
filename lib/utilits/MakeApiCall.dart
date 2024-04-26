@@ -153,9 +153,12 @@ Future<dynamic> requestPOST(
 Future<dynamic> requestPOST2(
     {required String url, required Object formData, required Dio dio}) async {
   try {
+    String? accessToken = await getToken();
+
     dio.options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
     };
     dio.options.baseUrl = url;
     print(url);
@@ -216,14 +219,17 @@ Future<dynamic> requestMultiPart({
   required FormData formData,
 }) async {
   try {
+    String? accessToken = await getToken();
+
     Dio _dio = new Dio();
     _dio.options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer $accessToken'
     };
     _dio.options.baseUrl = url;
 
-    final response = await _dio.put(url, data: formData);
+    final response = await _dio.post(url, data: formData);
     print(response);
     switch (response.statusCode) {
       case 200:

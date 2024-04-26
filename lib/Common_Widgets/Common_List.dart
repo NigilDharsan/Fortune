@@ -12,14 +12,14 @@ import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Text_Style.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //Transaction List
 Widget Service_List(context,
     {required ServicesData data,
     required String isTag,
     required bool isHistory,
-    required WidgetRef ref,
-    required String user_role}) {
+    required WidgetRef ref}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -94,7 +94,7 @@ Widget Service_List(context,
                       style: DateT,
                     ),
                     const Spacer(),
-                    isHistory == true && user_role != "Admin"
+                    isHistory == true
                         ? Container()
                         : InkWell(
                             onTap: () {
@@ -362,8 +362,18 @@ Widget Service_HistoryList(
         ),
         isHistory == true
             ? InkWell(
-                onTap: () {
-                  ShowToastMessage("No Document Found!");
+                onTap: () async {
+                  String docurl = '${data.serviceDoc}';
+
+                  if (docurl == "" || docurl == "null") {
+                    ShowToastMessage("No Document Found!");
+                  } else {
+                    final Uri url = Uri.parse(docurl);
+
+                    if (!await launchUrl(url)) {
+                      ShowToastMessage("No Document Found!");
+                    }
+                  }
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -378,14 +388,25 @@ Widget Service_HistoryList(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'View doc',
-                        style: cardDetailT,
-                      ),
+                      data.serviceDoc == null ||
+                              data.serviceDoc == "" ||
+                              data.serviceDoc == "null"
+                          ? Text(
+                              'No Documents',
+                              style: cardDetailT,
+                            )
+                          : Text(
+                              'View doc',
+                              style: cardDetailT,
+                            ),
                       const SizedBox(
                         width: 10,
                       ),
-                      Icon(Icons.arrow_forward),
+                      data.serviceDoc == null ||
+                              data.serviceDoc == "" ||
+                              data.serviceDoc == "null"
+                          ? Container()
+                          : Icon(Icons.arrow_forward),
                     ],
                   )),
                 ),
@@ -401,8 +422,7 @@ Widget Marketing_List(context,
     {required MarketingListData data,
     required String isTag,
     required bool isHistory,
-    required WidgetRef ref,
-    required String user_role}) {
+    required WidgetRef ref}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -523,31 +543,27 @@ Widget Marketing_List(context,
                 ),
               ),
               const Spacer(),
-              user_role == "Admin"
-                  ? InkWell(
-                      onTap: () {
-                        Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        Marketing_Form_Edit_Screen(
-                                            marketing_id:
-                                                "${data.leadId ?? 0}")))
-                            .then((value) {
-                          if (value == true) {
-                            ref.refresh(marketingListProvider);
-                          }
-                        });
-                      },
-                      child: Container(
-                          height: 30,
-                          width: 30,
-                          child: Center(
-                              child: Icon(
-                            Icons.edit_rounded,
-                          ))),
-                    )
-                  : Container(),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Marketing_Form_Edit_Screen(
+                                  marketing_id: "${data.leadId ?? 0}")))
+                      .then((value) {
+                    if (value == true) {
+                      ref.refresh(marketingListProvider);
+                    }
+                  });
+                },
+                child: Container(
+                    height: 30,
+                    width: 30,
+                    child: Center(
+                        child: Icon(
+                      Icons.edit_rounded,
+                    ))),
+              )
             ],
           ),
           //detail

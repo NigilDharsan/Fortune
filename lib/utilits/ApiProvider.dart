@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
@@ -7,7 +8,9 @@ import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/ApiService.dart';
+import 'package:tuple/tuple.dart';
 
 final apiServiceProvider = Provider<ApiService>((ref) {
   final dio = ref.read(dioProvider);
@@ -31,6 +34,19 @@ final serviceDataProvider = FutureProvider<ServiceModel?>((ref) async {
 final serviceEditProvider =
     FutureProvider.autoDispose.family<EditModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getServiceEditApi(id);
+});
+
+final serviceUpdateProvider = FutureProvider.autoDispose
+    .family<SuccessModel?, Tuple2<String, FormData>>((ref, tuple) async {
+  final id = tuple.item1;
+  final formData = tuple.item2;
+
+  return ref.watch(apiServiceProvider).EditServiceData(id, formData);
+});
+
+final servicePostProvider = FutureProvider.autoDispose
+    .family<SuccessModel?, FormData>((ref, formData) async {
+  return ref.watch(apiServiceProvider).AddServiceData(formData);
 });
 
 final serviceHistoryProvider = FutureProvider.autoDispose

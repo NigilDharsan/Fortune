@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -32,27 +33,28 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
   TextEditingController _ContactNumber = TextEditingController();
   TextEditingController _ClientAddress = TextEditingController();
 
-  List<File> _selectedFiles = [];
+  File? _selectedFiles;
   List<Executives> _selectedItems = [];
 
   Future<void> _pickFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
+      allowMultiple: false,
+      type: FileType.any,
+      // allowedExtensions: ['pdf'],
     );
 
     if (result != null) {
       setState(() {
-        _selectedFiles
-            .addAll(result.files.map((file) => File(file.path!)).toList());
+        _selectedFiles = File(result.files.single.path!);
       });
+    } else {
+      print("User canceled the file picker.");
     }
   }
 
   void _removeImage(int index) {
     setState(() {
-      _selectedFiles.removeAt(index);
+      _selectedFiles = null;
     });
   }
 
@@ -225,20 +227,21 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                               context, "Pick PDF", _pickFiles),
                         ),
                         Container(
-                          height: _selectedFiles.length * 90,
+                          height: (_selectedFiles?.path ?? "") == "" ? 0 : 90,
                           child: ListView.builder(
-                            itemCount: _selectedFiles.length,
+                            itemCount:
+                                (_selectedFiles?.path ?? "") == "" ? 0 : 1,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PDFViewerScreen(
-                                          pdfPath: _selectedFiles[index].path),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => PDFViewerScreen(
+                                  //         pdfPath: _selectedFiles?.path ?? ""),
+                                  //   ),
+                                  // );
                                 },
                                 child: Container(
                                   height: 65,
@@ -263,10 +266,11 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                                   .width /
                                               2,
                                           child: Text(
-                                            _selectedFiles[index]
-                                                .path
-                                                .split('/')
-                                                .last,
+                                            _selectedFiles?.path != null
+                                                ? _selectedFiles!.path
+                                                    .split('/')
+                                                    .last
+                                                : "",
                                             style: pdfT,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
@@ -320,7 +324,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                           height: 30,
                         ),
                         //BUTTON
-                        CommonElevatedButton(context, "Submit", () {
+                        CommonElevatedButton(context, "Submit", () async {
                           if (_formKey.currentState!.validate()) {
                             if (client_id == "") {
                               ShowToastMessage("Select client name");
@@ -333,7 +337,9 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                   .map((item) => "${item.id ?? 0}")
                                   .toList();
 
-                              Map<String, dynamic> data = {
+                              LoadingOverlay.show(context);
+
+                              var formData = FormData.fromMap({
                                 "is_new_client":
                                     isAddNewClient == true ? "1" : "0",
                                 "client_id": client_id,
@@ -341,11 +347,42 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                 "cus_first_name": _ClientName.text,
                                 "address": _ClientAddress.text,
                                 "status_note": _StatusNote.text,
-                                "assign_executive": idList,
+                                for (var i = 0; i < idList.length; i++)
+                                  'assign_executive[$i]': idList[i],
                                 "company_id": company_id,
-                              };
+                              });
 
-                              addServiceList(data);
+                              if (_selectedFiles != null) {
+                                List<int> fileBytes =
+                                    await _selectedFiles!.readAsBytes();
+
+                                final filename = _selectedFiles?.path != null
+                                    ? _selectedFiles!.path.split('/').last
+                                    : "file.jpg";
+
+                                formData.files.addAll([
+                                  MapEntry(
+                                      'report_upload',
+                                      await MultipartFile.fromBytes(
+                                        fileBytes,
+                                        filename: filename,
+                                      )),
+                                ]);
+                              }
+                              final result = await ref
+                                  .read(servicePostProvider(formData).future);
+                              LoadingOverlay.forcedStop();
+                              // Handle the result
+                              if (result?.success == true) {
+                                ShowToastMessage(result?.message ?? "");
+                                Navigator.pop(context, true);
+
+                                // Handle success
+                              } else {
+                                // Handle failure
+                                ShowToastMessage(result?.message ?? "");
+                              }
+                              // addServiceList(data);
                             }
                           }
                         }),
