@@ -52,6 +52,7 @@ dependencies:
   url_launcher:
   path_provider:
   http:
+  device_info_plus:
   # google_maps_flutter:
 
 

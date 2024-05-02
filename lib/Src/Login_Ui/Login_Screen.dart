@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +27,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String _password = "";
+  String device_id = "";
   bool _obscurePassword = true;
 
   //PASSWORD VISIBILITY FUNCTION
@@ -39,9 +41,19 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _employeeId.text = "sampath@fortunepowerfastening.com";
+    _employeeId.text = "ananth@fortunepowerfastening.com";
     _passwordController.text = "password";
     _password = "password";
+    getDeviceID();
+  }
+
+  getDeviceID() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    final deviceInfo = await deviceInfoPlugin.deviceInfo;
+    final allInfo = deviceInfo.data;
+    print('Running on ${allInfo.values.last}');
+
+    device_id = allInfo.values.last; // e.g. "Moto G (4)"
   }
 
 //
@@ -154,8 +166,11 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
 
                         final apiService = ApiService(ref.read(dioProvider));
 
-                        var formData = FormData.fromMap(
-                            {"email": _employeeId.text, "password": _password});
+                        var formData = FormData.fromMap({
+                          "email": _employeeId.text,
+                          "password": _password,
+                          "device_id": device_id
+                        });
                         final postResponse = await apiService.login<LoginModel>(
                             ConstantApi.loginUrl, formData);
                         await LoadingOverlay.hide();
