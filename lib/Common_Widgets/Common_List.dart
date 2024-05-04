@@ -417,6 +417,79 @@ Widget Service_HistoryList(
   );
 }
 
+Widget Service_List_DashBoard(
+    context, {
+      required String data,
+      required String isTag,
+    }) {
+  Color? containerColor;
+  TextStyle? style;
+  switch (isTag) {
+    case "processing":
+      containerColor = orange2;
+      style = red;
+      break;
+    case "completed":
+      containerColor = green1;
+      style = white;
+      break;
+    case "pending":
+      containerColor = blue5;
+      style = white;
+      break;
+    case "cancelled":
+      containerColor = red1;
+      style = white;
+      break;
+    default:
+      containerColor = Colors.white;
+      break;
+  }
+  return Container(
+    width: MediaQuery.sizeOf(context).width/1.8,
+    decoration:
+    BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //USER NAME
+              Container(
+
+                  margin: EdgeInsets.only(top: 15, bottom: 10),
+                  alignment: Alignment.topLeft,
+                  child:  Text(
+                    data,
+                    style: serviceHomeT,
+                  ),
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width/4,
+                  alignment: Alignment.topLeft,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: containerColor),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 5, bottom: 5),
+                    child: Text(
+                      isTag,
+                      style: style,
+                    ),
+                  )),
+            ],
+          ),
+        ),
+
+      ],
+    ),
+  );
+}
+
 //MARKETING LIST
 Widget Marketing_List(context,
     {required MarketingListData data,

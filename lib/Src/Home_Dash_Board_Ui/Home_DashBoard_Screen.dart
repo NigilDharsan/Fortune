@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Common_Widgets/Common_List.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Common_Widgets/Location_Picker.dart';
 import 'package:fortune/Src/Login_Ui/Login_Screen.dart';
@@ -143,6 +144,31 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       ),
                     ],
                   ),
+
+                  //SERVICE LIST
+                  Container(
+                    width: MediaQuery.sizeOf(context).width/1.2,
+                      margin: EdgeInsets.only(top: 20,bottom: 10,left: 10),
+                      child: Text("SERVICES didn’t closed for more than 5 days",style: TBlack,maxLines: 2,textAlign: TextAlign.start,)),
+                  Container(
+                    height: MediaQuery.sizeOf(context).height/9,
+                      child: Center(child: Service_List())),
+                  //HISTORY LIST
+                  Container(
+                      width: MediaQuery.sizeOf(context).width/1.2,
+                      margin: EdgeInsets.only(top: 20,bottom: 10,left: 10),
+                      child: Text("MARKETINGS didn’t updated for more than 5 days",style: TBlack,maxLines: 2,textAlign: TextAlign.start,)),
+                  Container(
+                      height: MediaQuery.sizeOf(context).height/9,
+                      child: Center(child: Service_List())),
+                  //TODAY LIST
+                  Container(
+                      width: MediaQuery.sizeOf(context).width/1.2,
+                      margin: EdgeInsets.only(top: 20,bottom: 10,left: 10),
+                      child: Text("MARKETINGS didn’t updated for more than 5 days",style: TBlack,maxLines: 2,textAlign: TextAlign.start,)),
+                  Container(
+                      height: MediaQuery.sizeOf(context).height/9,
+                      child: Center(child: Service_List())),
                 ],
               ),
             );
@@ -215,4 +241,20 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
       ),
     );
   }
+
+
+}
+
+Widget Service_List(){
+  return ListView.builder(
+    itemCount: 10,
+    scrollDirection: Axis.horizontal,
+    shrinkWrap: true,
+    physics: const ScrollPhysics(),
+    itemBuilder: (BuildContext context, int index) {
+      return  Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Service_List_DashBoard(context,data: "Arun dsdsad SDAFSDFSF SDSAD", isTag: 'cancelled'),
+      );
+    },);
 }

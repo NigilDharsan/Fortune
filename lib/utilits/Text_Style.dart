@@ -57,6 +57,11 @@ TextStyle cardDetailT = TextStyle(
     fontSize: 16,
     color: Black,
     fontWeight: FontWeight.w500);
+TextStyle serviceHomeT = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    color: Black,
+    fontWeight: FontWeight.w500);
 TextStyle inboxT = TextStyle(
   fontFamily: 'Inter',
   fontSize: 14,
