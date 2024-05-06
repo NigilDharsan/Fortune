@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
+import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Screen.dart';
+import 'package:fortune/Src/StockActivity/AddDailyStockActivity.dart';
+import 'package:fortune/Src/StockActivity/AddPhysicalStocks.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
@@ -418,10 +422,10 @@ Widget Service_HistoryList(
 }
 
 Widget Service_List_DashBoard(
-    context, {
-      required String data,
-      required String isTag,
-    }) {
+  context, {
+  required String data,
+  required String isTag,
+}) {
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -446,29 +450,28 @@ Widget Service_List_DashBoard(
       break;
   }
   return Container(
-    width: MediaQuery.sizeOf(context).width/1.8,
+    width: MediaQuery.sizeOf(context).width / 1.8,
     decoration:
-    BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
     child: Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //USER NAME
               Container(
-
-                  margin: EdgeInsets.only(top: 15, bottom: 10),
-                  alignment: Alignment.topLeft,
-                  child:  Text(
-                    data,
-                    style: serviceHomeT,
-                  ),
+                margin: EdgeInsets.only(top: 15, bottom: 10),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  data,
+                  style: serviceHomeT,
+                ),
               ),
               Container(
-                width: MediaQuery.sizeOf(context).width/4,
+                  width: 120, //MediaQuery.sizeOf(context).width / 4,
                   alignment: Alignment.topLeft,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -476,15 +479,16 @@ Widget Service_List_DashBoard(
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 5, bottom: 5),
-                    child: Text(
-                      isTag,
-                      style: style,
+                    child: Center(
+                      child: Text(
+                        isTag,
+                        style: style,
+                      ),
                     ),
                   )),
             ],
           ),
         ),
-
       ],
     ),
   );
@@ -940,6 +944,193 @@ Widget Marketing_History(
           ),
         ],
       ),
+    ),
+  );
+}
+
+Widget ActivitiesList(context,
+    {required ActivitiesData data,
+    required bool isHistory,
+    required WidgetRef ref}) {
+  Color? containerColor;
+  TextStyle? style;
+
+  return Container(
+    // width: MediaQuery.of(context).size.width / 1.5,
+    margin: EdgeInsets.only(
+      bottom: 20,
+    ),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //USER NAME
+              Container(
+                  margin: EdgeInsets.only(top: 15, bottom: 10),
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    children: [
+                      Text(
+                        data.customer ?? "",
+                        style: cardDetailT,
+                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => InvoiceFormScreen(
+                                        data: data,
+                                      ))).then((value) {
+                            if (value == true) {
+                              ref.refresh(activityListProvider);
+                            }
+                          });
+                        },
+                        child: Container(
+                            height: 30,
+                            width: 30,
+                            child: Center(
+                                child: Icon(
+                              Icons.mode_edit,
+                              size: 25,
+                            ))),
+                      ),
+                    ],
+                  )),
+              //DATE
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
+                child: Row(
+                  children: [
+                    Text(
+                      "Date: ${data.date ?? ""}",
+                      style: DateT,
+                    ),
+                  ],
+                ),
+              ),
+              //PHONE NUMBER
+              Container(
+                child: Text(
+                  "Invoice No: ${data.invoiceNo ?? ""}",
+                  style: DateT,
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  child: Text(
+                    'Items Product(Quantity): ${data.items?.map((item) => "${item.productName} (${item.quantity})").join(', ')}',
+                    style: DateT,
+                    maxLines: 2,
+                  ),
+                ),
+              ),
+              isHistory == true
+                  ? SizedBox(
+                      height: 5,
+                    )
+                  : SizedBox(
+                      height: 15,
+                    ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget StocksList(context,
+    {required StocksData data,
+    required bool isHistory,
+    required WidgetRef ref}) {
+  Color? containerColor;
+  TextStyle? style;
+
+  return Container(
+    // width: MediaQuery.of(context).size.width / 1.5,
+    margin: EdgeInsets.only(
+      bottom: 20,
+    ),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //USER NAME
+              Container(
+                  margin: EdgeInsets.only(top: 15, bottom: 10),
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    children: [
+                      Text(
+                        data.itemName ?? "",
+                        style: cardDetailT,
+                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddPhysicalStockScreen(
+                                        data: data,
+                                      ))).then((value) {
+                            if (value == true) {
+                              ref.refresh(stocksListProvider);
+                            }
+                          });
+                        },
+                        child: Container(
+                            height: 30,
+                            width: 30,
+                            child: Center(
+                                child: Icon(
+                              Icons.mode_edit,
+                              size: 25,
+                            ))),
+                      ),
+                    ],
+                  )),
+              //DATE
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
+                child: Row(
+                  children: [
+                    Text(
+                      "Date: ${data.date ?? ""}",
+                      style: DateT,
+                    ),
+                  ],
+                ),
+              ),
+              //PHONE NUMBER
+              Container(
+                child: Text(
+                  "Available Stocks: ${data.availableStock ?? ""}",
+                  style: DateT,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     ),
   );
 }

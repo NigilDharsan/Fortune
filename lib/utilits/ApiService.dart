@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/LoginModel.dart';
@@ -10,6 +11,7 @@ import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/MakeApiCall.dart';
 
@@ -318,6 +320,52 @@ class ApiService {
       }
     }
     return ServiceHistoryModel();
+  }
+
+  Future<DailyActivitiesModel> getDailyStockListApi() async {
+    var formData = FormData.fromMap({});
+
+    final result = await requestPOST(
+        url: ConstantApi.activitiesList, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return DailyActivitiesModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = DailyActivitiesModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return DailyActivitiesModel();
+  }
+
+  Future<StocksModel> getStocksListApi() async {
+    var formData = FormData.fromMap({});
+
+    final result = await requestPOST(
+        url: ConstantApi.stocksList, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return StocksModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = StocksModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return StocksModel();
   }
 
   Future<MarketingHistoryModel> getMarketingHistoryApi(

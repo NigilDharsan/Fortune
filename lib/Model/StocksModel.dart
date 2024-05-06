@@ -1,11 +1,11 @@
-class ServiceListModel {
+class StocksModel {
   bool? success;
   Data? data;
   String? message;
 
-  ServiceListModel({this.success, this.data, this.message});
+  StocksModel({this.success, this.data, this.message});
 
-  ServiceListModel.fromJson(Map<String, dynamic> json) {
+  StocksModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     message = json['message'];
@@ -23,41 +23,40 @@ class ServiceListModel {
 }
 
 class Data {
-  Services? services;
+  Stocks? stocks;
 
-  Data({this.services});
+  Data({this.stocks});
 
   Data.fromJson(Map<String, dynamic> json) {
-    services = json['services'] != null
-        ? new Services.fromJson(json['services'])
-        : null;
+    stocks =
+        json['stocks'] != null ? new Stocks.fromJson(json['stocks']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.services != null) {
-      data['services'] = this.services!.toJson();
+    if (this.stocks != null) {
+      data['stocks'] = this.stocks!.toJson();
     }
     return data;
   }
 }
 
-class Services {
+class Stocks {
   int? currentPage;
-  List<ServicesData>? data;
+  List<StocksData>? data;
   String? firstPageUrl;
   int? from;
   int? lastPage;
   String? lastPageUrl;
   List<Links>? links;
-  String? nextPageUrl;
+  Null? nextPageUrl;
   String? path;
   int? perPage;
-  String? prevPageUrl;
+  Null? prevPageUrl;
   int? to;
   int? total;
 
-  Services(
+  Stocks(
       {this.currentPage,
       this.data,
       this.firstPageUrl,
@@ -72,12 +71,12 @@ class Services {
       this.to,
       this.total});
 
-  Services.fromJson(Map<String, dynamic> json) {
+  Stocks.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
     if (json['data'] != null) {
-      data = <ServicesData>[];
+      data = <StocksData>[];
       json['data'].forEach((v) {
-        data!.add(new ServicesData.fromJson(v));
+        data!.add(new StocksData.fromJson(v));
       });
     }
     firstPageUrl = json['first_page_url'];
@@ -121,74 +120,27 @@ class Services {
   }
 }
 
-class ServicesData {
-  int? serviceId;
-  String? status;
-  String? clientName;
-  String? address;
-  String? contactNo;
-  String? date;
-  String? statusNote;
-  List<ServiceExecutives>? serviceExecutives;
-
-  ServicesData(
-      {this.serviceId,
-      this.status,
-      this.clientName,
-      this.address,
-      this.contactNo,
-      this.date,
-      this.statusNote,
-      this.serviceExecutives});
-
-  ServicesData.fromJson(Map<String, dynamic> json) {
-    serviceId = json['service_id'];
-    status = json['status'];
-    clientName = json['client_name'];
-    address = json['address'];
-    contactNo = json['contact_no'];
-    date = json['date'];
-    statusNote = json['status_note'];
-    if (json['service_executives'] != null) {
-      serviceExecutives = <ServiceExecutives>[];
-      json['service_executives'].forEach((v) {
-        serviceExecutives!.add(new ServiceExecutives.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['service_id'] = this.serviceId;
-    data['status'] = this.status;
-    data['client_name'] = this.clientName;
-    data['address'] = this.address;
-    data['contact_no'] = this.contactNo;
-    data['date'] = this.date;
-    data['status_note'] = this.statusNote;
-    if (this.serviceExecutives != null) {
-      data['service_executives'] =
-          this.serviceExecutives!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class ServiceExecutives {
+class StocksData {
   int? id;
-  String? name;
+  String? itemName;
+  String? availableStock;
+  String? date;
 
-  ServiceExecutives({this.id, this.name});
+  StocksData({this.id, this.itemName, this.availableStock, this.date});
 
-  ServiceExecutives.fromJson(Map<String, dynamic> json) {
+  StocksData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
+    itemName = json['item_name'];
+    availableStock = json['available_stock'];
+    date = json['date'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
+    data['item_name'] = this.itemName;
+    data['available_stock'] = this.availableStock;
+    data['date'] = this.date;
     return data;
   }
 }

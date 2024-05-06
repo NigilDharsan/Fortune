@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/MarketingEditModel.dart';
@@ -8,6 +9,7 @@ import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/ApiService.dart';
 import 'package:tuple/tuple.dart';
@@ -71,4 +73,14 @@ final marketingEditProvider = FutureProvider.autoDispose
 final marketingHistoryProvider = FutureProvider.autoDispose
     .family<MarketingHistoryModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getMarketingHistoryApi(id);
+});
+
+final activityListProvider =
+    FutureProvider.autoDispose<DailyActivitiesModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getDailyStockListApi();
+});
+
+final stocksListProvider =
+    FutureProvider.autoDispose<StocksModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getStocksListApi();
 });

@@ -1,11 +1,11 @@
-class ServiceListModel {
+class DailyActivitiesModel {
   bool? success;
   Data? data;
   String? message;
 
-  ServiceListModel({this.success, this.data, this.message});
+  DailyActivitiesModel({this.success, this.data, this.message});
 
-  ServiceListModel.fromJson(Map<String, dynamic> json) {
+  DailyActivitiesModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     message = json['message'];
@@ -23,41 +23,41 @@ class ServiceListModel {
 }
 
 class Data {
-  Services? services;
+  Activities? activities;
 
-  Data({this.services});
+  Data({this.activities});
 
   Data.fromJson(Map<String, dynamic> json) {
-    services = json['services'] != null
-        ? new Services.fromJson(json['services'])
+    activities = json['activities'] != null
+        ? new Activities.fromJson(json['activities'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.services != null) {
-      data['services'] = this.services!.toJson();
+    if (this.activities != null) {
+      data['activities'] = this.activities!.toJson();
     }
     return data;
   }
 }
 
-class Services {
+class Activities {
   int? currentPage;
-  List<ServicesData>? data;
+  List<ActivitiesData>? data;
   String? firstPageUrl;
   int? from;
   int? lastPage;
   String? lastPageUrl;
   List<Links>? links;
-  String? nextPageUrl;
+  Null? nextPageUrl;
   String? path;
   int? perPage;
-  String? prevPageUrl;
+  Null? prevPageUrl;
   int? to;
   int? total;
 
-  Services(
+  Activities(
       {this.currentPage,
       this.data,
       this.firstPageUrl,
@@ -72,12 +72,12 @@ class Services {
       this.to,
       this.total});
 
-  Services.fromJson(Map<String, dynamic> json) {
+  Activities.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
     if (json['data'] != null) {
-      data = <ServicesData>[];
+      data = <ActivitiesData>[];
       json['data'].forEach((v) {
-        data!.add(new ServicesData.fromJson(v));
+        data!.add(new ActivitiesData.fromJson(v));
       });
     }
     firstPageUrl = json['first_page_url'];
@@ -121,74 +121,65 @@ class Services {
   }
 }
 
-class ServicesData {
-  int? serviceId;
-  String? status;
-  String? clientName;
-  String? address;
-  String? contactNo;
+class ActivitiesData {
+  int? id;
+  String? invoiceNo;
+  String? customer;
+  List<Items>? items;
+  String? dispatchVehicleNo;
   String? date;
-  String? statusNote;
-  List<ServiceExecutives>? serviceExecutives;
 
-  ServicesData(
-      {this.serviceId,
-      this.status,
-      this.clientName,
-      this.address,
-      this.contactNo,
-      this.date,
-      this.statusNote,
-      this.serviceExecutives});
+  ActivitiesData(
+      {this.id,
+      this.invoiceNo,
+      this.customer,
+      this.items,
+      this.dispatchVehicleNo,
+      this.date});
 
-  ServicesData.fromJson(Map<String, dynamic> json) {
-    serviceId = json['service_id'];
-    status = json['status'];
-    clientName = json['client_name'];
-    address = json['address'];
-    contactNo = json['contact_no'];
-    date = json['date'];
-    statusNote = json['status_note'];
-    if (json['service_executives'] != null) {
-      serviceExecutives = <ServiceExecutives>[];
-      json['service_executives'].forEach((v) {
-        serviceExecutives!.add(new ServiceExecutives.fromJson(v));
+  ActivitiesData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    invoiceNo = json['invoice_no'];
+    customer = json['customer'];
+    if (json['items'] != null) {
+      items = <Items>[];
+      json['items'].forEach((v) {
+        items!.add(new Items.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['service_id'] = this.serviceId;
-    data['status'] = this.status;
-    data['client_name'] = this.clientName;
-    data['address'] = this.address;
-    data['contact_no'] = this.contactNo;
-    data['date'] = this.date;
-    data['status_note'] = this.statusNote;
-    if (this.serviceExecutives != null) {
-      data['service_executives'] =
-          this.serviceExecutives!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class ServiceExecutives {
-  int? id;
-  String? name;
-
-  ServiceExecutives({this.id, this.name});
-
-  ServiceExecutives.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
+    dispatchVehicleNo = json['dispatch_vehicle_no'];
+    date = json['date'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
+    data['invoice_no'] = this.invoiceNo;
+    data['customer'] = this.customer;
+    if (this.items != null) {
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    }
+    data['dispatch_vehicle_no'] = this.dispatchVehicleNo;
+    data['date'] = this.date;
+    return data;
+  }
+}
+
+class Items {
+  String? productName;
+  String? quantity;
+
+  Items({this.productName, this.quantity});
+
+  Items.fromJson(Map<String, dynamic> json) {
+    productName = json['product_name'];
+    quantity = json['quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['product_name'] = this.productName;
+    data['quantity'] = this.quantity;
     return data;
   }
 }

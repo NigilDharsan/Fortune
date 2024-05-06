@@ -18,6 +18,14 @@ class ConstantApi {
   static String marketingStore = SERVER_ONE + "marketings";
   static String marketingHistory = SERVER_ONE + "marketings/history/";
 
+  static String activitiesList = SERVER_ONE + "activities/list";
+  static String activitiesCreate = SERVER_ONE + "activities";
+  static String activitiesUpdate = SERVER_ONE + "activities";
+
+  static String stocksList = SERVER_ONE + "stocks/list";
+  static String stocksCreate = SERVER_ONE + "stocks";
+  static String stocksUpdate = SERVER_ONE + "stocks";
+
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";
   static String BAD_RESPONSE = "Bad Response";
