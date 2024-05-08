@@ -140,7 +140,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             Expanded(
                               flex: 3,
                               child: TextFormField(
-                                initialValue: itemsData[i]["productName"],
+                                controller: TextEditingController()
+                                  ..text = itemsData[i]["productName"] ?? "",
+                                // initialValue: itemsData[i]["productName"],
                                 onChanged: (typed) {
                                   // setState(() {
                                   final getValue = {
@@ -169,7 +171,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             Expanded(
                               flex: 2,
                               child: TextFormField(
-                                initialValue: itemsData[i]["quantity"],
+                                controller: TextEditingController()
+                                  ..text = itemsData[i]["quantity"] ?? "",
+
+                                // initialValue: itemsData[i]["quantity"],
                                 onChanged: (typed) {
                                   // setState(() {
                                   final getValue = {
