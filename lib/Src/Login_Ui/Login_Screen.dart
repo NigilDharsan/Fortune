@@ -14,6 +14,7 @@ import 'package:fortune/utilits/ConstantsApi.dart';
 import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Loading_Overlay.dart';
 import 'package:fortune/utilits/Text_Style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login_Screen extends ConsumerStatefulWidget {
   Login_Screen({super.key});
@@ -41,9 +42,9 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _employeeId.text = "sivavignesh@fpf.com";
-    // _passwordController.text = "password";
-    // _password = "password";
+    _employeeId.text = "venkatesh@fpf.com";
+    _passwordController.text = "password";
+    _password = "password";
     getDeviceID();
   }
 
@@ -165,11 +166,14 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                         LoadingOverlay.show(context);
 
                         final apiService = ApiService(ref.read(dioProvider));
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
 
                         var formData = FormData.fromMap({
                           "email": _employeeId.text,
                           "password": _password,
-                          "device_id": device_id
+                          "device_id": device_id,
+                          "fcm_token": prefs.getString('fcmToken')
                         });
                         final postResponse = await apiService.login<LoginModel>(
                             ConstantApi.loginUrl, formData);

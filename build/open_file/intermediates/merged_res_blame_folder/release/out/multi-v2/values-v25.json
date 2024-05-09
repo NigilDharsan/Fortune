@@ -4,7 +4,7 @@
             "outputFile": "com.crazecoder.openfile.open_file-merged_res-24:/values-v25/values-v25.xml",
             "map": [
                 {
-                    "source": "/Users/mac/.gradle/caches/transforms-3/e284401544ba482b40b90025405636f0/transformed/appcompat-1.6.1/res/values-v25/values-v25.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/e284401544ba482b40b90025405636f0/transformed/appcompat-1.6.1/res/values-v25/values-v25.xml",
                     "from": {
                         "startLines": "2,3,4,6",
                         "startColumns": "4,4,4,4",
@@ -20,7 +20,7 @@
             "outputFile": "com.crazecoder.openfile.open_file-mergeReleaseResources-22:/values-v25/values-v25.xml",
             "map": [
                 {
-                    "source": "/Users/mac/.gradle/caches/transforms-3/e284401544ba482b40b90025405636f0/transformed/appcompat-1.6.1/res/values-v25/values-v25.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/e284401544ba482b40b90025405636f0/transformed/appcompat-1.6.1/res/values-v25/values-v25.xml",
                     "from": {
                         "startLines": "2,3,4,6",
                         "startColumns": "4,4,4,4",

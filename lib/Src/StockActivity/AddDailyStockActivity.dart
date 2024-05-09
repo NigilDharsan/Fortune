@@ -201,7 +201,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                               ),
                             ),
                             SizedBox(width: 16.0),
-                            i == (itemsData.length - 1)
+                            i == 0
                                 ? IconButton(
                                     icon: Icon(Icons.add_box),
                                     onPressed: () {

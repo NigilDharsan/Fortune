@@ -1,12 +1,12 @@
 <lint-module
     format="1"
-    dir="/Users/mac/Fortune/android/app"
+    dir="/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app"
     name=":app"
     type="APP"
     maven="android:app:"
     gradle="7.3.0"
-    buildFolder="/Users/mac/Fortune/build/app"
-    bootClassPath="/Users/mac/Library/Android/sdk/platforms/android-33/android.jar:/Users/mac/Library/Android/sdk/build-tools/30.0.3/core-lambda-stubs.jar"
+    buildFolder="/Users/nigildharsan/Documents/Flutter Project/Fortune/build/app"
+    bootClassPath="/Users/nigildharsan/Library/Android/sdk/platforms/android-33/android.jar:/Users/nigildharsan/Library/Android/sdk/build-tools/30.0.3/core-lambda-stubs.jar"
     javaSourceLevel="1.8"
     compileTarget="android-33">
   <lintOptions

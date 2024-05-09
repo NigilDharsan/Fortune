@@ -1,4 +1,4 @@
-package com.fortune.powerfastening.fortune
+package com.fortune.fortunepowerfastening
 
 import io.flutter.embedding.android.FlutterActivity
 

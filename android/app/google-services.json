@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378750705537",
+    "project_id": "fortune-power-fastening",
+    "storage_bucket": "fortune-power-fastening.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378750705537:android:941510a6cbfa0825aed280",
+        "android_client_info": {
+          "package_name": "com.fortune.fortunepowerfastening"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzNvnE1vj76_L0lSrp-pHp8cJdBq6dUi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

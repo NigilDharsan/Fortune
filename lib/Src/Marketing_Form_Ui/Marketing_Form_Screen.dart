@@ -236,19 +236,35 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             },
                             onTap: () async {
                               FocusScope.of(context).unfocus();
-                              DateTime? pickdate = await showDatePicker(
+                              DateTime? pickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime.now(),
                                   lastDate: DateTime(2050));
-                              if (pickdate != null) {
-                                String formatdate =
-                                    DateFormat("yyyy/MM/dd").format(pickdate!);
-                                if (mounted) {
-                                  setState(() {
-                                    _DatePicker.text = formatdate;
-                                    print(_DatePicker.text);
-                                  });
+                              if (pickedDate != null) {
+                                final TimeOfDay? pickedTime =
+                                    await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                );
+                                if (pickedTime != null) {
+                                  final DateTime selectedDateTime = DateTime(
+                                    pickedDate.year,
+                                    pickedDate.month,
+                                    pickedDate.day,
+                                    pickedTime.hour,
+                                    pickedTime.minute,
+                                  );
+
+                                  String formatdate =
+                                      DateFormat("dd/MM/yyyy hh:mm a")
+                                          .format(selectedDateTime);
+                                  if (mounted) {
+                                    setState(() {
+                                      _DatePicker.text = formatdate;
+                                      print(_DatePicker.text);
+                                    });
+                                  }
                                 }
                               }
                             },
