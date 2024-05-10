@@ -145,7 +145,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                               countT: "${data?.data?.servicesCount ?? 0}",
                               cardName: "Service",
                               isWhite: true,
-                              color: blue1),
+                              color: blue5),
                         ),
                       ],
                     ),
@@ -168,7 +168,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                               iconFile: Icons.edit_document,
                               cardName: " Daily Stock Activity ",
                               isWhite: true,
-                              color: red1),
+                              color: green1),
                         ),
                         InkWell(
                           onTap: () {
@@ -183,7 +183,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                               iconFile: Icons.dashboard_customize_outlined,
                               cardName: "Physical Stock",
                               isWhite: true,
-                              color: blue1),
+                              color: orange1),
                         ),
                       ],
                     ),
