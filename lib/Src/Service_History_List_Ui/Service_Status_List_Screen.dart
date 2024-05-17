@@ -50,7 +50,7 @@ class _Service_History_List_ScreenState
             );
           },
           error: (Object error, StackTrace stackTrace) {
-            return Text(error.toString());
+            return Center(child: Text("No data found!"));
           },
           loading: () => Center(child: CircularProgressIndicator()),
         ));

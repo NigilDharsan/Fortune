@@ -17,28 +17,29 @@ class PhysicalStocksList extends ConsumerStatefulWidget {
 }
 
 class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
-  var user_Role = "";
+  // var user_Role = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    getRole();
+    // getRole();
   }
 
-  void getRole() async {
-    final qww = await getUserRole();
-    setState(() {
-      user_Role = qww;
-    });
-  }
+  // void getRole() async {
+  //   final qww = await getUserRole();
+  //   setState(() {
+  //     user_Role = qww;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     final _StocksListData = ref.watch(stocksListProvider);
+    SingleTon singleton = SingleTon();
 
-    return user_Role != "Marketing-And-Service-Executives"
+    return singleton.permissionList.contains("stock-create") == true
         ? Scaffold(
             floatingActionButton: Floating_Button(context, onTap: () {
               Navigator.push(
@@ -82,7 +83,7 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
                 );
               },
               error: (Object error, StackTrace stackTrace) {
-                return Text(error.toString());
+                return Center(child: Text("No data found!"));
               },
               loading: () => Center(child: CircularProgressIndicator()),
             ),

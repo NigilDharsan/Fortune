@@ -7,7 +7,9 @@ import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Src/Login_Ui/Login_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
+import 'package:fortune/Src/Marketing_History_List/Marketing_History_List.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_List_Screen.dart';
+import 'package:fortune/Src/Service_History_List_Ui/Service_Status_List_Screen.dart';
 import 'package:fortune/Src/StockActivity/DailyStockActivityList.dart';
 import 'package:fortune/Src/StockActivity/PhysicalStocksList.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
@@ -43,10 +45,11 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
   @override
   Widget build(BuildContext context) {
     final _dashbaordData = ref.watch(dashboardProvider);
+    SingleTon singleton = SingleTon();
 
     return Scaffold(
         appBar: Custom_AppBar(
-            title: "Home Dash Board",
+            title: "Home Dashboard",
             actions: [
               PopupMenuButton(
                   surfaceTintColor: white1,
@@ -62,7 +65,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                   Routes(Boolvalue);
                                   accessToken("");
                                   UserId("");
-                                  UserRole("");
+                                  // UserRole("");
 
                                   print('ROUTES : ${Routes(Boolvalue)}');
                                   Navigator.pushAndRemoveUntil(
@@ -101,7 +104,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       child: Row(
                         children: [
                           Text(
-                            "Hello, ",
+                            "Hello ",
                             style: TBlack1,
                           ),
                           Text(
@@ -115,120 +118,178 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       height: 10,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment:
+                          (singleton.permissionList.contains("lead-list") ==
+                                      true &&
+                                  singleton.permissionList
+                                          .contains("service-list") ==
+                                      true)
+                              ? MainAxisAlignment.spaceEvenly
+                              : MainAxisAlignment.center,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        Marketing_List_Screen())).then(
-                                (value) => ref.refresh(dashboardProvider));
-                          },
-                          child: _CountCard(
-                              countT: "${data?.data?.marketingCount ?? 0}",
-                              cardName: "Marketing",
-                              isWhite: true,
-                              color: red1),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        Service_List_Screen())).then(
-                                (value) => ref.refresh(dashboardProvider));
-                          },
-                          child: _CountCard(
-                              countT: "${data?.data?.servicesCount ?? 0}",
-                              cardName: "Service",
-                              isWhite: true,
-                              color: blue5),
-                        ),
+                        singleton.permissionList.contains("lead-list") == true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Marketing_List_Screen())).then(
+                                      (value) =>
+                                          ref.refresh(dashboardProvider));
+                                },
+                                child: _CountCard(
+                                    countT:
+                                        "${data?.data?.marketingCount ?? 0}",
+                                    cardName: "Marketing",
+                                    isWhite: true,
+                                    color: red1),
+                              )
+                            : Container(),
+                        singleton.permissionList.contains("service-list") ==
+                                true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Service_List_Screen())).then(
+                                      (value) =>
+                                          ref.refresh(dashboardProvider));
+                                },
+                                child: _CountCard(
+                                    countT: "${data?.data?.servicesCount ?? 0}",
+                                    cardName: "Service",
+                                    isWhite: true,
+                                    color: blue5),
+                              )
+                            : Container(),
                       ],
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: (singleton.permissionList
+                                      .contains("activity-list") ==
+                                  true &&
+                              singleton.permissionList.contains("stock-list") ==
+                                  true)
+                          ? MainAxisAlignment.spaceEvenly
+                          : MainAxisAlignment.center,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        DailyStockActivityList())).then(
-                                (value) => ref.refresh(dashboardProvider));
-                          },
-                          child: _ActivityCard(
-                              iconFile: Icons.edit_document,
-                              cardName: " Daily Stock Activity ",
-                              isWhite: true,
-                              color: green1),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PhysicalStocksList())).then(
-                                (value) => ref.refresh(dashboardProvider));
-                          },
-                          child: _ActivityCard(
-                              iconFile: Icons.dashboard_customize_outlined,
-                              cardName: "Physical Stock",
-                              isWhite: true,
-                              color: orange1),
-                        ),
+                        singleton.permissionList.contains("activity-list") ==
+                                true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DailyStockActivityList())).then(
+                                      (value) =>
+                                          ref.refresh(dashboardProvider));
+                                },
+                                child: _ActivityCard(
+                                    iconFile: Icons.edit_document,
+                                    cardName: " Daily Stock Activity ",
+                                    isWhite: true,
+                                    color: green1),
+                              )
+                            : Container(),
+                        singleton.permissionList.contains("stock-list") == true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PhysicalStocksList())).then(
+                                      (value) =>
+                                          ref.refresh(dashboardProvider));
+                                },
+                                child: _ActivityCard(
+                                    iconFile:
+                                        Icons.dashboard_customize_outlined,
+                                    cardName: "Physical Stock",
+                                    isWhite: true,
+                                    color: orange1),
+                              )
+                            : Container(),
                       ],
                     ),
                     //TODAY LIST
-                    Container(
-                        width: MediaQuery.sizeOf(context).width / 1.2,
-                        margin: EdgeInsets.only(top: 20, bottom: 10, left: 10),
-                        child: Text(
-                          "Today's list of MARKETING to be visited",
-                          style: TBlack,
-                          maxLines: 2,
-                          textAlign: TextAlign.start,
-                        )),
-                    Container(
-                        height: 120, //MediaQuery.sizeOf(context).height / 9,
-                        child:
-                            Marketing_List(data?.data?.todayMarketings ?? [])),
+                    singleton.permissionList.contains("lead-list") == true
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  width: MediaQuery.sizeOf(context).width / 1.2,
+                                  margin: EdgeInsets.only(
+                                      top: 20, bottom: 10, left: 10),
+                                  child: Text(
+                                    "Today's list of marketing to be visited",
+                                    style: TBlack,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.start,
+                                  )),
+                              Container(
+                                  height:
+                                      120, //MediaQuery.sizeOf(context).height / 9,
+                                  child: Marketing_List(
+                                      data?.data?.todayMarketings ?? [])),
+                            ],
+                          )
+                        : Container(),
 
                     //SERVICE LIST
-                    Container(
-                        width: MediaQuery.sizeOf(context).width / 1.2,
-                        margin: EdgeInsets.only(top: 20, bottom: 10, left: 10),
-                        child: Text(
-                          "SERVICES didn’t closed for more than 5 days",
-                          style: TBlack,
-                          maxLines: 2,
-                          textAlign: TextAlign.start,
-                        )),
+                    singleton.permissionList.contains("service-list") == true
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  width: MediaQuery.sizeOf(context).width / 1.2,
+                                  margin: EdgeInsets.only(
+                                      top: 20, bottom: 10, left: 10),
+                                  child: Text(
+                                    "Service didn’t closed for more than 5 days",
+                                    style: TBlack,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.start,
+                                  )),
+                              Container(
+                                  height:
+                                      120, //MediaQuery.sizeOf(context).height / 9,
+                                  child:
+                                      Service_List(data?.data?.services ?? [])),
+                            ],
+                          )
+                        : Container(),
 
-                    Container(
-                        height: 120, //MediaQuery.sizeOf(context).height / 9,
-                        child: Service_List(data?.data?.services ?? [])),
                     //HISTORY LIST
-                    Container(
-                        width: MediaQuery.sizeOf(context).width / 1.2,
-                        margin: EdgeInsets.only(top: 20, bottom: 10, left: 10),
-                        child: Text(
-                          "MARKETINGS didn’t updated for more than 5 days",
-                          style: TBlack,
-                          maxLines: 2,
-                          textAlign: TextAlign.start,
-                        )),
-                    Container(
-                        height: 120, //MediaQuery.sizeOf(context).height / 9,
-                        child: Marketing_List(data?.data?.marketings ?? [])),
+                    singleton.permissionList.contains("lead-list") == true
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  width: MediaQuery.sizeOf(context).width / 1.2,
+                                  margin: EdgeInsets.only(
+                                      top: 20, bottom: 10, left: 10),
+                                  child: Text(
+                                    "Marketings didn’t updated for more than 5 days",
+                                    style: TBlack,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.start,
+                                  )),
+                              Container(
+                                  height:
+                                      120, //MediaQuery.sizeOf(context).height / 9,
+                                  child: Marketing_List(
+                                      data?.data?.marketings ?? [])),
+                            ],
+                          )
+                        : Container(),
 
                     SizedBox(
                       height: 50,
@@ -239,7 +300,8 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
             );
           },
           error: (Object error, StackTrace stackTrace) {
-            return Text(error.toString());
+            return Center(
+                child: Text("Connection closed, Please login again!"));
           },
           loading: () => Center(child: CircularProgressIndicator()),
         ));
@@ -288,7 +350,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                     children: [
                       Text(
                         "More info",
-                        style: isWhite == true ? WjobHeadingT : jobHeadingT,
+                        style: isWhite == true ? WcompanyDetailT : jobHeadingT,
                       ),
                       const SizedBox(
                         width: 5,
@@ -353,7 +415,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                     children: [
                       Text(
                         "More info",
-                        style: isWhite == true ? WjobHeadingT : jobHeadingT,
+                        style: isWhite == true ? WcompanyDetailT : jobHeadingT,
                       ),
                       const SizedBox(
                         width: 5,
@@ -398,9 +460,19 @@ Widget Service_List(List<ServicesData1> data) {
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: EdgeInsets.only(left: 20),
-          child: Service_List_DashBoard(context,
-              data: data[index].clientName ?? "",
-              isTag: data[index].status ?? ""),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Service_History_List_Screen(
+                            service_id: "${data[index].serviceId ?? 0}",
+                          )));
+            },
+            child: Service_List_DashBoard(context,
+                data: data[index].clientName ?? "",
+                isTag: data[index].status ?? ""),
+          ),
         );
       },
     );
@@ -428,8 +500,19 @@ Widget Marketing_List(List<HistoryData> data) {
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: EdgeInsets.only(left: 20),
-          child: Service_List_DashBoard(context,
-              data: "Arun dsdsad SDAFSDFSF SDSAD", isTag: 'cancelled'),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Marketing_History_List(
+                            marketing_id: "${data[index].leadId}",
+                          )));
+            },
+            child: Service_List_DashBoard(context,
+                data: data[index].clientName ?? "",
+                isTag: data[index].status ?? ""),
+          ),
         );
       },
     );

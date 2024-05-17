@@ -42,9 +42,9 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _employeeId.text = "venkatesh@fpf.com";
-    _passwordController.text = "password";
-    _password = "password";
+    // _employeeId.text = "sarath@fpf.com";
+    // _passwordController.text = "password";
+    // _password = "password";
     getDeviceID();
   }
 
@@ -163,6 +163,11 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                     margin: EdgeInsets.only(left: 30, right: 30),
                     child: CommonElevatedButton(context, "Log In", () async {
                       if (_formKey.currentState!.validate()) {
+                        String Boolvalue = "false";
+                        Routes(Boolvalue);
+                        accessToken("");
+                        UserId("");
+
                         LoadingOverlay.show(context);
 
                         final apiService = ApiService(ref.read(dioProvider));
@@ -183,7 +188,17 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                           ShowToastMessage(postResponse.message ?? "");
                           accessToken(postResponse.data?.token ?? "");
                           UserId(postResponse.data?.name ?? "");
-                          UserRole(postResponse.data?.role ?? "");
+                          // UserRole(postResponse.data?.role ?? "");
+
+                          SingleTon singleton = SingleTon();
+                          singleton.permissionList =
+                              postResponse.data?.permissions ?? [];
+
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+
+                          await prefs.setStringList('permissions',
+                              postResponse.data?.permissions ?? []);
 
                           Navigator.pushReplacement(
                               context,

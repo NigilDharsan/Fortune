@@ -19,28 +19,29 @@ class DailyStockActivityList extends ConsumerStatefulWidget {
 
 class _DailyStockActivityListState
     extends ConsumerState<DailyStockActivityList> {
-  var user_Role = "";
+  // var user_Role = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    getRole();
+    // getRole();
   }
 
-  void getRole() async {
-    final qww = await getUserRole();
-    setState(() {
-      user_Role = qww;
-    });
-  }
+  // void getRole() async {
+  //   final qww = await getUserRole();
+  //   setState(() {
+  //     user_Role = qww;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     final _ActivityListData = ref.watch(activityListProvider);
+    SingleTon singleton = SingleTon();
 
-    return user_Role != "Marketing-And-Service-Executives"
+    return singleton.permissionList.contains("activity-create") == true
         ? Scaffold(
             floatingActionButton: Floating_Button(context, onTap: () {
               Navigator.push(
@@ -85,7 +86,7 @@ class _DailyStockActivityListState
                 );
               },
               error: (Object error, StackTrace stackTrace) {
-                return Text(error.toString());
+                return Center(child: Text("No data found!"));
               },
               loading: () => Center(child: CircularProgressIndicator()),
             ),

@@ -13,6 +13,7 @@ import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
 import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
+import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/MakeApiCall.dart';
 
 import 'ConstantsApi.dart';
@@ -206,15 +207,16 @@ class ApiService {
   }
 
   Future<ServiceListModel> getServiceListApi() async {
-    var formData = FormData.fromMap({
-      "executive_id": "",
-      "client_id": "",
-      "status_id": "",
-      "daterange": ""
-    });
+    // var formData = FormData.fromMap({
+    //   "executive_id": "",
+    //   "client_id": "",
+    //   "status_id": "",
+    //   "daterange": ""
+    // });
+    SingleTon singleTon = SingleTon();
 
     final result = await requestPOST(
-        url: ConstantApi.servicesList, formData: formData, dio: _dio);
+        url: ConstantApi.servicesList, formData: singleTon.formData, dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -415,15 +417,18 @@ class ApiService {
   }
 
   Future<MarketingListModel> getMarketingListApi() async {
-    var formData = FormData.fromMap({
-      "executive_id": "",
-      "client_id": "",
-      "status_id": "",
-      "daterange": ""
-    });
+    // var formData = FormData.fromMap({
+    //   "executive_id": "",
+    //   "client_id": "",
+    //   "status_id": "",
+    //   "daterange": ""
+    // });
+    SingleTon singleTon = SingleTon();
 
     final result = await requestPOST(
-        url: ConstantApi.marketingList, formData: formData, dio: _dio);
+        url: ConstantApi.marketingList,
+        formData: singleTon.formData,
+        dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");

@@ -77,6 +77,8 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
 
   @override
   Widget build(BuildContext context) {
+    SingleTon singleton = SingleTon();
+
     final _ServiceData = ref.watch(serviceDataProvider);
 
     return Scaffold(
@@ -298,31 +300,43 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                         ),
 
                         //ASSIGN EXECUTIVE
-                        Title_Style(Title: "Assign Executive", isStatus: true),
-                        // dropDownField3(
-                        //   context,
-                        //   hintT: 'Select Executive',
-                        //   value: assignExecutive,
-                        //   listValue: data?.data?.executives ?? [],
-                        //   onChanged: (String? newValue) {
-                        //     setState(() {
-                        //       assignExecutive = newValue;
-                        //     });
-                        //   },
-                        // ),
-                        MultiSelectDropdown(
-                          items: data?.data?.executives ?? [],
-                          selectedItems: _selectedItems,
-                          onChanged: (List<Executives> selectedItems) {
-                            setState(() {
-                              _selectedItems = selectedItems;
-                            });
-                          },
-                        ),
+
+                        singleton.permissionList.contains("service-assign") ==
+                                true
+                            ? Column(
+                                children: [
+                                  Title_Style(
+                                      Title: "Assign Executive",
+                                      isStatus: true),
+                                  // dropDownField3(
+                                  //   context,
+                                  //   hintT: 'Select Executive',
+                                  //   value: assignExecutive,
+                                  //   listValue: data?.data?.executives ?? [],
+                                  //   onChanged: (String? newValue) {
+                                  //     setState(() {
+                                  //       assignExecutive = newValue;
+                                  //     });
+                                  //   },
+                                  // ),
+                                  MultiSelectDropdown(
+                                    items: data?.data?.executives ?? [],
+                                    selectedItems: _selectedItems,
+                                    onChanged:
+                                        (List<Executives> selectedItems) {
+                                      setState(() {
+                                        _selectedItems = selectedItems;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )
+                            : Container(),
 
                         const SizedBox(
                           height: 30,
                         ),
+
                         //BUTTON
                         CommonElevatedButton(context, "Submit", () async {
                           if (_formKey.currentState!.validate()) {
@@ -330,7 +344,10 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                               ShowToastMessage("Select client name");
                             } else if (company_id == "") {
                               ShowToastMessage("Select company name");
-                            } else if (_selectedItems.length == 0) {
+                            } else if (singleton.permissionList
+                                        .contains("service-assign") ==
+                                    true &&
+                                _selectedItems.length == 0) {
                               ShowToastMessage("Select executive");
                             } else {
                               List<String> idList = _selectedItems

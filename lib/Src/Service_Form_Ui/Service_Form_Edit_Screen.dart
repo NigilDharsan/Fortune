@@ -65,8 +65,6 @@ class _Service_Form_Edit_ScreenState
     });
   }
 
-  List<String> _SelectClient = ['Bosh', 'Pricol', 'Tessolv'];
-  List<String> _CompanyName = ['Zoho', 'wipro', 'Advance'];
   List<String> _selectState = [
     'completed',
     'pending',
@@ -146,7 +144,9 @@ class _Service_Form_Edit_ScreenState
 
                     int index = data!.data!.companies!.indexWhere(
                         (st) => st.companyId == data.data?.data?[0].companyId);
-                    companyName = data.data!.companies![index].name ?? "";
+                    if (index >= 0) {
+                      companyName = data.data!.companies![index].name ?? "";
+                    }
 
                     if (!isvalueUpdated) {
                       _StatusNote.text =

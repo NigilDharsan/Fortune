@@ -28,7 +28,19 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
   TextEditingController _ClientAddress = TextEditingController();
   TextEditingController _ClientName = TextEditingController();
   TextEditingController _PlanofAction = TextEditingController();
+  TextEditingController _Reference = TextEditingController();
+
   TextEditingController _ContactNumber = TextEditingController();
+
+  String? selectStatus;
+  String selectStatus_id = "";
+
+  List<String> _selectState = [
+    'completed',
+    'pending',
+    'processing',
+    "cancelled"
+  ];
 
   String TimeVal = '';
   TimeOfDay? _selectedTime;
@@ -80,6 +92,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
   @override
   Widget build(BuildContext context) {
     final _MarketingData = ref.watch(marketingDataProvider);
+    SingleTon singleton = SingleTon();
 
     return Scaffold(
       backgroundColor: white5,
@@ -132,6 +145,23 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             });
                           },
                         ),
+
+                        //REFERENCE
+                        Title_Style(Title: 'Reference', isStatus: true),
+                        textFormField(
+                            isEnabled: true,
+                            hintText: "Reference",
+                            keyboardtype: TextInputType.text,
+                            Controller: _Reference,
+                            validating: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please Enter Reference";
+                              }
+                              if (value == null) {
+                                return "Please Enter Reference";
+                              }
+                              return null;
+                            }),
                         //COMPANY NAME
                         Title_Style(Title: "Company Name", isStatus: true),
                         dropDownField2(
@@ -270,6 +300,29 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             },
                             hintText: 'dd/MM/yyyy'),
 
+//SELECT STATUS
+                        Title_Style(Title: "Select Status", isStatus: true),
+                        dropDownField(
+                          context,
+                          hintT: 'Select Status',
+                          value: selectStatus,
+                          listValue: _selectState,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectStatus = newValue;
+
+                              selectStatus_id = selectStatus == "completed"
+                                  ? "1"
+                                  : selectStatus == "pending"
+                                      ? "2"
+                                      : selectStatus == "processing"
+                                          ? "3"
+                                          : selectStatus == "cancelled"
+                                              ? "4"
+                                              : "";
+                            });
+                          },
+                        ),
                         //STATUS NOTE
                         Title_Style(Title: 'Status Note', isStatus: false),
                         textfieldDescription(
@@ -286,17 +339,25 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                               return null;
                             }),
 
+                        singleton.permissionList.contains("lead-assign") == true
+                            ? Column(
+                                children: [
+                                  Title_Style(
+                                      Title: "Assign to", isStatus: true),
+                                  MultiSelectDropdown(
+                                    items: data?.data?.executives ?? [],
+                                    selectedItems: _selectedItems,
+                                    onChanged:
+                                        (List<Executives> selectedItems) {
+                                      setState(() {
+                                        _selectedItems = selectedItems;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         //ASSIGN EXECUTIVE
-                        Title_Style(Title: "Assign to", isStatus: true),
-                        MultiSelectDropdown(
-                          items: data?.data?.executives ?? [],
-                          selectedItems: _selectedItems,
-                          onChanged: (List<Executives> selectedItems) {
-                            setState(() {
-                              _selectedItems = selectedItems;
-                            });
-                          },
-                        ),
 
                         const SizedBox(
                           height: 30,
@@ -308,8 +369,13 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                               ShowToastMessage("Select client name");
                             } else if (company_id == "") {
                               ShowToastMessage("Select company name");
-                            } else if (_selectedItems.length == 0) {
+                            } else if (singleton.permissionList
+                                        .contains("lead-assign") ==
+                                    true &&
+                                _selectedItems.length == 0) {
                               ShowToastMessage("Select executive");
+                            } else if (selectStatus_id == "") {
+                              ShowToastMessage("Select Status");
                             } else {
                               List<int> idList = _selectedItems
                                   .map((item) => item.id ?? 0)
@@ -319,12 +385,14 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                                 "is_new_client":
                                     isAddNewClient == true ? "1" : "0",
                                 "client_id": client_id,
+                                "reference": _Reference.text,
                                 "cus_mobile_no": _ContactNumber.text,
                                 "cus_first_name": _ClientName.text,
                                 "address": _ClientAddress.text,
                                 "status_note": _StatusNote.text,
                                 "assign_executive": idList,
                                 "company_id": company_id,
+                                "status": selectStatus_id,
                                 "plan_for_next_meet": _PlanofAction.text,
                                 "next_followup_date": _DatePicker.text
                               };

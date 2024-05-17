@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_Button.dart';
@@ -9,6 +10,7 @@ import 'package:fortune/Src/Service_History_List_Ui/Service_Status_List_Screen.d
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
+import 'package:intl/intl.dart';
 
 class Service_List_Screen extends ConsumerStatefulWidget {
   const Service_List_Screen({super.key});
@@ -19,28 +21,41 @@ class Service_List_Screen extends ConsumerStatefulWidget {
 }
 
 class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
-  var user_Role = "";
+  var dateRange = "";
+
+  var formData;
+  SingleTon singleton = SingleTon();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    getRole();
+    formData = FormData.fromMap({
+      "executive_id": "",
+      "client_id": "",
+      "status_id": "",
+      "daterange": ""
+    });
+    singleton.formData = formData;
+
+    // getRole();
   }
 
-  void getRole() async {
-    final qww = await getUserRole();
-    setState(() {
-      user_Role = qww;
-    });
-  }
+  // void getRole() async {
+  //   final qww = await getUserRole();
+  //   setState(() {
+  //     user_Role = qww;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     final _ServiceListData = ref.watch(serviceListProvider);
 
-    return user_Role != "Marketing-And-Service-Executives"
+    SingleTon singleton = SingleTon();
+
+    return singleton.permissionList.contains("service-create") == true
         ? Scaffold(
             floatingActionButton: Floating_Button(context, onTap: () {
               Navigator.push(
@@ -50,6 +65,14 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                   .then((value) {
                 if (value == true) {
                   setState(() {
+                    formData = FormData.fromMap({
+                      "executive_id": "",
+                      "client_id": "",
+                      "status_id": "",
+                      "daterange": ""
+                    });
+                    singleton.formData = formData;
+
                     ref.refresh(serviceListProvider);
                   });
                 }
@@ -72,7 +95,68 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          height: 20,
+                          height: 10,
+                        ),
+                        Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 8.0, right: 8.0),
+                            child: Row(
+                              children: [
+                                Text(dateRange),
+                                Spacer(),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.red),
+                                    onPressed: () async {
+                                      final DateTimeRange? picked =
+                                          await showDateRangePicker(
+                                        context: context,
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2200),
+                                        initialDateRange: DateTimeRange(
+                                          start: DateTime.now(),
+                                          end: DateTime.now(),
+                                        ),
+                                      );
+
+                                      if (picked != null) {
+                                        setState(() {
+                                          // fromDate = picked.start;
+                                          // toDate = picked.end;
+                                          String formatdate =
+                                              DateFormat("dd/MM/yyyy")
+                                                  .format(picked.start);
+
+                                          String todate =
+                                              DateFormat("dd/MM/yyyy")
+                                                  .format(picked.end);
+
+                                          setState(() {
+                                            dateRange =
+                                                "${formatdate}-${todate}";
+                                            formData = FormData.fromMap({
+                                              "executive_id": "",
+                                              "client_id": "",
+                                              "status_id": "",
+                                              "daterange": dateRange
+                                            });
+                                            singleton.formData = formData;
+                                          });
+                                        });
+                                      }
+                                    },
+                                    child: Text(
+                                      "Date range",
+                                      style: TextStyle(color: Colors.white),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         Container(
                           width: MediaQuery.sizeOf(context).width,
@@ -121,7 +205,7 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                 );
               },
               error: (Object error, StackTrace stackTrace) {
-                return Text(error.toString());
+                return Center(child: Text("No data found!"));
               },
               loading: () => Center(child: CircularProgressIndicator()),
             ),

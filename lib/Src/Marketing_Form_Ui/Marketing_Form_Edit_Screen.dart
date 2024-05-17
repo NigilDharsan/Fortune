@@ -34,6 +34,7 @@ class _Marketing_Form_Edit_ScreenState
   TextEditingController _ClientName = TextEditingController();
   TextEditingController _PlanofAction = TextEditingController();
   TextEditingController _ContactNumber = TextEditingController();
+  TextEditingController _Reference = TextEditingController();
 
   String TimeVal = '';
   TimeOfDay? _selectedTime;
@@ -130,6 +131,7 @@ class _Marketing_Form_Edit_ScreenState
                     _StatusNote.text = data.data?.data?.instructions ?? "";
                     _PlanofAction.text = data.data?.data?.planForNextMeet ?? "";
                     _DatePicker.text = data.data?.data?.nextFollowupDate ?? "";
+                    _Reference.text = data.data?.data?.reference ?? "";
                     selectStatus = selectStatus_id == "1"
                         ? "completed"
                         : selectStatus_id == "2"
@@ -154,6 +156,24 @@ class _Marketing_Form_Edit_ScreenState
                           listValue: ["${clientName}"],
                           onChanged: (String? newValue) {},
                         ),
+
+                        //REFERENCE
+                        Title_Style(Title: 'Reference', isStatus: true),
+                        textFormField(
+                            isEnabled: true,
+                            hintText: "Reference",
+                            keyboardtype: TextInputType.text,
+                            Controller: _Reference,
+                            validating: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please Enter Reference";
+                              }
+                              if (value == null) {
+                                return "Please Enter Reference";
+                              }
+                              return null;
+                            }),
+
                         //COMPANY NAME
                         Title_Style(Title: "Company Name", isStatus: true),
                         dropDownField(
@@ -361,6 +381,7 @@ class _Marketing_Form_Edit_ScreenState
                             var formData = FormData.fromMap({
                               "status_note": _StatusNote.text,
                               "status": selectStatus_id,
+                              "reference": _Reference.text,
                               "_method": "PUT",
                               "plan_for_next_meet": _PlanofAction.text,
                               "next_followup_date": _DatePicker.text

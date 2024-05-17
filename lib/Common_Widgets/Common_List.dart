@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
@@ -24,6 +25,8 @@ Widget Service_List(context,
     required String isTag,
     required bool isHistory,
     required WidgetRef ref}) {
+  SingleTon singleton = SingleTon();
+
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -100,30 +103,41 @@ Widget Service_List(context,
                     const Spacer(),
                     isHistory == true
                         ? Container()
-                        : InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Service_Form_Edit_Screen(
-                                                  service_id:
-                                                      "${data.serviceId ?? 0}")))
-                                  .then((value) {
-                                if (value == true) {
-                                  ref.refresh(serviceListProvider);
-                                }
-                              });
-                            },
-                            child: Container(
-                                height: 30,
-                                width: 30,
-                                child: Center(
-                                    child: Icon(
-                                  Icons.mode_edit,
-                                  size: 25,
-                                ))),
-                          ),
+                        : singleton.permissionList.contains("service-edit") ==
+                                true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Service_Form_Edit_Screen(
+                                                      service_id:
+                                                          "${data.serviceId ?? 0}")))
+                                      .then((value) {
+                                    if (value == true) {
+                                      var formData = FormData.fromMap({
+                                        "executive_id": "",
+                                        "client_id": "",
+                                        "status_id": "",
+                                        "daterange": ""
+                                      });
+                                      singleton.formData = formData;
+
+                                      ref.refresh(serviceListProvider);
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                    height: 30,
+                                    width: 30,
+                                    child: Center(
+                                        child: Icon(
+                                      Icons.mode_edit,
+                                      size: 25,
+                                    ))),
+                              )
+                            : Container(),
                   ],
                 ),
               ),
@@ -500,6 +514,8 @@ Widget Marketing_List(context,
     required String isTag,
     required bool isHistory,
     required WidgetRef ref}) {
+  SingleTon singleton = SingleTon();
+
   Color? containerColor;
   TextStyle? style;
   switch (isTag) {
@@ -594,19 +610,21 @@ Widget Marketing_List(context,
                     style: cardDetailT,
                   ),
                   const Spacer(),
-                  Container(
-                      alignment: Alignment.topLeft,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: containerColor),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, right: 10, top: 5, bottom: 5),
-                        child: Text(
-                          isTag,
-                          style: style,
-                        ),
-                      )),
+                  singleton.permissionList.contains("lead-edit") == true
+                      ? Container(
+                          alignment: Alignment.topLeft,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: containerColor),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 5, bottom: 5),
+                            child: Text(
+                              isTag,
+                              style: style,
+                            ),
+                          ))
+                      : Container(),
                 ],
               )),
           Row(
@@ -629,6 +647,15 @@ Widget Marketing_List(context,
                                   marketing_id: "${data.leadId ?? 0}")))
                       .then((value) {
                     if (value == true) {
+                      var formData = FormData.fromMap({
+                        "executive_id": "",
+                        "client_id": "",
+                        "status_id": "",
+                        "daterange": "",
+                        "page": 1
+                      });
+                      singleton.formData = formData;
+
                       ref.refresh(marketingListProvider);
                     }
                   });
@@ -954,6 +981,7 @@ Widget ActivitiesList(context,
     required WidgetRef ref}) {
   Color? containerColor;
   TextStyle? style;
+  SingleTon singleton = SingleTon();
 
   return Container(
     // width: MediaQuery.of(context).size.width / 1.5,
@@ -981,28 +1009,30 @@ Widget ActivitiesList(context,
                         style: cardDetailT,
                       ),
                       const Spacer(),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => InvoiceFormScreen(
-                                        data: data,
-                                      ))).then((value) {
-                            if (value == true) {
-                              ref.refresh(activityListProvider);
-                            }
-                          });
-                        },
-                        child: Container(
-                            height: 30,
-                            width: 30,
-                            child: Center(
-                                child: Icon(
-                              Icons.mode_edit,
-                              size: 25,
-                            ))),
-                      ),
+                      singleton.permissionList.contains("activity-edit") == true
+                          ? InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => InvoiceFormScreen(
+                                              data: data,
+                                            ))).then((value) {
+                                  if (value == true) {
+                                    ref.refresh(activityListProvider);
+                                  }
+                                });
+                              },
+                              child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: Center(
+                                      child: Icon(
+                                    Icons.mode_edit,
+                                    size: 25,
+                                  ))),
+                            )
+                          : Container(),
                     ],
                   )),
               //DATE
@@ -1057,6 +1087,7 @@ Widget StocksList(context,
     required WidgetRef ref}) {
   Color? containerColor;
   TextStyle? style;
+  SingleTon singleton = SingleTon();
 
   return Container(
     // width: MediaQuery.of(context).size.width / 1.5,
@@ -1084,28 +1115,31 @@ Widget StocksList(context,
                         style: cardDetailT,
                       ),
                       const Spacer(),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddPhysicalStockScreen(
-                                        data: data,
-                                      ))).then((value) {
-                            if (value == true) {
-                              ref.refresh(stocksListProvider);
-                            }
-                          });
-                        },
-                        child: Container(
-                            height: 30,
-                            width: 30,
-                            child: Center(
-                                child: Icon(
-                              Icons.mode_edit,
-                              size: 25,
-                            ))),
-                      ),
+                      singleton.permissionList.contains("stock-edit") == true
+                          ? InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddPhysicalStockScreen(
+                                              data: data,
+                                            ))).then((value) {
+                                  if (value == true) {
+                                    ref.refresh(stocksListProvider);
+                                  }
+                                });
+                              },
+                              child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: Center(
+                                      child: Icon(
+                                    Icons.mode_edit,
+                                    size: 25,
+                                  ))),
+                            )
+                          : Container(),
                     ],
                   )),
               //DATE
