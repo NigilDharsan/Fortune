@@ -87,6 +87,9 @@ class _Marketing_Form_Edit_ScreenState
   String? companyName;
   String? assignExecutive;
   String? status;
+
+  SingleTon singleton = SingleTon();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -123,7 +126,8 @@ class _Marketing_Form_Edit_ScreenState
                       st.companyId ==
                       int.parse(data.data?.data?.companyId ?? "0"));
 
-                  companyName = data.data!.companies![index].name ?? "";
+                  companyName =
+                      data.data!.companies![index].companyBranch ?? "";
 
                   if (!isvalueUpdated) {
                     isvalueUpdated = true;
@@ -372,6 +376,37 @@ class _Marketing_Form_Edit_ScreenState
                           },
                         ),
 
+                        singleton.permissionList.contains("service-assign") ==
+                                true
+                            ? Column(
+                                children: [
+                                  Title_Style(
+                                      Title: "Assign Executive",
+                                      isStatus: true),
+                                  // dropDownField3(
+                                  //   context,
+                                  //   hintT: 'Select Executive',
+                                  //   value: assignExecutive,
+                                  //   listValue: data?.data?.executives ?? [],
+                                  //   onChanged: (String? newValue) {
+                                  //     setState(() {
+                                  //       assignExecutive = newValue;
+                                  //     });
+                                  //   },
+                                  // ),
+                                  MultiSelectDropdown(
+                                    items: data.data?.executives ?? [],
+                                    selectedItems: _selectedItems,
+                                    onChanged:
+                                        (List<Executives> selectedItems) {
+                                      setState(() {
+                                        _selectedItems = selectedItems;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         const SizedBox(
                           height: 30,
                         ),

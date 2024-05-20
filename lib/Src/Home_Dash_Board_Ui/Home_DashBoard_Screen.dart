@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_List.dart';
@@ -46,6 +47,32 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
   Widget build(BuildContext context) {
     final _dashbaordData = ref.watch(dashboardProvider);
     SingleTon singleton = SingleTon();
+
+    singleton.filterSalesrep = null;
+    singleton.filterSalesrepID = null;
+
+    singleton.filterDaterange = null;
+
+    singleton.filterStatus = null;
+    singleton.filterStatusID = null;
+
+    singleton.filterClientname = null;
+    singleton.filterClientnameID = null;
+
+    singleton.filterCompanyname = null;
+    singleton.filterCompanynameID = null;
+
+    singleton.filterBranchname = null;
+    singleton.filterBranchnameID = null;
+
+    singleton.filterDaterangeType = null;
+    singleton.filterDaterangeTypeID = null;
+
+    singleton.filterNextFollowUp = null;
+    singleton.filterNextFollowUpID = null;
+
+    singleton.filterEnable = false;
+    singleton.formData = FormData();
 
     return Scaffold(
         appBar: Custom_AppBar(
@@ -224,16 +251,57 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                  width: MediaQuery.sizeOf(context).width / 1.2,
-                                  margin: EdgeInsets.only(
-                                      top: 20, bottom: 10, left: 10),
-                                  child: Text(
-                                    "Today's list of marketing to be visited",
-                                    style: TBlack,
-                                    maxLines: 2,
-                                    textAlign: TextAlign.start,
-                                  )),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: 20, bottom: 10, left: 10),
+                                        child: Text(
+                                          "Today's list of marketing to be visited",
+                                          style: TBlack,
+                                          maxLines: 2,
+                                          overflow: TextOverflow
+                                              .ellipsis, // Handle overflow with ellipsis
+                                          textAlign: TextAlign.start,
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  InkWell(
+                                    // Use InkWell for a clickable effect
+                                    onTap: () {
+                                      Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Marketing_List_Screen()))
+                                          .then((value) =>
+                                              ref.refresh(dashboardProvider));
+                                    },
+                                    child: const Row(
+                                      children: [
+                                        Text(
+                                          'View All',
+                                          style: TextStyle(
+                                            color: Colors
+                                                .black, // Change color to match your design
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons
+                                              .arrow_forward_ios, // Use any arrow icon you prefer
+                                          size: 16, // Adjust size as needed
+                                          color: Colors
+                                              .black, // Change color to match your design
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 10)
+                                ],
+                              ),
                               Container(
                                   height:
                                       120, //MediaQuery.sizeOf(context).height / 9,
@@ -248,16 +316,68 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                  width: MediaQuery.sizeOf(context).width / 1.2,
-                                  margin: EdgeInsets.only(
-                                      top: 20, bottom: 10, left: 10),
-                                  child: Text(
-                                    "Service didn’t closed for more than 5 days",
-                                    style: TBlack,
-                                    maxLines: 2,
-                                    textAlign: TextAlign.start,
-                                  )),
+                              // Container(
+                              //     width: MediaQuery.sizeOf(context).width / 1.2,
+                              //     margin: EdgeInsets.only(
+                              //         top: 20, bottom: 10, left: 10),
+                              //     child: Text(
+                              //       "Service didn’t closed for more than 5 days",
+                              //       style: TBlack,
+                              //       maxLines: 2,
+                              //       textAlign: TextAlign.start,
+                              //     )),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: 20, bottom: 10, left: 10),
+                                        child: Text(
+                                          "Service didn’t closed for more than 5 days",
+                                          style: TBlack,
+                                          maxLines: 2,
+                                          overflow: TextOverflow
+                                              .ellipsis, // Handle overflow with ellipsis
+                                          textAlign: TextAlign.start,
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  InkWell(
+                                    // Use InkWell for a clickable effect
+                                    onTap: () {
+                                      // Handle button click
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Service_List_Screen())).then(
+                                          (value) =>
+                                              ref.refresh(dashboardProvider));
+                                    },
+                                    child: const Row(
+                                      children: [
+                                        Text(
+                                          'View All',
+                                          style: TextStyle(
+                                            color: Colors
+                                                .black, // Change color to match your design
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons
+                                              .arrow_forward_ios, // Use any arrow icon you prefer
+                                          size: 16, // Adjust size as needed
+                                          color: Colors
+                                              .black, // Change color to match your design
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 10)
+                                ],
+                              ),
                               Container(
                                   height:
                                       120, //MediaQuery.sizeOf(context).height / 9,
@@ -272,16 +392,67 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                  width: MediaQuery.sizeOf(context).width / 1.2,
-                                  margin: EdgeInsets.only(
-                                      top: 20, bottom: 10, left: 10),
-                                  child: Text(
-                                    "Marketings didn’t updated for more than 5 days",
-                                    style: TBlack,
-                                    maxLines: 2,
-                                    textAlign: TextAlign.start,
-                                  )),
+                              // Container(
+                              //     width: MediaQuery.sizeOf(context).width / 1.2,
+                              //     margin: EdgeInsets.only(
+                              //         top: 20, bottom: 10, left: 10),
+                              //     child: Text(
+                              //       "Marketings didn’t updated for more than 5 days",
+                              //       style: TBlack,
+                              //       maxLines: 2,
+                              //       textAlign: TextAlign.start,
+                              //     )),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: 20, bottom: 10, left: 10),
+                                        child: Text(
+                                          "Marketings didn’t updated for more than 5 days",
+                                          style: TBlack,
+                                          maxLines: 2,
+                                          overflow: TextOverflow
+                                              .ellipsis, // Handle overflow with ellipsis
+                                          textAlign: TextAlign.start,
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  InkWell(
+                                    // Use InkWell for a clickable effect
+                                    onTap: () {
+                                      Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Marketing_List_Screen()))
+                                          .then((value) =>
+                                              ref.refresh(dashboardProvider));
+                                    },
+                                    child: const Row(
+                                      children: [
+                                        Text(
+                                          'View All',
+                                          style: TextStyle(
+                                            color: Colors
+                                                .black, // Change color to match your design
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons
+                                              .arrow_forward_ios, // Use any arrow icon you prefer
+                                          size: 16, // Adjust size as needed
+                                          color: Colors
+                                              .black, // Change color to match your design
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 10)
+                                ],
+                              ),
                               Container(
                                   height:
                                       120, //MediaQuery.sizeOf(context).height / 9,

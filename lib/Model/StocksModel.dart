@@ -1,3 +1,5 @@
+import 'package:fortune/Model/ServiceListModel.dart';
+
 class StocksModel {
   bool? success;
   Data? data;
@@ -24,18 +26,24 @@ class StocksModel {
 
 class Data {
   Stocks? stocks;
+  Filter? filter;
 
-  Data({this.stocks});
+  Data({this.stocks, this.filter});
 
   Data.fromJson(Map<String, dynamic> json) {
     stocks =
         json['stocks'] != null ? new Stocks.fromJson(json['stocks']) : null;
+    filter =
+        json['filter'] != null ? new Filter.fromJson(json['filter']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.stocks != null) {
       data['stocks'] = this.stocks!.toJson();
+    }
+    if (this.filter != null) {
+      data['filter'] = this.filter!.toJson();
     }
     return data;
   }

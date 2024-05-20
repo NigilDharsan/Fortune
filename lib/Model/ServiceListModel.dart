@@ -1,3 +1,5 @@
+import 'package:fortune/Model/ServiceModel.dart';
+
 class ServiceListModel {
   bool? success;
   Data? data;
@@ -24,19 +26,25 @@ class ServiceListModel {
 
 class Data {
   Services? services;
+  Filter? filter;
 
-  Data({this.services});
+  Data({this.services, this.filter});
 
   Data.fromJson(Map<String, dynamic> json) {
     services = json['services'] != null
         ? new Services.fromJson(json['services'])
         : null;
+    filter =
+        json['filter'] != null ? new Filter.fromJson(json['filter']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.services != null) {
       data['services'] = this.services!.toJson();
+    }
+    if (this.filter != null) {
+      data['filter'] = this.filter!.toJson();
     }
     return data;
   }
@@ -211,6 +219,250 @@ class Links {
     data['url'] = this.url;
     data['label'] = this.label;
     data['active'] = this.active;
+    return data;
+  }
+}
+
+class Filter {
+  List<Company>? company;
+  List<ClientDetails>? clientDetails;
+  List<Executives>? executives;
+  List<Branch>? branch;
+
+  Status? status;
+
+  Filter(
+      {this.company,
+      this.clientDetails,
+      this.executives,
+      this.branch,
+      this.status});
+
+  Filter.fromJson(Map<String, dynamic> json) {
+    if (json['company'] != null) {
+      company = <Company>[];
+      json['company'].forEach((v) {
+        company!.add(new Company.fromJson(v));
+      });
+    }
+    if (json['client_details'] != null) {
+      clientDetails = <ClientDetails>[];
+      json['client_details'].forEach((v) {
+        clientDetails!.add(new ClientDetails.fromJson(v));
+      });
+    }
+    if (json['executives'] != null) {
+      executives = <Executives>[];
+      json['executives'].forEach((v) {
+        executives!.add(new Executives.fromJson(v));
+      });
+    }
+    if (json['branch'] != null) {
+      branch = <Branch>[];
+      json['branch'].forEach((v) {
+        branch!.add(new Branch.fromJson(v));
+      });
+    }
+    status =
+        json['status'] != null ? new Status.fromJson(json['status']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.company != null) {
+      data['company'] = this.company!.map((v) => v.toJson()).toList();
+    }
+    if (this.clientDetails != null) {
+      data['client_details'] =
+          this.clientDetails!.map((v) => v.toJson()).toList();
+    }
+    if (this.executives != null) {
+      data['executives'] = this.executives!.map((v) => v.toJson()).toList();
+    }
+    if (this.branch != null) {
+      data['branch'] = this.branch!.map((v) => v.toJson()).toList();
+    }
+    if (this.status != null) {
+      data['status'] = this.status!.toJson();
+    }
+    return data;
+  }
+}
+
+class Branch {
+  int? id;
+  String? branchName;
+  int? companyId;
+  String? createdAt;
+  String? updatedAt;
+
+  Branch(
+      {this.id,
+      this.branchName,
+      this.companyId,
+      this.createdAt,
+      this.updatedAt});
+
+  Branch.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    branchName = json['branch_name'];
+    companyId = json['company_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['branch_name'] = this.branchName;
+    data['company_id'] = this.companyId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Company {
+  int? companyId;
+  String? name;
+  Null? email;
+  Null? logo;
+  Null? qrScanner;
+  Null? mobileNo;
+  Null? accNo;
+  Null? ifsc;
+  Null? bankName;
+  Null? branchName;
+  Null? gstNo;
+  Null? landlineNo;
+  Null? websiteLink;
+  Null? address;
+  String? city;
+  Null? state;
+  Null? pincode;
+  int? status;
+  Null? createdAt;
+  Null? updatedAt;
+  Null? bankDetails;
+  String? companyBranch;
+
+  Company(
+      {this.companyId,
+      this.name,
+      this.email,
+      this.logo,
+      this.qrScanner,
+      this.mobileNo,
+      this.accNo,
+      this.ifsc,
+      this.bankName,
+      this.branchName,
+      this.gstNo,
+      this.landlineNo,
+      this.websiteLink,
+      this.address,
+      this.city,
+      this.state,
+      this.pincode,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.bankDetails,
+      this.companyBranch});
+
+  Company.fromJson(Map<String, dynamic> json) {
+    companyId = json['company_id'];
+    name = json['name'];
+    email = json['email'];
+    logo = json['logo'];
+    qrScanner = json['qr_scanner'];
+    mobileNo = json['mobile_no'];
+    accNo = json['acc_no'];
+    ifsc = json['ifsc'];
+    bankName = json['bank_name'];
+    branchName = json['branch_name'];
+    gstNo = json['gst_no'];
+    landlineNo = json['landline_no'];
+    websiteLink = json['website_link'];
+    address = json['address'];
+    city = json['city'];
+    state = json['state'];
+    pincode = json['pincode'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    bankDetails = json['bank_details'];
+    companyBranch = json['company_branch'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['company_id'] = this.companyId;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['logo'] = this.logo;
+    data['qr_scanner'] = this.qrScanner;
+    data['mobile_no'] = this.mobileNo;
+    data['acc_no'] = this.accNo;
+    data['ifsc'] = this.ifsc;
+    data['bank_name'] = this.bankName;
+    data['branch_name'] = this.branchName;
+    data['gst_no'] = this.gstNo;
+    data['landline_no'] = this.landlineNo;
+    data['website_link'] = this.websiteLink;
+    data['address'] = this.address;
+    data['city'] = this.city;
+    data['state'] = this.state;
+    data['pincode'] = this.pincode;
+    data['status'] = this.status;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['bank_details'] = this.bankDetails;
+    data['company_branch'] = this.companyBranch;
+    return data;
+  }
+}
+
+class ClientDetails {
+  int? clientId;
+  String? cusFirstName;
+
+  ClientDetails({this.clientId, this.cusFirstName});
+
+  ClientDetails.fromJson(Map<String, dynamic> json) {
+    clientId = json['client_id'];
+    cusFirstName = json['cus_first_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['client_id'] = this.clientId;
+    data['cus_first_name'] = this.cusFirstName;
+    return data;
+  }
+}
+
+class Status {
+  String? s1;
+  String? s2;
+  String? s3;
+  String? s4;
+
+  Status({this.s1, this.s2, this.s3, this.s4});
+
+  Status.fromJson(Map<String, dynamic> json) {
+    s1 = json['1'];
+    s2 = json['2'];
+    s3 = json['3'];
+    s4 = json['4'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['1'] = this.s1;
+    data['2'] = this.s2;
+    data['3'] = this.s3;
+    data['4'] = this.s4;
     return data;
   }
 }

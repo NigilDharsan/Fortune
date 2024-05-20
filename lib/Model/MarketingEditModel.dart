@@ -1,3 +1,5 @@
+import 'package:fortune/Model/ServiceModel.dart';
+
 class MarketingEditModel {
   bool? success;
   Data? data;
@@ -24,6 +26,8 @@ class MarketingEditModel {
 
 class Data {
   List<Companies>? companies;
+  List<Executives>? executives;
+
   Status? status;
   MarketingEditData? data;
 
@@ -34,6 +38,12 @@ class Data {
       companies = <Companies>[];
       json['companies'].forEach((v) {
         companies!.add(new Companies.fromJson(v));
+      });
+    }
+    if (json['executives'] != null) {
+      executives = <Executives>[];
+      json['executives'].forEach((v) {
+        executives!.add(new Executives.fromJson(v));
       });
     }
     status =
@@ -47,6 +57,9 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.companies != null) {
       data['companies'] = this.companies!.map((v) => v.toJson()).toList();
+    }
+    if (this.executives != null) {
+      data['executives'] = this.executives!.map((v) => v.toJson()).toList();
     }
     if (this.status != null) {
       data['status'] = this.status!.toJson();

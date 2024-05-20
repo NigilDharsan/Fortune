@@ -87,6 +87,8 @@ class _Service_Form_Edit_ScreenState
   String client_id = "";
   String company_id = "";
 
+  SingleTon singleton = SingleTon();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -145,7 +147,8 @@ class _Service_Form_Edit_ScreenState
                     int index = data!.data!.companies!.indexWhere(
                         (st) => st.companyId == data.data?.data?[0].companyId);
                     if (index >= 0) {
-                      companyName = data.data!.companies![index].name ?? "";
+                      companyName =
+                          data.data!.companies![index].branchName ?? "";
                     }
 
                     if (!isvalueUpdated) {
@@ -361,6 +364,38 @@ class _Service_Form_Edit_ScreenState
                               });
                             },
                           ),
+
+                          singleton.permissionList.contains("service-assign") ==
+                                  true
+                              ? Column(
+                                  children: [
+                                    Title_Style(
+                                        Title: "Assign Executive",
+                                        isStatus: true),
+                                    // dropDownField3(
+                                    //   context,
+                                    //   hintT: 'Select Executive',
+                                    //   value: assignExecutive,
+                                    //   listValue: data?.data?.executives ?? [],
+                                    //   onChanged: (String? newValue) {
+                                    //     setState(() {
+                                    //       assignExecutive = newValue;
+                                    //     });
+                                    //   },
+                                    // ),
+                                    MultiSelectDropdown(
+                                      items: data.data?.executives ?? [],
+                                      selectedItems: _selectedItems,
+                                      onChanged:
+                                          (List<Executives> selectedItems) {
+                                        setState(() {
+                                          _selectedItems = selectedItems;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : Container(),
 
                           const SizedBox(
                             height: 30,

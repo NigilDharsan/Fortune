@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_Button.dart';
 import 'package:fortune/Common_Widgets/Common_List.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
+import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/StocksModel.dart';
+import 'package:fortune/Src/FilterScreen.dart/FilterPhysicalStock.dart';
 import 'package:fortune/Src/StockActivity/AddPhysicalStocks.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
@@ -18,13 +21,18 @@ class PhysicalStocksList extends ConsumerStatefulWidget {
 
 class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
   // var user_Role = "";
+  Filter? filter;
+  var formData;
+  SingleTon singleton = SingleTon();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    // getRole();
+    formData =
+        FormData.fromMap({"company_id": "", "branch_id": "", "daterange": ""});
+    singleton.formData = formData;
   }
 
   // void getRole() async {
@@ -57,11 +65,56 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
             backgroundColor: white5,
             appBar: Custom_AppBar(
                 title: 'Manage Physical Stocks',
-                actions: [],
+                actions: <Widget>[
+                  Stack(children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: 16.0), // Adjust the padding as needed
+                      child: IconButton(
+                        icon: Icon(Icons.filter_list),
+                        onPressed: () {
+                          // Add your search functionality here
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FilterPhysicalStock(
+                                        filter: filter,
+                                      ))).then((value) {
+                            if (value == true) {
+                              setState(() {
+                                formData = FormData.fromMap({
+                                  "company_id": singleton.filterCompanynameID,
+                                  "branch_id": singleton.filterBranchnameID,
+                                  "daterange": singleton.filterDaterange
+                                });
+                                singleton.formData = formData;
+
+                                ref.refresh(stocksListProvider);
+                              });
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      top: 10.0, // Adjust position as needed
+                      right: 20.0, // Adjust position as needed
+                      child: Container(
+                        padding: EdgeInsets.all(5.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ])
+                ],
                 isGreen: false,
                 isNav: true),
             body: _StocksListData.when(
               data: (data) {
+                filter = data?.data?.filter ?? Filter();
+
                 return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
@@ -91,12 +144,59 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
         : Scaffold(
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: 'Daily Stock Activities',
-                actions: [],
+                title: 'Manage Physical Stocks',
+                actions: <Widget>[
+                  Stack(children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: 16.0), // Adjust the padding as needed
+                      child: IconButton(
+                        icon: Icon(Icons.filter_list),
+                        onPressed: () {
+                          // Add your search functionality here
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FilterPhysicalStock(
+                                        filter: filter,
+                                      ))).then((value) {
+                            if (value == true) {
+                              setState(() {
+                                formData = FormData.fromMap({
+                                  "company_id": singleton.filterCompanynameID,
+                                  "branch_id": singleton.filterBranchnameID,
+                                  "daterange": singleton.filterDaterange
+                                });
+                                singleton.formData = formData;
+
+                                ref.refresh(stocksListProvider);
+                              });
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    singleton.filterEnable == true
+                        ? Positioned(
+                            top: 10.0, // Adjust position as needed
+                            right: 20.0, // Adjust position as needed
+                            child: Container(
+                              padding: EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )
+                        : Container(),
+                  ])
+                ],
                 isGreen: false,
                 isNav: true),
             body: _StocksListData.when(
               data: (data) {
+                filter = data?.data?.filter ?? Filter();
+
                 return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),

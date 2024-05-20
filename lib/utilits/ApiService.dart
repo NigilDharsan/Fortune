@@ -235,6 +235,37 @@ class ApiService {
     return ServiceListModel();
   }
 
+  Future<List<ServicesData>> getServiceListPaginationApi() async {
+    // var formData = FormData.fromMap({
+    //   "executive_id": "",
+    //   "client_id": "",
+    //   "status_id": "",
+    //   "daterange": ""
+    // });
+    SingleTon singleTon = SingleTon();
+
+    final result = await requestPOST(
+        url: ConstantApi.servicesList, formData: singleTon.formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      final results = ServiceListModel?.fromJson(result["response"]);
+
+      return results.data?.services?.data ?? [];
+    } else {
+      try {
+        var resultval = ServiceListModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval.data?.services?.data ?? [];
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return [];
+  }
+
   Future<EditModel> getServiceEditApi(String service_id) async {
     final result = await requestGET(
         url: ConstantApi.servicesStore + "/${service_id}/" + "edit", dio: _dio);
@@ -325,10 +356,12 @@ class ApiService {
   }
 
   Future<DailyActivitiesModel> getDailyStockListApi() async {
-    var formData = FormData.fromMap({});
+    SingleTon singleTon = SingleTon();
 
     final result = await requestPOST(
-        url: ConstantApi.activitiesList, formData: formData, dio: _dio);
+        url: ConstantApi.activitiesList,
+        formData: singleTon.formData,
+        dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -348,10 +381,10 @@ class ApiService {
   }
 
   Future<StocksModel> getStocksListApi() async {
-    var formData = FormData.fromMap({});
+    SingleTon singleTon = SingleTon();
 
     final result = await requestPOST(
-        url: ConstantApi.stocksList, formData: formData, dio: _dio);
+        url: ConstantApi.stocksList, formData: singleTon.formData, dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");

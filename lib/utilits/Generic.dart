@@ -136,6 +136,31 @@ class SingleTon {
   bool isLoading = true;
   List<String> permissionList = [];
   FormData formData = FormData();
+
+  String? filterSalesrep;
+  String? filterSalesrepID;
+
+  String? filterDaterange;
+
+  String? filterStatus;
+  String? filterStatusID;
+
+  String? filterClientname;
+  String? filterClientnameID;
+
+  String? filterCompanyname;
+  String? filterCompanynameID;
+
+  String? filterBranchname;
+  String? filterBranchnameID;
+
+  String? filterDaterangeType;
+  String? filterDaterangeTypeID;
+
+  String? filterNextFollowUp;
+  String? filterNextFollowUpID;
+
+  bool? filterEnable = false;
 }
 
 Widget buildLoadingIndicator() {

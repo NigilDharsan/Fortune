@@ -5,12 +5,13 @@ import 'package:fortune/Common_Widgets/Common_Button.dart';
 import 'package:fortune/Common_Widgets/Common_List.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
+import 'package:fortune/Model/ServiceListModel.dart';
+import 'package:fortune/Src/FilterScreen.dart/FilterScreen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
 import 'package:fortune/Src/Marketing_History_List/Marketing_History_List.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
-import 'package:intl/intl.dart';
 
 class Marketing_List_Screen extends ConsumerStatefulWidget {
   const Marketing_List_Screen({super.key});
@@ -31,6 +32,8 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
   SingleTon singleton = SingleTon();
   ScrollController _scrollController = ScrollController();
   List<MarketingListData> marketingData = [];
+
+  Filter? filter;
 
   @override
   void initState() {
@@ -107,7 +110,57 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
             backgroundColor: white5,
             appBar: Custom_AppBar(
                 title: "Marketing List",
-                actions: null,
+                actions: <Widget>[
+                  Stack(children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: 16.0), // Adjust the padding as needed
+                      child: IconButton(
+                        icon: Icon(Icons.filter_list),
+                        onPressed: () {
+                          // Add your search functionality here
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FilterScreen(
+                                        filter: filter,
+                                      ))).then((value) {
+                            if (value == true) {
+                              formData = FormData.fromMap({
+                                "executive_id": singleton.filterSalesrepID,
+                                "status_id": singleton.filterStatusID,
+                                "daterange": singleton.filterDaterange,
+                                "company_id": singleton.filterCompanynameID,
+                                "daterange_type":
+                                    singleton.filterDaterangeTypeID,
+                                "next_followup": singleton.filterNextFollowUpID,
+                                "page": 1
+                              });
+                              singleton.formData = formData;
+                              i = 0;
+                              isRefresh = true;
+                              marketingData = [];
+                              ref.refresh(marketingListProvider);
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    singleton.filterEnable == true
+                        ? Positioned(
+                            top: 10.0, // Adjust position as needed
+                            right: 20.0, // Adjust position as needed
+                            child: Container(
+                              padding: EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )
+                        : Container(),
+                  ])
+                ],
                 isGreen: false,
                 isNav: true),
             body: _MarketingListData.when(
@@ -121,6 +174,8 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                 }
                 isRefresh = false;
                 i = 1;
+                filter = data?.data?.filter ?? Filter();
+
                 return SingleChildScrollView(
                   controller:
                       _scrollController, // Attach the scroll controller here
@@ -132,66 +187,6 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          color: Colors.white,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 8.0, right: 8.0),
-                            child: Row(
-                              children: [
-                                Text(dateRange),
-                                Spacer(),
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.red),
-                                    onPressed: () async {
-                                      final DateTimeRange? picked =
-                                          await showDateRangePicker(
-                                        context: context,
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2200),
-                                        initialDateRange: DateTimeRange(
-                                          start: DateTime.now(),
-                                          end: DateTime.now(),
-                                        ),
-                                      );
-
-                                      if (picked != null) {
-                                        setState(() {
-                                          // fromDate = picked.start;
-                                          // toDate = picked.end;
-                                          String formatdate =
-                                              DateFormat("dd/MM/yyyy")
-                                                  .format(picked.start);
-
-                                          String todate =
-                                              DateFormat("dd/MM/yyyy")
-                                                  .format(picked.end);
-
-                                          setState(() {
-                                            dateRange =
-                                                "${formatdate}-${todate}";
-                                            formData = FormData.fromMap({
-                                              "executive_id": "",
-                                              "client_id": "",
-                                              "status_id": "",
-                                              "daterange": dateRange,
-                                              "page": pageCount
-                                            });
-                                            singleton.formData = formData;
-                                            ref.refresh(marketingListProvider);
-                                          });
-                                        });
-                                      }
-                                    },
-                                    child: Text(
-                                      "Date range",
-                                      style: TextStyle(color: Colors.white),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ),
                         const SizedBox(
                           height: 20,
                         ),
@@ -214,7 +209,57 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
             backgroundColor: white5,
             appBar: Custom_AppBar(
                 title: "Marketing List",
-                actions: null,
+                actions: <Widget>[
+                  Stack(children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: 16.0), // Adjust the padding as needed
+                      child: IconButton(
+                        icon: Icon(Icons.filter_list),
+                        onPressed: () {
+                          // Add your search functionality here
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FilterScreen(
+                                        filter: filter,
+                                      ))).then((value) {
+                            if (value == true) {
+                              formData = FormData.fromMap({
+                                "executive_id": singleton.filterSalesrepID,
+                                "status_id": singleton.filterStatusID,
+                                "daterange": singleton.filterDaterange,
+                                "company_id": singleton.filterCompanynameID,
+                                "daterange_type":
+                                    singleton.filterDaterangeTypeID,
+                                "next_followup": singleton.filterNextFollowUpID,
+                                "page": 1
+                              });
+                              singleton.formData = formData;
+                              i = 0;
+                              isRefresh = true;
+                              marketingData = [];
+                              ref.refresh(marketingListProvider);
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    singleton.filterEnable == true
+                        ? Positioned(
+                            top: 10.0, // Adjust position as needed
+                            right: 20.0, // Adjust position as needed
+                            child: Container(
+                              padding: EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )
+                        : Container(),
+                  ])
+                ],
                 isGreen: false,
                 isNav: true),
             body: _MarketingListData.when(

@@ -217,6 +217,12 @@ TextStyle WBlack1 = TextStyle(
     fontSize: 22,
     color: Colors.white,
     fontWeight: FontWeight.w700);
+TextStyle viewAllT = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    color: black1,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.25);
 
 TextStyle refferalCountT = TextStyle(
     fontFamily: 'Inter',
