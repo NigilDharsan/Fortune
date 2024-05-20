@@ -548,12 +548,12 @@ Widget dropDownField4(
       ),
       items: listValue?.map((Company option) {
         return DropdownMenuItem<String>(
-          value: option.name,
+          value: option.companyBranch,
           child: Padding(
             padding: const EdgeInsets.only(
               left: 10,
             ),
-            child: Text(option.name ?? ""),
+            child: Text(option.companyBranch ?? ""),
           ),
         );
       }).toList(),

@@ -61,7 +61,8 @@ final marketingListProvider =
   return ref.watch(apiServiceProvider).getMarketingListApi();
 });
 
-final marketingDataProvider = FutureProvider<ServiceModel?>((ref) async {
+final marketingDataProvider =
+    FutureProvider.autoDispose<ServiceModel?>((ref) async {
   return ref.watch(apiServiceProvider).getMarketingDataApi();
 });
 

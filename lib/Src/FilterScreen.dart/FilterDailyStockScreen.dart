@@ -43,8 +43,51 @@ class _FilterDailyStockScreenState extends State<FilterDailyStockScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Custom_AppBar(
-            title: "Filter", actions: null, isGreen: false, isNav: true),
+        appBar: singleton.filterEnable == true
+            ? Custom_AppBar(
+                title: "Filter",
+                isGreen: false,
+                isNav: true,
+                actions: <Widget>[
+                  Stack(children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: 16.0), // Adjust the padding as needed
+                      child: InkWell(
+                          onTap: () {
+                            singleton.filterSalesrep = null;
+                            singleton.filterSalesrepID = null;
+
+                            singleton.filterDaterange = null;
+
+                            singleton.filterStatus = null;
+                            singleton.filterStatusID = null;
+
+                            singleton.filterClientname = null;
+                            singleton.filterClientnameID = null;
+
+                            singleton.filterCompanyname = null;
+                            singleton.filterCompanynameID = null;
+
+                            singleton.filterBranchname = null;
+                            singleton.filterBranchnameID = null;
+
+                            singleton.filterDaterangeType = null;
+                            singleton.filterDaterangeTypeID = null;
+
+                            singleton.filterNextFollowUp = null;
+                            singleton.filterNextFollowUpID = null;
+
+                            singleton.filterEnable = false;
+                            Navigator.pop(context, true);
+                          },
+                          child: Text("Clear All")),
+                    ),
+                  ])
+                ],
+              )
+            : Custom_AppBar(
+                title: "Filter", isGreen: false, isNav: true, actions: null),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -110,8 +153,8 @@ class _FilterDailyStockScreenState extends State<FilterDailyStockScreen> {
                       listValue: widget.filter?.company,
                       onChanged: (String? newValue) {
                         singleton.filterCompanyname = newValue ?? "";
-                        Company? item = widget.filter?.company!
-                            .firstWhere((item) => item.name == newValue);
+                        Company? item = widget.filter?.company!.firstWhere(
+                            (item) => item.companyBranch == newValue);
                         singleton.filterCompanynameID =
                             "${item?.companyId ?? 0}";
 

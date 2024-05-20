@@ -130,6 +130,19 @@ class _Marketing_Form_Edit_ScreenState
                       data.data!.companies![index].companyBranch ?? "";
 
                   if (!isvalueUpdated) {
+                    final salesrep = data.data?.data?.salesrepInvolved ?? "";
+
+                    List<String> servicerepsList = salesrep.split(',');
+
+                    // Convert the array of strings into an array of integers
+                    List<int> servicerepsIntArray =
+                        servicerepsList.map(int.parse).toList();
+
+                    _selectedItems = data.data!.executives!
+                        .where((executive) =>
+                            servicerepsIntArray.contains(executive.id))
+                        .toList();
+
                     isvalueUpdated = true;
                     selectStatus_id = data.data?.data?.status ?? "";
                     _StatusNote.text = data.data?.data?.instructions ?? "";
@@ -413,16 +426,28 @@ class _Marketing_Form_Edit_ScreenState
                         //BUTTON
                         CommonElevatedButton(context, "Update", () {
                           if (_formKey.currentState!.validate()) {
-                            var formData = FormData.fromMap({
-                              "status_note": _StatusNote.text,
-                              "status": selectStatus_id,
-                              "reference": _Reference.text,
-                              "_method": "PUT",
-                              "plan_for_next_meet": _PlanofAction.text,
-                              "next_followup_date": _DatePicker.text
-                            });
+                            if (singleton.permissionList
+                                        .contains("service-assign") ==
+                                    true &&
+                                _selectedItems.length == 0) {
+                              ShowToastMessage("Select executive");
+                            } else {
+                              List<String> idList = _selectedItems
+                                  .map((item) => "${item.id ?? 0}")
+                                  .toList();
+                              var formData = FormData.fromMap({
+                                "status_note": _StatusNote.text,
+                                "status": selectStatus_id,
+                                "reference": _Reference.text,
+                                for (var i = 0; i < idList.length; i++)
+                                  'assign_executive[$i]': idList[i],
+                                "_method": "PUT",
+                                "plan_for_next_meet": _PlanofAction.text,
+                                "next_followup_date": _DatePicker.text
+                              });
 
-                            addMarketingList(formData);
+                              addMarketingList(formData);
+                            }
                           }
                         }),
 
