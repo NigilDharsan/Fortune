@@ -435,10 +435,15 @@ Widget dropDownField2(
   required String hintT,
 }) {
   return Container(
-    height: 50,
+    height: 70,
     width: MediaQuery.of(context).size.width,
-    decoration:
-        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(color: Colors.grey),
+      color: Colors.white,
+    ),
+    // decoration:
+    //     BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
     child: DropdownButtonFormField<String>(
       value: value,
       isExpanded: true,
@@ -449,7 +454,7 @@ Widget dropDownField2(
         hintText: hintT,
       ),
       icon: Padding(
-        padding: const EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.only(top: 10),
         child: Icon(
           Icons.keyboard_arrow_down_sharp,
           color: Colors.black,
@@ -644,6 +649,51 @@ Widget dropDownField6(
               left: 10,
             ),
             child: Text(option.branchName ?? ""),
+          ),
+        );
+      }).toList(),
+      onChanged: onChanged,
+    ),
+  );
+}
+
+Widget dropDownField7(
+  context, {
+  required String? value,
+  required List<Companies>? listValue,
+  required void Function(String?)? onChanged,
+  required String hintT,
+}) {
+  return Container(
+    height: 50,
+    width: MediaQuery.of(context).size.width,
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: DropdownButtonFormField<String>(
+      value: value,
+      isExpanded: true,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        hintStyle: phoneHT,
+        hintText: hintT,
+      ),
+      icon: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: Icon(
+          Icons.keyboard_arrow_down_sharp,
+          color: Colors.black,
+          size: 35,
+        ),
+      ),
+      items: listValue?.map((Companies option) {
+        return DropdownMenuItem<String>(
+          value: option.companyBranch,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 10,
+            ),
+            child: Text(option.companyBranch ?? ""),
           ),
         );
       }).toList(),

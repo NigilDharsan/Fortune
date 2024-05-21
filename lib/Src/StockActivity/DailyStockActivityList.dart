@@ -98,17 +98,19 @@ class _DailyStockActivityListState
                         },
                       ),
                     ),
-                    Positioned(
-                      top: 10.0, // Adjust position as needed
-                      right: 20.0, // Adjust position as needed
-                      child: Container(
-                        padding: EdgeInsets.all(5.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
+                    singleton.filterEnable == true
+                        ? Positioned(
+                            top: 10.0, // Adjust position as needed
+                            right: 20.0, // Adjust position as needed
+                            child: Container(
+                              padding: EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )
+                        : Container(),
                   ])
                 ],
                 isGreen: false,
