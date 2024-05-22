@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/LoginModel.dart';
@@ -10,7 +11,9 @@ import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
+import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/MakeApiCall.dart';
 
 import 'ConstantsApi.dart';
@@ -204,15 +207,16 @@ class ApiService {
   }
 
   Future<ServiceListModel> getServiceListApi() async {
-    var formData = FormData.fromMap({
-      "executive_id": "",
-      "client_id": "",
-      "status_id": "",
-      "daterange": ""
-    });
+    // var formData = FormData.fromMap({
+    //   "executive_id": "",
+    //   "client_id": "",
+    //   "status_id": "",
+    //   "daterange": ""
+    // });
+    SingleTon singleTon = SingleTon();
 
     final result = await requestPOST(
-        url: ConstantApi.servicesList, formData: formData, dio: _dio);
+        url: ConstantApi.servicesList, formData: singleTon.formData, dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -229,6 +233,37 @@ class ApiService {
       }
     }
     return ServiceListModel();
+  }
+
+  Future<List<ServicesData>> getServiceListPaginationApi() async {
+    // var formData = FormData.fromMap({
+    //   "executive_id": "",
+    //   "client_id": "",
+    //   "status_id": "",
+    //   "daterange": ""
+    // });
+    SingleTon singleTon = SingleTon();
+
+    final result = await requestPOST(
+        url: ConstantApi.servicesList, formData: singleTon.formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      final results = ServiceListModel?.fromJson(result["response"]);
+
+      return results.data?.services?.data ?? [];
+    } else {
+      try {
+        var resultval = ServiceListModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval.data?.services?.data ?? [];
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return [];
   }
 
   Future<EditModel> getServiceEditApi(String service_id) async {
@@ -320,6 +355,54 @@ class ApiService {
     return ServiceHistoryModel();
   }
 
+  Future<DailyActivitiesModel> getDailyStockListApi() async {
+    SingleTon singleTon = SingleTon();
+
+    final result = await requestPOST(
+        url: ConstantApi.activitiesList,
+        formData: singleTon.formData,
+        dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return DailyActivitiesModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = DailyActivitiesModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return DailyActivitiesModel();
+  }
+
+  Future<StocksModel> getStocksListApi() async {
+    SingleTon singleTon = SingleTon();
+
+    final result = await requestPOST(
+        url: ConstantApi.stocksList, formData: singleTon.formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return StocksModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = StocksModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return StocksModel();
+  }
+
   Future<MarketingHistoryModel> getMarketingHistoryApi(
       String service_id) async {
     var formData = FormData.fromMap({});
@@ -367,15 +450,18 @@ class ApiService {
   }
 
   Future<MarketingListModel> getMarketingListApi() async {
-    var formData = FormData.fromMap({
-      "executive_id": "",
-      "client_id": "",
-      "status_id": "",
-      "daterange": ""
-    });
+    // var formData = FormData.fromMap({
+    //   "executive_id": "",
+    //   "client_id": "",
+    //   "status_id": "",
+    //   "daterange": ""
+    // });
+    SingleTon singleTon = SingleTon();
 
     final result = await requestPOST(
-        url: ConstantApi.marketingList, formData: formData, dio: _dio);
+        url: ConstantApi.marketingList,
+        formData: singleTon.formData,
+        dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");

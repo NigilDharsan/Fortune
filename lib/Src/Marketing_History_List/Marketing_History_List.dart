@@ -44,7 +44,9 @@ class _Marketing_History_ListState
                   ),
                   Container(
                     width: MediaQuery.sizeOf(context).width,
-                    child: _Marketing_List(data?.data?.marketing?.data ?? []),
+                    child: (data?.data?.marketing?.data ?? []) != []
+                        ? _Marketing_List(data?.data?.marketing?.data ?? [])
+                        : Center(child: Text("No History!")),
                   ),
                 ],
               ),
@@ -52,7 +54,7 @@ class _Marketing_History_ListState
           );
         },
         error: (Object error, StackTrace stackTrace) {
-          return Text(error.toString());
+          return Center(child: Text("No data found!"));
         },
         loading: () => Center(child: CircularProgressIndicator()),
       ),

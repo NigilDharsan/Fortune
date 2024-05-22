@@ -1,3 +1,5 @@
+import 'package:fortune/Model/ServiceModel.dart';
+
 class EditModel {
   bool? success;
   Data? data;
@@ -24,16 +26,23 @@ class EditModel {
 
 class Data {
   List<Companies>? companies;
+  List<Executives>? executives;
   Status? status;
   List<EditData>? data;
 
-  Data({this.companies, this.status, this.data});
+  Data({this.companies, this.status, this.data, this.executives});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['companies'] != null) {
       companies = <Companies>[];
       json['companies'].forEach((v) {
         companies!.add(new Companies.fromJson(v));
+      });
+    }
+    if (json['executives'] != null) {
+      executives = <Executives>[];
+      json['executives'].forEach((v) {
+        executives!.add(new Executives.fromJson(v));
       });
     }
     status =
@@ -51,6 +60,9 @@ class Data {
     if (this.companies != null) {
       data['companies'] = this.companies!.map((v) => v.toJson()).toList();
     }
+    if (this.executives != null) {
+      data['executives'] = this.executives!.map((v) => v.toJson()).toList();
+    }
     if (this.status != null) {
       data['status'] = this.status!.toJson();
     }
@@ -64,25 +76,25 @@ class Data {
 class Companies {
   int? companyId;
   String? name;
-  Null? email;
-  Null? logo;
-  Null? qrScanner;
-  Null? mobileNo;
-  Null? accNo;
-  Null? ifsc;
-  Null? bankName;
-  Null? branchName;
-  Null? gstNo;
-  Null? landlineNo;
-  Null? websiteLink;
-  Null? address;
+  String? email;
+  String? logo;
+  String? qrScanner;
+  String? mobileNo;
+  String? accNo;
+  String? ifsc;
+  String? bankName;
+  String? branchName;
+  String? gstNo;
+  String? landlineNo;
+  String? websiteLink;
+  String? address;
   String? city;
-  Null? state;
-  Null? pincode;
+  String? state;
+  String? pincode;
   int? status;
-  Null? createdAt;
-  Null? updatedAt;
-  Null? bankDetails;
+  String? createdAt;
+  String? updatedAt;
+  String? bankDetails;
   String? companyBranch;
 
   Companies(
@@ -191,42 +203,42 @@ class EditData {
   int? serviceId;
   int? companyId;
   String? servicerepsInvolved;
-  Null? billeddoc;
-  Null? branchId;
-  Null? unitId;
+  String? billeddoc;
+  String? branchId;
+  String? unitId;
   int? customerId;
-  Null? cusType;
-  Null? hsn;
-  Null? ticketNo;
+  String? cusType;
+  String? hsn;
+  String? ticketNo;
   String? cusFirstName;
-  Null? cusState;
-  Null? cusLastName;
-  Null? gstVerified;
-  Null? gstNo;
+  String? cusState;
+  String? cusLastName;
+  String? gstVerified;
+  String? gstNo;
   String? address;
-  Null? landmark;
-  Null? city;
-  Null? contactPerson;
+  String? landmark;
+  String? city;
+  String? contactPerson;
   String? cusMobileNo;
-  Null? typeOfUnit;
-  Null? unitCapacity;
-  Null? unitLocation;
-  Null? typeOfService;
-  Null? natureOfComplaint;
+  String? typeOfUnit;
+  String? unitCapacity;
+  String? unitLocation;
+  String? typeOfService;
+  String? natureOfComplaint;
   String? reportUpload;
   String? reportDescription;
-  Null? technicianId;
-  Null? reportFromTechnician;
+  String? technicianId;
+  String? reportFromTechnician;
   String? callTakenDate;
-  Null? technicianAllocateDate;
-  Null? technicianReportDate;
+  String? technicianAllocateDate;
+  String? technicianReportDate;
   String? addedby;
   String? status;
-  Null? paidStatus;
-  Null? advAmount;
-  Null? typeOfWork;
-  Null? serviceType;
-  Null? amount;
+  String? paidStatus;
+  String? advAmount;
+  String? typeOfWork;
+  String? serviceType;
+  String? amount;
   String? createdAt;
   String? updatedAt;
 

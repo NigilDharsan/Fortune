@@ -1,3 +1,5 @@
+import 'package:fortune/Model/ServiceModel.dart';
+
 class MarketingEditModel {
   bool? success;
   Data? data;
@@ -24,6 +26,8 @@ class MarketingEditModel {
 
 class Data {
   List<Companies>? companies;
+  List<Executives>? executives;
+
   Status? status;
   MarketingEditData? data;
 
@@ -34,6 +38,12 @@ class Data {
       companies = <Companies>[];
       json['companies'].forEach((v) {
         companies!.add(new Companies.fromJson(v));
+      });
+    }
+    if (json['executives'] != null) {
+      executives = <Executives>[];
+      json['executives'].forEach((v) {
+        executives!.add(new Executives.fromJson(v));
       });
     }
     status =
@@ -47,6 +57,9 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.companies != null) {
       data['companies'] = this.companies!.map((v) => v.toJson()).toList();
+    }
+    if (this.executives != null) {
+      data['executives'] = this.executives!.map((v) => v.toJson()).toList();
     }
     if (this.status != null) {
       data['status'] = this.status!.toJson();
@@ -209,6 +222,7 @@ class MarketingEditData {
   String? enquiryType;
   String? addedby;
   String? status;
+  String? reference;
   String? createdAt;
   String? updatedAt;
 
@@ -237,6 +251,7 @@ class MarketingEditData {
       this.enquiryType,
       this.addedby,
       this.status,
+      this.reference,
       this.createdAt,
       this.updatedAt});
 
@@ -265,6 +280,7 @@ class MarketingEditData {
     enquiryType = json['enquiry_type'];
     addedby = json['addedby'];
     status = json['status'];
+    reference = json['reference'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -295,6 +311,7 @@ class MarketingEditData {
     data['enquiry_type'] = this.enquiryType;
     data['addedby'] = this.addedby;
     data['status'] = this.status;
+    data['reference'] = this.reference;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

@@ -65,6 +65,63 @@ class Data {
   }
 }
 
+class Executives {
+  int? id;
+  int? companyId;
+  int? branchId;
+  String? name;
+  String? mobile;
+  String? email;
+  String? emailVerifiedAt;
+  String? fcmToken;
+  int? status;
+  String? createdAt;
+  String? updatedAt;
+
+  Executives(
+      {this.id,
+      this.companyId,
+      this.branchId,
+      this.name,
+      this.mobile,
+      this.email,
+      this.emailVerifiedAt,
+      this.fcmToken,
+      this.status,
+      this.createdAt,
+      this.updatedAt});
+
+  Executives.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    companyId = json['company_id'];
+    branchId = json['branch_id'];
+    name = json['name'];
+    mobile = json['mobile'];
+    email = json['email'];
+    emailVerifiedAt = json['email_verified_at'];
+    fcmToken = json['fcm_token'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['company_id'] = this.companyId;
+    data['branch_id'] = this.branchId;
+    data['name'] = this.name;
+    data['mobile'] = this.mobile;
+    data['email'] = this.email;
+    data['email_verified_at'] = this.emailVerifiedAt;
+    data['fcm_token'] = this.fcmToken;
+    data['status'] = this.status;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
 class Companies {
   int? companyId;
   String? name;
@@ -162,55 +219,6 @@ class Companies {
     data['updated_at'] = this.updatedAt;
     data['bank_details'] = this.bankDetails;
     data['company_branch'] = this.companyBranch;
-    return data;
-  }
-}
-
-class Executives {
-  int? id;
-  int? companyId;
-  String? name;
-  String? mobile;
-  String? email;
-  String? emailVerifiedAt;
-  int? status;
-  String? createdAt;
-  String? updatedAt;
-
-  Executives(
-      {this.id,
-      this.companyId,
-      this.name,
-      this.mobile,
-      this.email,
-      this.emailVerifiedAt,
-      this.status,
-      this.createdAt,
-      this.updatedAt});
-
-  Executives.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    companyId = json['company_id'];
-    name = json['name'];
-    mobile = json['mobile'];
-    email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['company_id'] = this.companyId;
-    data['name'] = this.name;
-    data['mobile'] = this.mobile;
-    data['email'] = this.email;
-    data['email_verified_at'] = this.emailVerifiedAt;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

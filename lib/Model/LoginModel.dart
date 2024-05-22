@@ -26,13 +26,18 @@ class Data {
   String? token;
   String? name;
   String? role;
+  List<String>? permissions;
 
-  Data({this.token, this.name});
+  Data({this.token, this.name, this.role, this.permissions});
 
   Data.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     name = json['name'];
     role = json['role'];
+    permissions =
+        json['permissions'] != null ? json['permissions'].cast<String>() : null;
+
+    // permissions = json['permissions'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -40,7 +45,7 @@ class Data {
     data['token'] = this.token;
     data['name'] = this.name;
     data['role'] = this.role;
-
+    data['permissions'] = this.permissions;
     return data;
   }
 }

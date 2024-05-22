@@ -58,7 +58,13 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
 
         setState(() {
           SingleTon singleton = SingleTon();
-          currentAddress = "${street}, ${area}, ${locality}, ${pinCode}";
+
+          if (area != "") {
+            currentAddress = "${street}, ${area}, ${locality}, ${pinCode}";
+          } else {
+            currentAddress = "${street}, ${locality}, ${pinCode}";
+          }
+
           singleton.setLocation = currentAddress;
           singleton.lattidue = latitude.toString();
           singleton.longitude = longitude.toString();

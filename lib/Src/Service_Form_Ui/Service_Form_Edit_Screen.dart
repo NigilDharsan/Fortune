@@ -65,8 +65,6 @@ class _Service_Form_Edit_ScreenState
     });
   }
 
-  List<String> _SelectClient = ['Bosh', 'Pricol', 'Tessolv'];
-  List<String> _CompanyName = ['Zoho', 'wipro', 'Advance'];
   List<String> _selectState = [
     'completed',
     'pending',
@@ -88,6 +86,8 @@ class _Service_Form_Edit_ScreenState
 
   String client_id = "";
   String company_id = "";
+
+  SingleTon singleton = SingleTon();
 
   @override
   void initState() {
@@ -146,9 +146,26 @@ class _Service_Form_Edit_ScreenState
 
                     int index = data!.data!.companies!.indexWhere(
                         (st) => st.companyId == data.data?.data?[0].companyId);
-                    companyName = data.data!.companies![index].name ?? "";
+                    if (index >= 0) {
+                      companyName =
+                          data.data!.companies![index].companyBranch ?? "";
+                    }
 
                     if (!isvalueUpdated) {
+                      final salesrep =
+                          data.data?.data?[0].servicerepsInvolved ?? "";
+
+                      List<String> servicerepsList = salesrep.split(',');
+
+                      // Convert the array of strings into an array of integers
+                      List<int> servicerepsIntArray =
+                          servicerepsList.map(int.parse).toList();
+
+                      _selectedItems = data.data!.executives!
+                          .where((executive) =>
+                              servicerepsIntArray.contains(executive.id))
+                          .toList();
+
                       _StatusNote.text =
                           data.data?.data?[0].reportDescription ?? "";
 
@@ -362,51 +379,96 @@ class _Service_Form_Edit_ScreenState
                             },
                           ),
 
+                          singleton.permissionList.contains("service-assign") ==
+                                  true
+                              ? Column(
+                                  children: [
+                                    Title_Style(
+                                        Title: "Assign Executive",
+                                        isStatus: true),
+                                    // dropDownField3(
+                                    //   context,
+                                    //   hintT: 'Select Executive',
+                                    //   value: assignExecutive,
+                                    //   listValue: data?.data?.executives ?? [],
+                                    //   onChanged: (String? newValue) {
+                                    //     setState(() {
+                                    //       assignExecutive = newValue;
+                                    //     });
+                                    //   },
+                                    // ),
+                                    MultiSelectDropdown(
+                                      items: data.data?.executives ?? [],
+                                      selectedItems: _selectedItems,
+                                      onChanged:
+                                          (List<Executives> selectedItems) {
+                                        setState(() {
+                                          _selectedItems = selectedItems;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+
                           const SizedBox(
                             height: 30,
                           ),
                           //BUTTON
                           CommonElevatedButton(context, "Update", () async {
                             if (_formKey.currentState!.validate()) {
-                              var formData = FormData.fromMap({
-                                "status": selectStatus_id,
-                                "status_note": _StatusNote.text,
-                                // "report_upload": _selectedFiles,
-                                "_method": "PUT",
-                              });
-
-                              if (_selectedFiles != null) {
-                                List<int> fileBytes =
-                                    await _selectedFiles!.readAsBytes();
-
-                                final filename = _selectedFiles?.path != null
-                                    ? _selectedFiles!.path.split('/').last
-                                    : "file.jpg";
-                                formData.files.addAll([
-                                  MapEntry(
-                                      'report_upload',
-                                      await MultipartFile.fromBytes(
-                                        fileBytes,
-                                        filename: filename,
-                                      )),
-                                ]);
-                              }
-
-                              LoadingOverlay.show(context);
-
-                              final tuple = Tuple2(widget.service_id, formData);
-                              final result = await ref
-                                  .read(serviceUpdateProvider(tuple).future);
-                              LoadingOverlay.forcedStop();
-                              // Handle the result
-                              if (result != null) {
-                                ShowToastMessage(result.message ?? "");
-                                Navigator.pop(context, true);
-
-                                // Handle success
+                              if (singleton.permissionList
+                                          .contains("service-assign") ==
+                                      true &&
+                                  _selectedItems.length == 0) {
+                                ShowToastMessage("Select executive");
                               } else {
-                                // Handle failure
-                                ShowToastMessage(result?.message ?? "");
+                                List<String> idList = _selectedItems
+                                    .map((item) => "${item.id ?? 0}")
+                                    .toList();
+
+                                var formData = FormData.fromMap({
+                                  "status": selectStatus_id,
+                                  "status_note": _StatusNote.text,
+                                  for (var i = 0; i < idList.length; i++)
+                                    'assign_executive[$i]': idList[i],
+                                  "_method": "PUT",
+                                });
+
+                                if (_selectedFiles != null) {
+                                  List<int> fileBytes =
+                                      await _selectedFiles!.readAsBytes();
+
+                                  final filename = _selectedFiles?.path != null
+                                      ? _selectedFiles!.path.split('/').last
+                                      : "file.jpg";
+                                  formData.files.addAll([
+                                    MapEntry(
+                                        'report_upload',
+                                        await MultipartFile.fromBytes(
+                                          fileBytes,
+                                          filename: filename,
+                                        )),
+                                  ]);
+                                }
+
+                                LoadingOverlay.show(context);
+
+                                final tuple =
+                                    Tuple2(widget.service_id, formData);
+                                final result = await ref
+                                    .read(serviceUpdateProvider(tuple).future);
+                                LoadingOverlay.forcedStop();
+                                // Handle the result
+                                if (result != null) {
+                                  ShowToastMessage(result.message ?? "");
+                                  Navigator.pop(context, true);
+
+                                  // Handle success
+                                } else {
+                                  // Handle failure
+                                  ShowToastMessage(result?.message ?? "");
+                                }
                               }
                             }
                           }),

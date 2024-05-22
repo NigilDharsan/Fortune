@@ -14,6 +14,7 @@ import 'package:fortune/utilits/ConstantsApi.dart';
 import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Loading_Overlay.dart';
 import 'package:fortune/utilits/Text_Style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login_Screen extends ConsumerStatefulWidget {
   Login_Screen({super.key});
@@ -162,14 +163,22 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                     margin: EdgeInsets.only(left: 30, right: 30),
                     child: CommonElevatedButton(context, "Log In", () async {
                       if (_formKey.currentState!.validate()) {
+                        String Boolvalue = "false";
+                        Routes(Boolvalue);
+                        accessToken("");
+                        UserId("");
+
                         LoadingOverlay.show(context);
 
                         final apiService = ApiService(ref.read(dioProvider));
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
 
                         var formData = FormData.fromMap({
                           "email": _employeeId.text,
                           "password": _password,
-                          "device_id": device_id
+                          "device_id": device_id,
+                          "fcm_token": prefs.getString('fcmToken')
                         });
                         final postResponse = await apiService.login<LoginModel>(
                             ConstantApi.loginUrl, formData);
@@ -179,7 +188,17 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                           ShowToastMessage(postResponse.message ?? "");
                           accessToken(postResponse.data?.token ?? "");
                           UserId(postResponse.data?.name ?? "");
-                          UserRole(postResponse.data?.role ?? "");
+                          // UserRole(postResponse.data?.role ?? "");
+
+                          SingleTon singleton = SingleTon();
+                          singleton.permissionList =
+                              postResponse.data?.permissions ?? [];
+
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+
+                          await prefs.setStringList('permissions',
+                              postResponse.data?.permissions ?? []);
 
                           Navigator.pushReplacement(
                               context,

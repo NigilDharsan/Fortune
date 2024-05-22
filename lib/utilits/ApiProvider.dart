@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/MarketingEditModel.dart';
@@ -8,6 +9,7 @@ import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/ApiService.dart';
 import 'package:tuple/tuple.dart';
@@ -59,7 +61,8 @@ final marketingListProvider =
   return ref.watch(apiServiceProvider).getMarketingListApi();
 });
 
-final marketingDataProvider = FutureProvider<ServiceModel?>((ref) async {
+final marketingDataProvider =
+    FutureProvider.autoDispose<ServiceModel?>((ref) async {
   return ref.watch(apiServiceProvider).getMarketingDataApi();
 });
 
@@ -71,4 +74,79 @@ final marketingEditProvider = FutureProvider.autoDispose
 final marketingHistoryProvider = FutureProvider.autoDispose
     .family<MarketingHistoryModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getMarketingHistoryApi(id);
+});
+
+final activityListProvider =
+    FutureProvider.autoDispose<DailyActivitiesModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getDailyStockListApi();
+});
+
+final stocksListProvider =
+    FutureProvider.autoDispose<StocksModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getStocksListApi();
+});
+
+// PAGINATION IMPLEMENTATION
+
+// final serviceListProvider1 = StateProvider<List<ServicesData>>((ref) => []);
+
+// final currentPageProvider = StateProvider<int>((ref) => 1);
+
+// final fetchDataProvider = FutureProvider.autoDispose<List<ServicesData>>((ref) async {
+//   // final currentPage = ref.watch(currentPageProvider).state;
+
+//   final currentPage =
+//     ref.watch(currentPageProvider); // Correctly accessing the provider
+
+// // Now you can use `currentPage` to access the state value
+// final currentPageValue = currentPage; // This will be an integer
+
+//   final formData = FormData.fromMap({
+//     "executive_id": "",
+//     "client_id": "",
+//     "status_id": "",
+//     "daterange": "",
+//     "page": "currentPage",
+//   });
+
+//   // Make your API call here using formData
+//   final newData = await yourApiCall(formData);
+
+//   return newData;
+// });
+final counterStateProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
+final serviceListPaginationProvider =
+    FutureProvider.autoDispose<List<ServicesData>?>((ref) async {
+  return ref.watch(apiServiceProvider).getServiceListPaginationApi();
+});
+
+final serviceListPagination = FutureProvider<List<ServicesData>?>((ref) async {
+  return ref.watch(apiServiceProvider).getServiceListPaginationApi();
+});
+
+final serviceListPagination1 = FutureProvider<List<ServicesData>?>((ref) async {
+  return ref.watch(apiServiceProvider).getServiceListPaginationApi();
+});
+
+final itemListFutureProvider = FutureProvider<List<ServicesData>>((ref) async {
+  // Simulate an asynchronous operation, e.g., fetching data from an API
+  await Future.delayed(Duration(seconds: 1));
+
+  // Get the existing list of items from the itemListProvider
+  final List<ServicesData> existingItems =
+      await ref.read(apiServiceProvider).getServiceListPaginationApi();
+
+  // Simulate appending new items to the existing list
+  final List<ServicesData> fetchedItems = await ref
+      .watch(apiServiceProvider)
+      .getServiceListPaginationApi(); // Fetch data from your API or other source
+
+  // Combine existing items with newly fetched items
+  final List<ServicesData> updatedList = List.from(existingItems)
+    ..addAll(fetchedItems);
+
+  return updatedList;
 });

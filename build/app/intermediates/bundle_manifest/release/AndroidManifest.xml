@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fortune.powerfastening.fortune"
+    package="com.fortune.fortunepowerfastening"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -9,6 +9,8 @@
         android:targetSdkVersion="33" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -22,10 +24,10 @@
     </queries>
 
     <permission
-        android:name="com.fortune.powerfastening.fortune.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.fortune.fortunepowerfastening.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.fortune.powerfastening.fortune.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.fortune.fortunepowerfastening.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:name="android.app.Application"
@@ -34,7 +36,7 @@
         android:label="fortune"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.fortune.powerfastening.fortune.MainActivity"
+            android:name="com.fortune.fortunepowerfastening.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"
@@ -66,15 +68,26 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+        <service
+            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
         <provider
             android:name="com.crazecoder.openfile.FileProvider"
-            android:authorities="com.fortune.powerfastening.fortune.fileProvider.com.crazecoder.openfile"
+            android:authorities="com.fortune.fortunepowerfastening.fileProvider.com.crazecoder.openfile"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+        <activity
+            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
         <uses-library
             android:name="androidx.window.extensions"
@@ -83,9 +96,18 @@
             android:name="androidx.window.sidecar"
             android:required="false" />
 
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.fortune.powerfastening.fortune.androidx-startup"
+            android:authorities="com.fortune.fortunepowerfastening.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

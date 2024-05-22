@@ -1,14 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Common_Colors.dart';
 
 final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 String? accesstokens = 'accessToken';
 String? userId = 'user_id';
-String? userRole = 'user_role';
+// String? userRole = 'user_role';
 String? usercheckIN = 'user_checkin';
 
 String Storage = 'storage';
@@ -49,18 +51,18 @@ Future<dynamic> getuserId() async {
   return user_id;
 }
 
-UserRole(dynamic val) async {
-  await _secureStorage.write(
-      key: userRole!, value: val!, aOptions: _androidOptions());
-  print("value!:${val!}" + "$userRole");
-}
+// UserRole(dynamic val) async {
+//   await _secureStorage.write(
+//       key: userRole!, value: val!, aOptions: _androidOptions());
+//   print("value!:${val!}" + "$userRole");
+// }
 
-Future<dynamic> getUserRole() async {
-  dynamic user_id =
-      await _secureStorage.read(key: userRole!, aOptions: _androidOptions());
-  print("valuesss:$user_id");
-  return user_id;
-}
+// Future<dynamic> getUserRole() async {
+//   dynamic user_id =
+//       await _secureStorage.read(key: userRole!, aOptions: _androidOptions());
+//   print("valuesss:$user_id");
+//   return user_id;
+// }
 
 UsercheckIN(dynamic val) async {
   await _secureStorage.write(
@@ -87,6 +89,14 @@ Future<dynamic> getRoutes() async {
       await _secureStorage.read(key: routes!, aOptions: _androidOptions());
   print("valuesss:$routes_Log");
   return routes_Log;
+}
+
+Future<bool?> getPermission(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  final List<String>? items = prefs.getStringList('permissions');
+
+  return items?.contains(value);
 }
 
 class NavigationService {
@@ -124,6 +134,33 @@ class SingleTon {
   String lattidue = "";
   String longitude = "";
   bool isLoading = true;
+  List<String> permissionList = [];
+  FormData formData = FormData();
+
+  String? filterSalesrep;
+  String? filterSalesrepID;
+
+  String? filterDaterange;
+
+  String? filterStatus;
+  String? filterStatusID;
+
+  String? filterClientname;
+  String? filterClientnameID;
+
+  String? filterCompanyname;
+  String? filterCompanynameID;
+
+  String? filterBranchname;
+  String? filterBranchnameID;
+
+  String? filterDaterangeType;
+  String? filterDaterangeTypeID;
+
+  String? filterNextFollowUp;
+  String? filterNextFollowUpID;
+
+  bool? filterEnable = false;
 }
 
 Widget buildLoadingIndicator() {
@@ -159,4 +196,12 @@ Widget buildLoadingIndicator() {
 //   print(_idVal);
 // }
 
+class Singleton {
+  static final Singleton _singleton = Singleton._internal();
 
+  factory Singleton() {
+    return _singleton;
+  }
+
+  Singleton._internal();
+}

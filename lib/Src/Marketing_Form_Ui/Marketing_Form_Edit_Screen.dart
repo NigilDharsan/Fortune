@@ -34,6 +34,7 @@ class _Marketing_Form_Edit_ScreenState
   TextEditingController _ClientName = TextEditingController();
   TextEditingController _PlanofAction = TextEditingController();
   TextEditingController _ContactNumber = TextEditingController();
+  TextEditingController _Reference = TextEditingController();
 
   String TimeVal = '';
   TimeOfDay? _selectedTime;
@@ -86,6 +87,9 @@ class _Marketing_Form_Edit_ScreenState
   String? companyName;
   String? assignExecutive;
   String? status;
+
+  SingleTon singleton = SingleTon();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -122,14 +126,29 @@ class _Marketing_Form_Edit_ScreenState
                       st.companyId ==
                       int.parse(data.data?.data?.companyId ?? "0"));
 
-                  companyName = data.data!.companies![index].name ?? "";
+                  companyName =
+                      data.data!.companies![index].companyBranch ?? "";
 
                   if (!isvalueUpdated) {
+                    final salesrep = data.data?.data?.salesrepInvolved ?? "";
+
+                    List<String> servicerepsList = salesrep.split(',');
+
+                    // Convert the array of strings into an array of integers
+                    List<int> servicerepsIntArray =
+                        servicerepsList.map(int.parse).toList();
+
+                    _selectedItems = data.data!.executives!
+                        .where((executive) =>
+                            servicerepsIntArray.contains(executive.id))
+                        .toList();
+
                     isvalueUpdated = true;
                     selectStatus_id = data.data?.data?.status ?? "";
                     _StatusNote.text = data.data?.data?.instructions ?? "";
                     _PlanofAction.text = data.data?.data?.planForNextMeet ?? "";
                     _DatePicker.text = data.data?.data?.nextFollowupDate ?? "";
+                    _Reference.text = data.data?.data?.reference ?? "";
                     selectStatus = selectStatus_id == "1"
                         ? "completed"
                         : selectStatus_id == "2"
@@ -154,6 +173,24 @@ class _Marketing_Form_Edit_ScreenState
                           listValue: ["${clientName}"],
                           onChanged: (String? newValue) {},
                         ),
+
+                        //REFERENCE
+                        Title_Style(Title: 'Reference', isStatus: true),
+                        textFormField(
+                            isEnabled: true,
+                            hintText: "Reference",
+                            keyboardtype: TextInputType.text,
+                            Controller: _Reference,
+                            validating: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please Enter Reference";
+                              }
+                              if (value == null) {
+                                return "Please Enter Reference";
+                              }
+                              return null;
+                            }),
+
                         //COMPANY NAME
                         Title_Style(Title: "Company Name", isStatus: true),
                         dropDownField(
@@ -352,21 +389,65 @@ class _Marketing_Form_Edit_ScreenState
                           },
                         ),
 
+                        singleton.permissionList.contains("service-assign") ==
+                                true
+                            ? Column(
+                                children: [
+                                  Title_Style(
+                                      Title: "Assign Executive",
+                                      isStatus: true),
+                                  // dropDownField3(
+                                  //   context,
+                                  //   hintT: 'Select Executive',
+                                  //   value: assignExecutive,
+                                  //   listValue: data?.data?.executives ?? [],
+                                  //   onChanged: (String? newValue) {
+                                  //     setState(() {
+                                  //       assignExecutive = newValue;
+                                  //     });
+                                  //   },
+                                  // ),
+                                  MultiSelectDropdown(
+                                    items: data.data?.executives ?? [],
+                                    selectedItems: _selectedItems,
+                                    onChanged:
+                                        (List<Executives> selectedItems) {
+                                      setState(() {
+                                        _selectedItems = selectedItems;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         const SizedBox(
                           height: 30,
                         ),
                         //BUTTON
                         CommonElevatedButton(context, "Update", () {
                           if (_formKey.currentState!.validate()) {
-                            var formData = FormData.fromMap({
-                              "status_note": _StatusNote.text,
-                              "status": selectStatus_id,
-                              "_method": "PUT",
-                              "plan_for_next_meet": _PlanofAction.text,
-                              "next_followup_date": _DatePicker.text
-                            });
+                            if (singleton.permissionList
+                                        .contains("service-assign") ==
+                                    true &&
+                                _selectedItems.length == 0) {
+                              ShowToastMessage("Select executive");
+                            } else {
+                              List<String> idList = _selectedItems
+                                  .map((item) => "${item.id ?? 0}")
+                                  .toList();
+                              var formData = FormData.fromMap({
+                                "status_note": _StatusNote.text,
+                                "status": selectStatus_id,
+                                "reference": _Reference.text,
+                                for (var i = 0; i < idList.length; i++)
+                                  'assign_executive[$i]': idList[i],
+                                "_method": "PUT",
+                                "plan_for_next_meet": _PlanofAction.text,
+                                "next_followup_date": _DatePicker.text
+                              });
 
-                            addMarketingList(formData);
+                              addMarketingList(formData);
+                            }
                           }
                         }),
 
