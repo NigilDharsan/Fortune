@@ -153,38 +153,7 @@ class _AddPhysicalStockScreenState
                               // ),
                             ),
                             SizedBox(width: 16.0),
-                            Expanded(
-                              flex: 2,
-                              child: TextFormField(
-                                controller: TextEditingController()
-                                  ..text = itemsData[i]["quantity"] ?? "",
 
-                                // initialValue: itemsData[i]["quantity"],
-                                onChanged: (typed) {
-                                  // setState(() {
-                                  final getValue = {
-                                    'productName':
-                                        "${itemsData[i]["productName"]}",
-                                    'quantity': typed,
-                                  };
-                                  itemsData.removeAt(i);
-                                  itemsData.insert(i, getValue);
-                                  // });
-                                },
-                                decoration: InputDecoration(
-                                  labelText: 'Quantity',
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Enter quantity',
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter Quantity";
-                                  }
-
-                                  return null;
-                                },
-                              ),
-                            ),
                             SizedBox(width: 16.0),
                             i == 0
                                 ? IconButton(
@@ -209,6 +178,36 @@ class _AddPhysicalStockScreenState
                                     },
                                   )
                           ],
+                        ),
+                        SizedBox(height: 16.0),
+                        TextFormField(
+                          controller: TextEditingController()
+                            ..text = itemsData[i]["quantity"] ?? "",
+
+                          // initialValue: itemsData[i]["quantity"],
+                          onChanged: (typed) {
+                            // setState(() {
+                            final getValue = {
+                              'productName':
+                              "${itemsData[i]["productName"]}",
+                              'quantity': typed,
+                            };
+                            itemsData.removeAt(i);
+                            itemsData.insert(i, getValue);
+                            // });
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Quantity',
+                            border: OutlineInputBorder(),
+                            hintText: 'Enter quantity',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter Quantity";
+                            }
+
+                            return null;
+                          },
                         ),
 
                         SizedBox(height: 16.0), // Add space between items

@@ -427,54 +427,70 @@ Widget dropDownField1(
   );
 }
 
+
 Widget dropDownField2(
-  context, {
-  required String? value,
-  required List<Companies>? listValue,
-  required void Function(String?)? onChanged,
-  required String hintT,
-}) {
-  return Container(
-    height: 70,
-    width: MediaQuery.of(context).size.width,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: Colors.grey),
-      color: Colors.white,
-    ),
-    // decoration:
-    //     BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
-    child: DropdownButtonFormField<String>(
-      value: value,
-      isExpanded: true,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-        hintStyle: phoneHT,
-        hintText: hintT,
+    context, {
+      required String? value,
+      required List<Companies>? listValue,
+      required void Function(String?)? onChanged,
+      required String hintT,
+    }) {
+  return
+    Container(
+      height: 70,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.white,
       ),
-      icon: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Icon(
-          Icons.keyboard_arrow_down_sharp,
-          color: Colors.black,
-          size: 35,
-        ),
-      ),
-      items: listValue?.map((Companies option) {
-        return DropdownMenuItem<String>(
-          value: option.companyBranch,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
+      child: Stack(
+        children: [
+          Positioned(
+            left: 10,
+            top: 15,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                    hintT,
+                style: phoneHT,textAlign: TextAlign.start,
+              ),
             ),
-            child: Text(option.companyBranch ?? ""),
           ),
-        );
-      }).toList(),
-      onChanged: onChanged,
-    ),
-  );
+          DropdownButtonFormField<String>(
+            value: value,
+            isExpanded: true,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              fillColor: Colors.transparent,
+              filled: true,
+            ),
+            icon: Icon(
+              Icons.keyboard_arrow_down_sharp,
+              color: Colors.black,
+              size: 35,
+            ),
+            items: listValue?.map((Companies option) {
+              return DropdownMenuItem<String>(
+                value: option.companyBranch,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(option.companyBranch ?? ""),
+                ),
+              );
+            }).toList(),
+            onChanged: onChanged,
+          ),
+        ],
+      ),
+    );
 }
 
 Widget dropDownField3(
