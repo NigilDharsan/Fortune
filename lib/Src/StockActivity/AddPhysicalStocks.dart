@@ -68,104 +68,107 @@ class _AddPhysicalStockScreenState
           return Form(
             key: _formKey,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(left: 10,right: 10),
               child: ListView(
                 children: [
-                  SizedBox(height: 20.0), // Add space between items
+                  SizedBox(height: 20.0),
+                  // Add space between items
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       for (int i = 0; i < itemsData.length; i++)
                         Column(
                           children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: dropDownField7(
-                                    hintT: 'Select Items',
-                                    context,
-                                    value: itemsData[i]["productName"] == ""
-                                        ? null
-                                        : itemsData[i]["productName"],
-                                    listValue: data?.data ?? [],
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        int index = data!.data!.indexWhere(
-                                            (st) => st.itemName == newValue);
+                            Container(
+                              alignment: Alignment.topRight,
+                              child:  i == 0
+                                  ? IconButton(
+                                alignment:Alignment.topRight,
+                                icon: Icon(Icons.add_box),
+                                onPressed: () {
+                                  setState(() {
+                                    final tempArr = {
+                                      'productID': "",
+                                      'productName': "",
+                                      'quantity': "",
+                                    };
 
-                                        final getValue = {
-                                          'productID':
-                                              "${data.data![index].id}",
-                                          'productName': "${newValue}",
-                                          'quantity':
-                                              "${itemsData[i]["quantity"]}",
-                                        };
-                                        itemsData.removeAt(i);
-                                        itemsData.insert(i, getValue);
-                                      });
-                                    },
-                                  ),
-                                ),
-                                SizedBox(width: 16.0),
-                                SizedBox(width: 16.0),
-                                // i == 0
-                                //     ? IconButton(
-                                //         icon: Icon(Icons.add_box),
-                                //         onPressed: () {
-                                //           setState(() {
-                                //             final tempArr = {
-                                //               'productID': "",
-                                //               'productName': "",
-                                //               'quantity': "",
-                                //             };
-
-                                //             itemsData.add(tempArr);
-                                //           });
-                                //         },
-                                //       )
-                                //     : IconButton(
-                                //         icon: Icon(Icons.remove_circle),
-                                //         onPressed: () {
-                                //           setState(() {
-                                //             itemsData.removeAt(i);
-                                //           });
-                                //         },
-                                //       )
-                              ],
+                                    itemsData.add(tempArr);
+                                  });
+                                },
+                              )
+                                  : IconButton(
+                                alignment:Alignment.topRight,
+                                icon: Icon(Icons.remove_circle),
+                                onPressed: () {
+                                  setState(() {
+                                    itemsData.removeAt(i);
+                                  });
+                                },
+                              ),
                             ),
                             SizedBox(height: 16.0),
-                            TextFormField(
-                              controller: TextEditingController()
-                                ..text = itemsData[i]["quantity"] ?? "",
 
-                              // initialValue: itemsData[i]["quantity"],
-                              onChanged: (typed) {
-                                // setState(() {
-                                final getValue = {
-                                  'productID': "${itemsData[i]["productID"]}",
-                                  'productName':
-                                      "${itemsData[i]["productName"]}",
-                                  'quantity': typed,
-                                };
-                                itemsData.removeAt(i);
-                                itemsData.insert(i, getValue);
-                                // });
+                            dropDownField7(
+                              hintT: 'Select Items',
+                              context,
+                              value: itemsData[i]["productName"] == ""
+                                  ? null
+                                  : itemsData[i]["productName"],
+                              listValue: data?.data ?? [],
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  int index = data!.data!.indexWhere(
+                                      (st) => st.itemName == newValue);
+
+                                  final getValue = {
+                                    'productID':
+                                        "${data.data![index].id}",
+                                    'productName': "${newValue}",
+                                    'quantity':
+                                        "${itemsData[i]["quantity"]}",
+                                  };
+                                  itemsData.removeAt(i);
+                                  itemsData.insert(i, getValue);
+                                });
                               },
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 10.0),
-                                labelText: 'Quantity',
-                                border: OutlineInputBorder(),
-                                hintText: 'Enter quantity',
+                            ),
+
+                            SizedBox(height: 16.0),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20,right: 20),
+                              child: TextFormField(
+                                controller: TextEditingController()
+                                  ..text = itemsData[i]["quantity"] ?? "",
+
+                                // initialValue: itemsData[i]["quantity"],
+                                onChanged: (typed) {
+                                  // setState(() {
+                                  final getValue = {
+                                    'productID': "${itemsData[i]["productID"]}",
+                                    'productName':
+                                        "${itemsData[i]["productName"]}",
+                                    'quantity': typed,
+                                  };
+                                  itemsData.removeAt(i);
+                                  itemsData.insert(i, getValue);
+                                  // });
+                                },
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 10.0),
+                                  labelText: 'Quantity',
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Enter quantity',
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Enter Quantity";
+                                  }
+
+                                  return null;
+                                },
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Enter Quantity";
-                                }
-
-                                return null;
-                              },
                             ),
 
                             SizedBox(height: 30.0), // Add space between items
@@ -173,37 +176,40 @@ class _AddPhysicalStockScreenState
                         ),
                     ],
                   ),
-                  CommonElevatedButton(
-                    context,
-                    widget.data != null ? "Update" : "Submit",
-                    () {
-                      if (_formKey.currentState!.validate()) {
-                        if (widget.data != null) {
-                          var formData = FormData.fromMap({
-                            "item_name": _ItemName.text,
-                            "available_stock": _AvailableStock.text,
-                            "_method": "PUT",
-                          });
-                          addStockItems(formData);
-                        } else {
-                          List<String> idList = itemsData
-                              .map((item) => "${item["productID"] ?? ""}")
-                              .toList();
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: CommonElevatedButton(
+                      context,
+                      widget.data != null ? "Update" : "Submit",
+                      () {
+                        if (_formKey.currentState!.validate()) {
+                          if (widget.data != null) {
+                            var formData = FormData.fromMap({
+                              "item_name": _ItemName.text,
+                              "available_stock": _AvailableStock.text,
+                              "_method": "PUT",
+                            });
+                            addStockItems(formData);
+                          } else {
+                            List<String> idList = itemsData
+                                .map((item) => "${item["productID"] ?? ""}")
+                                .toList();
 
-                          List<String> idList1 = itemsData
-                              .map((item) => "${item["quantity"] ?? ""}")
-                              .toList();
+                            List<String> idList1 = itemsData
+                                .map((item) => "${item["quantity"] ?? ""}")
+                                .toList();
 
-                          var formData = FormData.fromMap({
-                            for (var i = 0; i < idList.length; i++)
-                              'item[$i][item_name]': idList[i],
-                            for (var j = 0; j < idList1.length; j++)
-                              'item[$j][available_stock]': idList1[j],
-                          });
-                          addStockItems(formData);
+                            var formData = FormData.fromMap({
+                              for (var i = 0; i < idList.length; i++)
+                                'item[$i][item_name]': idList[i],
+                              for (var j = 0; j < idList1.length; j++)
+                                'item[$j][available_stock]': idList1[j],
+                            });
+                            addStockItems(formData);
+                          }
                         }
-                      }
-                    },
+                      },
+                    ),
                   ),
                 ],
               ),
