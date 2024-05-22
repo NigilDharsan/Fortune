@@ -42,6 +42,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         final dict1 = widget.data!.items?[i].quantity ?? "";
 
         final getValue = {
+          'productID': "",
           'productName': dict,
           'quantity': dict1,
         };
@@ -50,6 +51,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     } else {
       itemsData = [
         {
+          'productID': "",
           'productName': "",
           'quantity': "",
         }
@@ -260,7 +262,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                         for (var j = 0; j < idList1.length; j++)
                           'items[$j][quantity]': idList1[j],
                       });
-                      addMarketingList(formData);
+                      addStockActivity(formData);
                     } else {
                       var formData = FormData.fromMap({
                         "invoice_no": _InvoiceNumber.text,
@@ -271,7 +273,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                         for (var j = 0; j < idList1.length; j++)
                           'items[$j][quantity]': idList1[j],
                       });
-                      addMarketingList(formData);
+                      addStockActivity(formData);
                     }
                   }
                 },
@@ -283,7 +285,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     );
   }
 
-  void addMarketingList(FormData data) async {
+  void addStockActivity(FormData data) async {
     LoadingOverlay.show(context);
 
     final apiService = ApiService(ref.read(dioProvider));

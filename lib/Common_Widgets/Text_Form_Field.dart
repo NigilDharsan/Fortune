@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/StockItemModel.dart';
 
 import '../utilits/Common_Colors.dart';
 import '../utilits/Text_Style.dart';
@@ -427,70 +428,70 @@ Widget dropDownField1(
   );
 }
 
-
 Widget dropDownField2(
-    context, {
-      required String? value,
-      required List<Companies>? listValue,
-      required void Function(String?)? onChanged,
-      required String hintT,
-    }) {
-  return
-    Container(
-      height: 70,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            left: 10,
-            top: 15,
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                    hintT,
-                style: phoneHT,textAlign: TextAlign.start,
-              ),
+  context, {
+  required String? value,
+  required List<Companies>? listValue,
+  required void Function(String?)? onChanged,
+  required String hintT,
+}) {
+  return Container(
+    height: 70,
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(5),
+      color: Colors.white,
+    ),
+    child: Stack(
+      children: [
+        Positioned(
+          left: 10,
+          top: 15,
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              hintT,
+              style: phoneHT,
+              textAlign: TextAlign.start,
             ),
           ),
-          DropdownButtonFormField<String>(
-            value: value,
-            isExpanded: true,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-              fillColor: Colors.transparent,
-              filled: true,
+        ),
+        DropdownButtonFormField<String>(
+          value: value,
+          isExpanded: true,
+          decoration: InputDecoration(
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.grey),
             ),
-            icon: Icon(
-              Icons.keyboard_arrow_down_sharp,
-              color: Colors.black,
-              size: 35,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.grey),
             ),
-            items: listValue?.map((Companies option) {
-              return DropdownMenuItem<String>(
-                value: option.companyBranch,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(option.companyBranch ?? ""),
-                ),
-              );
-            }).toList(),
-            onChanged: onChanged,
+            fillColor: Colors.transparent,
+            filled: true,
           ),
-        ],
-      ),
-    );
+          icon: Icon(
+            Icons.keyboard_arrow_down_sharp,
+            color: Colors.black,
+            size: 35,
+          ),
+          items: listValue?.map((Companies option) {
+            return DropdownMenuItem<String>(
+              value: option.companyBranch,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(option.companyBranch ?? ""),
+              ),
+            );
+          }).toList(),
+          onChanged: onChanged,
+        ),
+      ],
+    ),
+  );
 }
 
 Widget dropDownField3(
@@ -676,7 +677,7 @@ Widget dropDownField6(
 Widget dropDownField7(
   context, {
   required String? value,
-  required List<Companies>? listValue,
+  required List<StockItemData>? listValue,
   required void Function(String?)? onChanged,
   required String hintT,
 }) {
@@ -685,35 +686,41 @@ Widget dropDownField7(
     width: MediaQuery.of(context).size.width,
     decoration:
         BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
-    child: DropdownButtonFormField<String>(
-      value: value,
-      isExpanded: true,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-        hintStyle: phoneHT,
-        hintText: hintT,
-      ),
-      icon: Padding(
-        padding: const EdgeInsets.only(right: 10),
-        child: Icon(
-          Icons.keyboard_arrow_down_sharp,
-          color: Colors.black,
-          size: 35,
+    child: Center(
+      child: DropdownButtonFormField<String>(
+        padding: EdgeInsets.only(left: 30),
+        value: value,
+        isExpanded: true,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+          hintStyle: phoneHT,
+          hintText: hintT,
+          fillColor: red1,
+          filled: true,
         ),
-      ),
-      items: listValue?.map((Companies option) {
-        return DropdownMenuItem<String>(
-          value: option.companyBranch,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-            ),
-            child: Text(option.companyBranch ?? ""),
+        icon: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Icon(
+            Icons.keyboard_arrow_down_sharp,
+            color: Colors.black,
+            size: 35,
           ),
-        );
-      }).toList(),
-      onChanged: onChanged,
+        ),
+        items: listValue?.map((StockItemData option) {
+          return DropdownMenuItem<String>(
+            value: option.itemName,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 10,
+              ),
+              child: Text(option.itemName ?? ""),
+            ),
+          );
+        }).toList(),
+        onChanged: onChanged,
+      ),
     ),
   );
 }

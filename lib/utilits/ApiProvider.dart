@@ -9,6 +9,7 @@ import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/StockItemModel.dart';
 import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/ApiService.dart';
@@ -86,10 +87,18 @@ final stocksListProvider =
   return ref.watch(apiServiceProvider).getStocksListApi();
 });
 
+final stocksItemProvider =
+    FutureProvider.autoDispose<StockItemModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getStocksItemApi();
+});
+
+final stocksEditProvider =
+    FutureProvider.autoDispose.family<StockItemModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getStocksEditApi(id);
+});
+
 // PAGINATION IMPLEMENTATION
-
 // final serviceListProvider1 = StateProvider<List<ServicesData>>((ref) => []);
-
 // final currentPageProvider = StateProvider<int>((ref) => 1);
 
 // final fetchDataProvider = FutureProvider.autoDispose<List<ServicesData>>((ref) async {

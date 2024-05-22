@@ -1110,11 +1110,13 @@ Widget StocksList(context,
                   alignment: Alignment.topLeft,
                   child: Row(
                     children: [
-                      Text(
-                        data.itemName ?? "",
-                        style: cardDetailT,
+                      Expanded(
+                        child: Text(
+                          data.itemName ?? "",
+                          style: cardDetailT,
+                        ),
                       ),
-                      const Spacer(),
+                      // const Spacer(),
                       singleton.permissionList.contains("stock-edit") == true
                           ? InkWell(
                               onTap: () {
