@@ -1062,7 +1062,6 @@ Widget ActivitiesList(context,
                   child: Text(
                     'Items Product(Quantity): ${data.items?.map((item) => "${item.productName} (${item.quantity})").join(', ')}',
                     style: DateT,
-                    maxLines: 2,
                   ),
                 ),
               ),

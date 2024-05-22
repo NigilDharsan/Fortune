@@ -381,6 +381,29 @@ class ApiService {
     return DailyActivitiesModel();
   }
 
+  Future<StockItemModel> getActivityEditApi(String activity_id) async {
+    final result = await requestGET(
+        url: ConstantApi.activitiesCreate + "/${activity_id}/" + "edit",
+        dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return StockItemModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = StockItemModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return StockItemModel();
+  }
+
   Future<StocksModel> getStocksListApi() async {
     SingleTon singleTon = SingleTon();
 
@@ -427,8 +450,8 @@ class ApiService {
   }
 
   Future<StockItemModel> getStocksEditApi(String stocks_id) async {
-    final result =
-        await requestGET(url: ConstantApi.stocksCreate + "/create", dio: _dio);
+    final result = await requestGET(
+        url: ConstantApi.stocksCreate + "/${stocks_id}/" + "edit", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
