@@ -17,6 +17,7 @@ import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Text_Style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home_DashBoard_Screen extends ConsumerStatefulWidget {
   const Home_DashBoard_Screen({super.key});
@@ -28,6 +29,8 @@ class Home_DashBoard_Screen extends ConsumerStatefulWidget {
 
 class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
   var username = "";
+  SingleTon singleton = SingleTon();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -38,15 +41,18 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
 
   getUsername() async {
     var getname = await getuserId();
+    var getpermission = await getUserPermission();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     setState(() {
       username = getname;
+      singleton.permissionList = prefs.getStringList("permissions") ?? [];
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final _dashbaordData = ref.watch(dashboardProvider);
-    SingleTon singleton = SingleTon();
 
     singleton.filterSalesrep = null;
     singleton.filterSalesrepID = null;

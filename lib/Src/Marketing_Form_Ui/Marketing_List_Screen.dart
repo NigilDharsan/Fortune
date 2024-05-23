@@ -60,10 +60,13 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
       // Fetch more data
       pageCount++;
       formData = FormData.fromMap({
-        "executive_id": "",
-        "client_id": "",
-        "status_id": "",
-        "daterange": "",
+        "client_id": singleton.filterClientnameID,
+        "executive_id": singleton.filterSalesrepID,
+        "status_id": singleton.filterStatusID,
+        "daterange": singleton.filterDaterange,
+        "company_id": singleton.filterCompanynameID,
+        "daterange_type": singleton.filterDaterangeTypeID,
+        "next_followup": singleton.filterNextFollowUpID,
         "page": pageCount
       });
       singleton.formData = formData;
@@ -295,34 +298,32 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
 }
 
 Widget _Marketing_List(WidgetRef ref, List<MarketingListData>? data) {
-  if ((data?.length ?? 0) != 0) {
-    return ListView.builder(
-      itemCount: data?.length ?? 0,
-      shrinkWrap: true,
-      scrollDirection: Axis.vertical,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 0),
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Marketing_History_List(
-                            marketing_id: "${data[index].leadId}",
-                          )));
-            },
-            child: Marketing_List(context,
-                isTag: data![index].status ?? "",
-                data: data![index],
-                isHistory: true,
-                ref: ref),
-          ),
-        );
-      },
-    );
-  } else {
-    return Center(child: Expanded(child: Text("No Data Found!")));
-  }
+  return ((data?.length ?? 0) != 0)
+      ? ListView.builder(
+          itemCount: data?.length ?? 0,
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 0),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Marketing_History_List(
+                                marketing_id: "${data[index].leadId}",
+                              )));
+                },
+                child: Marketing_List(context,
+                    isTag: data![index].status ?? "",
+                    data: data![index],
+                    isHistory: true,
+                    ref: ref),
+              ),
+            );
+          },
+        )
+      : Center(child: Text("No Data Founds"));
 }

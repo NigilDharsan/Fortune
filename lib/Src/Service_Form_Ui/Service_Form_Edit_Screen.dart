@@ -235,12 +235,12 @@ class _Service_Form_Edit_ScreenState
                               LengthLimitingTextInputFormatter(10)
                             ],
                             Controller: _ContactNumber,
-                            validating: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter a Contact Number";
-                              }
-                              return null;
-                            },
+                            // validating: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return "Please enter a Contact Number";
+                            //   }
+                            //   return null;
+                            // },
                             onChanged: null,
                           ),
                           //CLIENT ADDRESS

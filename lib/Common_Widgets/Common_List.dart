@@ -71,11 +71,13 @@ Widget Service_List(context,
                   alignment: Alignment.topLeft,
                   child: Row(
                     children: [
-                      Text(
-                        data.clientName ?? "",
-                        style: cardDetailT,
+                      Expanded(
+                        child: Text(
+                          data.clientName ?? "",
+                          style: cardDetailT,
+                        ),
                       ),
-                      const Spacer(),
+                      // const Spacer(),
                       Container(
                           alignment: Alignment.topLeft,
                           decoration: BoxDecoration(

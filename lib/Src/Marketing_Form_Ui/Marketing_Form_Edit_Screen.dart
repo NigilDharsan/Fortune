@@ -227,15 +227,15 @@ class _Marketing_Form_Edit_ScreenState
                             LengthLimitingTextInputFormatter(10)
                           ],
                           Controller: _ContactNumber,
-                          validating: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter a Contact Number";
-                            } else if (!RegExp(r"^[0-9]{10}$")
-                                .hasMatch(value)) {
-                              return "Please enter a valid 10-digit Contact Number";
-                            }
-                            return null;
-                          },
+                          // validating: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return "Please enter a Contact Number";
+                          //   } else if (!RegExp(r"^[0-9]{10}$")
+                          //       .hasMatch(value)) {
+                          //     return "Please enter a valid 10-digit Contact Number";
+                          //   }
+                          //   return null;
+                          // },
                           onChanged: null,
                         ),
                         //CLIENT ADDRESS

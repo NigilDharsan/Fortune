@@ -189,7 +189,7 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
                           accessToken(postResponse.data?.token ?? "");
                           UserId(postResponse.data?.name ?? "");
                           // UserRole(postResponse.data?.role ?? "");
-
+                          UserPermission(postResponse.data?.permissions ?? []);
                           SingleTon singleton = SingleTon();
                           singleton.permissionList =
                               postResponse.data?.permissions ?? [];
