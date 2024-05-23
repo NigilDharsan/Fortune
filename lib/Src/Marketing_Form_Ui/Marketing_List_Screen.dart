@@ -295,30 +295,34 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
 }
 
 Widget _Marketing_List(WidgetRef ref, List<MarketingListData>? data) {
-  return ListView.builder(
-    itemCount: data?.length ?? 0,
-    shrinkWrap: true,
-    scrollDirection: Axis.vertical,
-    physics: const NeverScrollableScrollPhysics(),
-    itemBuilder: (BuildContext context, int index) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 0),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Marketing_History_List(
-                          marketing_id: "${data[index].leadId}",
-                        )));
-          },
-          child: Marketing_List(context,
-              isTag: data![index].status ?? "",
-              data: data![index],
-              isHistory: true,
-              ref: ref),
-        ),
-      );
-    },
-  );
+  if ((data?.length ?? 0) != 0) {
+    return ListView.builder(
+      itemCount: data?.length ?? 0,
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 0),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Marketing_History_List(
+                            marketing_id: "${data[index].leadId}",
+                          )));
+            },
+            child: Marketing_List(context,
+                isTag: data![index].status ?? "",
+                data: data![index],
+                isHistory: true,
+                ref: ref),
+          ),
+        );
+      },
+    );
+  } else {
+    return Center(child: Expanded(child: Text("No Data Found!")));
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/ActivityEditModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
@@ -12,6 +13,7 @@ import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
 import 'package:fortune/Model/StockItemModel.dart';
+import 'package:fortune/Model/StocksEditModel.dart';
 import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/Generic.dart';
@@ -381,10 +383,32 @@ class ApiService {
     return DailyActivitiesModel();
   }
 
-  Future<StockItemModel> getActivityEditApi(String activity_id) async {
+  Future<ActivityEditModel> getActivityEditApi(String activity_id) async {
     final result = await requestGET(
         url: ConstantApi.activitiesCreate + "/${activity_id}/" + "edit",
         dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ActivityEditModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ActivityEditModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ActivityEditModel();
+  }
+
+  Future<StockItemModel> getActivityItemApi() async {
+    final result = await requestGET(
+        url: ConstantApi.activitiesCreate + "/create", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
@@ -449,17 +473,17 @@ class ApiService {
     return StockItemModel();
   }
 
-  Future<StockItemModel> getStocksEditApi(String stocks_id) async {
+  Future<StocksEditModel> getStocksEditApi(String stocks_id) async {
     final result = await requestGET(
         url: ConstantApi.stocksCreate + "/${stocks_id}/" + "edit", dio: _dio);
 
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
-      return StockItemModel?.fromJson(result["response"]);
+      return StocksEditModel?.fromJson(result["response"]);
     } else {
       try {
-        var resultval = StockItemModel.fromJson(result["response"]);
+        var resultval = StocksEditModel.fromJson(result["response"]);
         // Toast.show(resultval.message.toString(), context);
         print(result["response"]);
         return resultval;
@@ -468,30 +492,8 @@ class ApiService {
         // Toast.show(result["response"], context);
       }
     }
-    return StockItemModel();
+    return StocksEditModel();
   }
-
-  // Future<StockEditModel> getStocksEditApi(String stocks_id) async {
-  //   final result = await requestGET(
-  //       url: ConstantApi.stocksCreate + "/${stocks_id}/" + "edit", dio: _dio);
-
-  //   if (result["success"] == true) {
-  //     print("resultOTP:$result");
-  //     print("resultOTPsss:${result["success"]}");
-  //     return StockEditModel?.fromJson(result["response"]);
-  //   } else {
-  //     try {
-  //       var resultval = StockEditModel.fromJson(result["response"]);
-  //       // Toast.show(resultval.message.toString(), context);
-  //       print(result["response"]);
-  //       return resultval;
-  //     } catch (e) {
-  //       print(result["response"]);
-  //       // Toast.show(result["response"], context);
-  //     }
-  //   }
-  //   return StockEditModel();
-  // }
 
   Future<MarketingHistoryModel> getMarketingHistoryApi(
       String service_id) async {

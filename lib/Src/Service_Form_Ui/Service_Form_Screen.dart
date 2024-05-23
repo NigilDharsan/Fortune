@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_Button.dart';
@@ -173,18 +174,20 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                           isEnabled: isAddNewClient == true ? true : false,
                           hintText: 'Mobile Number',
                           keyboardtype: TextInputType.phone,
-                          // inputFormatters: [
-                          //   LengthLimitingTextInputFormatter(10)
-                          // ],
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(10)
+                          ],
                           Controller: _ContactNumber,
                           validating: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter a Contact Number";
+                            if (isAddNewClient == true) {
+                              if (value!.isEmpty) {
+                                return "Please enter a Contact Number";
+                              } else if (!RegExp(r"^[0-9]{10}$")
+                                  .hasMatch(value)) {
+                                return "Please enter a valid 10-digit Contact Number";
+                              }
                             }
-                            // else if (!RegExp(r"^[0-9]{10}$")
-                            //     .hasMatch(value)) {
-                            //   return "Please enter a valid 10-digit Contact Number";
-                            // }
+
                             return null;
                           },
                           onChanged: null,

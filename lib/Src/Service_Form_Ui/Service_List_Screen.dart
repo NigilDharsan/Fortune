@@ -166,44 +166,48 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
             body: _ServiceListData.when(
               data: (data) {
                 filter = data?.data?.filter ?? Filter();
-                return Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-                  child: Container(
-                      width: MediaQuery.sizeOf(context).width,
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: data?.data?.services?.data?.length ?? 0,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        // physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 0),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Service_History_List_Screen(
-                                              service_id:
-                                                  "${data?.data?.services?.data?[index].serviceId ?? 0}",
-                                            )));
+                return (data?.data?.services?.data?.length ?? 0) != 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 30),
+                        child: Container(
+                            width: MediaQuery.sizeOf(context).width,
+                            child: ListView.builder(
+                              controller: _scrollController,
+                              itemCount:
+                                  data?.data?.services?.data?.length ?? 0,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              // physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Service_History_List_Screen(
+                                                    service_id:
+                                                        "${data?.data?.services?.data?[index].serviceId ?? 0}",
+                                                  )));
+                                    },
+                                    child: Service_List(context,
+                                        data: data?.data?.services
+                                                ?.data?[index] ??
+                                            ServicesData(),
+                                        isTag: data?.data?.services
+                                                ?.data?[index].status ??
+                                            "",
+                                        isHistory: false,
+                                        ref: ref),
+                                  ),
+                                );
                               },
-                              child: Service_List(context,
-                                  data: data?.data?.services?.data?[index] ??
-                                      ServicesData(),
-                                  isTag: data?.data?.services?.data?[index]
-                                          .status ??
-                                      "",
-                                  isHistory: false,
-                                  ref: ref),
-                            ),
-                          );
-                        },
-                      )),
-                );
+                            )),
+                      )
+                    : Center(child: Text("No Data Found"));
               },
               error: (Object error, StackTrace stackTrace) {
                 return Text(error.toString());
@@ -267,60 +271,61 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                 isNav: true),
             body: _ServiceListData.when(
               data: (data) {
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount:
-                                  data?.data?.services?.data?.length ?? 0,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Service_History_List_Screen(
-                                                    service_id:
-                                                        "${data?.data?.services?.data?[index].serviceId ?? 0}",
-                                                  )));
-                                    },
-                                    child: Service_List(context,
-                                        data: data?.data?.services
-                                                ?.data?[index] ??
-                                            ServicesData(),
-                                        isTag: data?.data?.services
-                                                ?.data?[index].status ??
-                                            "",
-                                        isHistory: false,
-                                        ref: ref),
-                                  ),
-                                );
-                              },
-                            )
-                            // _Service_List(
-                            //     ref, context, data?.data?.services?.data ?? []),
+                return (data?.data?.services?.data?.length ?? 0) == 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 30),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 20,
                             ),
-                      ],
-                    ),
-                  ),
-                );
+                            Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                child: ListView.builder(
+                                  controller: _scrollController,
+                                  itemCount:
+                                      data?.data?.services?.data?.length ?? 0,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(bottom: 0),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Service_History_List_Screen(
+                                                        service_id:
+                                                            "${data?.data?.services?.data?[index].serviceId ?? 0}",
+                                                      )));
+                                        },
+                                        child: Service_List(context,
+                                            data: data?.data?.services
+                                                    ?.data?[index] ??
+                                                ServicesData(),
+                                            isTag: data?.data?.services
+                                                    ?.data?[index].status ??
+                                                "",
+                                            isHistory: false,
+                                            ref: ref),
+                                      ),
+                                    );
+                                  },
+                                )
+                                // _Service_List(
+                                //     ref, context, data?.data?.services?.data ?? []),
+                                ),
+                          ],
+                        ),
+                      )
+                    : Center(child: Text("No Data Fount!"));
               },
               error: (Object error, StackTrace stackTrace) {
                 return Center(child: Text("No data found!"));

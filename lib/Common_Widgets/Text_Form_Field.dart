@@ -444,22 +444,23 @@ Widget dropDownField2(
     ),
     child: Stack(
       children: [
-        Positioned(
-          left: 10,
-          top: 15,
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              hintT,
-              style: phoneHT,
-              textAlign: TextAlign.start,
-            ),
-          ),
-        ),
+        // Positioned(
+        //   left: 10,
+        //   top: 15,
+        //   child: Align(
+        //     alignment: Alignment.center,
+        //     child: Text(
+        //       hintT,
+        //       style: phoneHT,
+        //       textAlign: TextAlign.start,
+        //     ),
+        //   ),
+        // ),
         DropdownButtonFormField<String>(
           value: value,
           isExpanded: true,
           decoration: InputDecoration(
+            hintText: hintT,
             contentPadding:
                 EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             border: OutlineInputBorder(
@@ -683,9 +684,9 @@ Widget dropDownField7(
 }) {
   return Center(
     child: Container(
-      height: 50,
+      height: 70,
       width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
       child: Center(
@@ -694,6 +695,7 @@ Widget dropDownField7(
           value: value,
           isExpanded: true,
           decoration: InputDecoration(
+            hintText: hintT,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide(color: Colors.grey),

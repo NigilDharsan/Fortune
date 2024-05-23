@@ -55,10 +55,15 @@ class _DailyStockActivityListState
                   context,
                   MaterialPageRoute(
                       builder: (context) => InvoiceFormScreen(
-                            data: null,
+                            isEdit: false,
+                            activityId: '',
                           ))).then((value) {
                 if (value == true) {
                   setState(() {
+                    formData = FormData.fromMap(
+                        {"company_id": "", "branch_id": "", "daterange": ""});
+                    singleton.formData = formData;
+
                     ref.refresh(activityListProvider);
                   });
                 }
@@ -231,17 +236,21 @@ class _DailyStockActivityListState
 }
 
 Widget _Activities_List(context, List<ActivitiesData>? data, WidgetRef ref) {
-  return ListView.builder(
-    itemCount: data?.length ?? 0,
-    shrinkWrap: true,
-    scrollDirection: Axis.vertical,
-    physics: const NeverScrollableScrollPhysics(),
-    itemBuilder: (BuildContext context, int index) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 0),
-        child: ActivitiesList(context,
-            data: data![index], isHistory: true, ref: ref),
-      );
-    },
-  );
+  if ((data?.length ?? 0) != 0) {
+    return ListView.builder(
+      itemCount: data?.length ?? 0,
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 0),
+          child: ActivitiesList(context,
+              data: data![index], isHistory: true, ref: ref),
+        );
+      },
+    );
+  } else {
+    return Center(child: Text("No Data Found!"));
+  }
 }

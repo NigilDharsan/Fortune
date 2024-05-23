@@ -1016,7 +1016,8 @@ Widget ActivitiesList(context,
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => InvoiceFormScreen(
-                                              data: data,
+                                              isEdit: true,
+                                              activityId: "${data.id}",
                                             ))).then((value) {
                                   if (value == true) {
                                     ref.refresh(activityListProvider);
@@ -1124,7 +1125,8 @@ Widget StocksList(context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             AddPhysicalStockScreen(
-                                              data: data,
+                                              isEdit: true,
+                                              stockId: "${data.id}",
                                             ))).then((value) {
                                   if (value == true) {
                                     ref.refresh(stocksListProvider);

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/ActivityEditModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
@@ -10,6 +11,7 @@ import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
 import 'package:fortune/Model/StockItemModel.dart';
+import 'package:fortune/Model/StocksEditModel.dart';
 import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/ApiService.dart';
@@ -82,6 +84,16 @@ final activityListProvider =
   return ref.watch(apiServiceProvider).getDailyStockListApi();
 });
 
+final activityEditProvider = FutureProvider.autoDispose
+    .family<ActivityEditModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getActivityEditApi(id);
+});
+
+final activityItemProvider =
+    FutureProvider.autoDispose<StockItemModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getActivityItemApi();
+});
+
 final stocksListProvider =
     FutureProvider.autoDispose<StocksModel?>((ref) async {
   return ref.watch(apiServiceProvider).getStocksListApi();
@@ -92,8 +104,8 @@ final stocksItemProvider =
   return ref.watch(apiServiceProvider).getStocksItemApi();
 });
 
-final stocksEditProvider =
-    FutureProvider.autoDispose.family<StockItemModel?, String>((ref, id) async {
+final stocksEditProvider = FutureProvider.autoDispose
+    .family<StocksEditModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getStocksEditApi(id);
 });
 

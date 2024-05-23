@@ -53,10 +53,16 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          AddPhysicalStockScreen(data: null))).then((value) {
+                      builder: (context) => AddPhysicalStockScreen(
+                            isEdit: false,
+                            stockId: "",
+                          ))).then((value) {
                 if (value == true) {
                   setState(() {
+                    formData = FormData.fromMap(
+                        {"company_id": "", "branch_id": "", "daterange": ""});
+                    singleton.formData = formData;
+
                     ref.refresh(stocksListProvider);
                   });
                 }
@@ -229,17 +235,21 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
 }
 
 Widget _Stocks_List(context, List<StocksData>? data, WidgetRef ref) {
-  return ListView.builder(
-    itemCount: data?.length ?? 0,
-    shrinkWrap: true,
-    scrollDirection: Axis.vertical,
-    physics: const NeverScrollableScrollPhysics(),
-    itemBuilder: (BuildContext context, int index) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 0),
-        child:
-            StocksList(context, data: data![index], isHistory: true, ref: ref),
-      );
-    },
-  );
+  if ((data?.length ?? 0) != 0) {
+    return ListView.builder(
+      itemCount: data?.length ?? 0,
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 0),
+          child: StocksList(context,
+              data: data![index], isHistory: true, ref: ref),
+        );
+      },
+    );
+  } else {
+    return Center(child: Text("No Data Found!"));
+  }
 }

@@ -207,12 +207,15 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                           ],
                           Controller: _ContactNumber,
                           validating: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter a Contact Number";
-                            } else if (!RegExp(r"^[0-9]{10}$")
-                                .hasMatch(value)) {
-                              return "Please enter a valid 10-digit Contact Number";
+                            if (isAddNewClient == true) {
+                              if (value!.isEmpty) {
+                                return "Please enter a Contact Number";
+                              } else if (!RegExp(r"^[0-9]{10}$")
+                                  .hasMatch(value)) {
+                                return "Please enter a valid 10-digit Contact Number";
+                              }
                             }
+
                             return null;
                           },
                           onChanged: null,
@@ -324,7 +327,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                           },
                         ),
                         //STATUS NOTE
-                        Title_Style(Title: 'Status Note', isStatus: false),
+                        Title_Style(Title: 'Status Note', isStatus: true),
                         textfieldDescription(
                             readOnly: false,
                             Controller: _StatusNote,
