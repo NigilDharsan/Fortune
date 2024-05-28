@@ -6,6 +6,8 @@ import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Common_Widgets/Location_Picker.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
+import 'package:fortune/Src/ClientScreen/Client_List_Screen.dart';
+import 'package:fortune/Src/ItemsScreen/Items_List_Screen.dart';
 import 'package:fortune/Src/Login_Ui/Login_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
 import 'package:fortune/Src/Marketing_History_List/Marketing_History_List.dart';
@@ -151,6 +153,61 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       height: 10,
                     ),
                     Row(
+                      mainAxisAlignment: (singleton.permissionList
+                                      .contains("dashboard-item-count") ==
+                                  true &&
+                              singleton.permissionList
+                                      .contains("dashboard-client-count") ==
+                                  true)
+                          ? MainAxisAlignment.spaceEvenly
+                          : MainAxisAlignment.center,
+                      children: [
+                        singleton.permissionList
+                                    .contains("dashboard-item-count") ==
+                                true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ItemsListScreen())).then(
+                                      (value) =>
+                                          ref.refresh(dashboardProvider));
+                                },
+                                child: _CountCard(
+                                    countT: "${data?.data?.itemCount ?? 0}",
+                                    cardName: "Items",
+                                    isWhite: true,
+                                    color: Colors.purple),
+                              )
+                            : Container(),
+                        singleton.permissionList
+                                    .contains("dashboard-client-count") ==
+                                true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ClientListScreen())).then(
+                                      (value) =>
+                                          ref.refresh(dashboardProvider));
+                                },
+                                child: _CountCard(
+                                    countT: "${data?.data?.clientCount ?? 0}",
+                                    cardName: "Client",
+                                    isWhite: true,
+                                    color: Colors.pink),
+                              )
+                            : Container(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
                       mainAxisAlignment:
                           (singleton.permissionList.contains("lead-list") ==
                                       true &&
@@ -253,7 +310,9 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       ],
                     ),
                     //TODAY LIST
-                    singleton.permissionList.contains("lead-list") == true
+                    singleton.permissionList
+                                .contains("dashboard-today-marketing") ==
+                            true
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -318,7 +377,9 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                         : Container(),
 
                     //SERVICE LIST
-                    singleton.permissionList.contains("service-list") == true
+                    singleton.permissionList
+                                .contains("dashboard-services-pending") ==
+                            true
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -394,7 +455,9 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                         : Container(),
 
                     //HISTORY LIST
-                    singleton.permissionList.contains("lead-list") == true
+                    singleton.permissionList
+                                .contains("dashboard-marketings-pending") ==
+                            true
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

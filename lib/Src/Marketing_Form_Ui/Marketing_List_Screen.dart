@@ -203,7 +203,8 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                 );
               },
               error: (Object error, StackTrace stackTrace) {
-                return Text(error.toString());
+                return Center(
+                    child: Text("Connection closed, Please try again!"));
               },
               loading: () => Center(child: CircularProgressIndicator()),
             ),

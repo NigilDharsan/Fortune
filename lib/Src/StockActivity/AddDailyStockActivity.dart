@@ -29,6 +29,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isvalueUpdated = false;
+  List<FocusNode> focus = [];
 
   @override
   void initState() {
@@ -44,6 +45,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
           'quantity': "",
         }
       ];
+      final focusCount = FocusNode();
+      focus = [focusCount];
     }
   }
 
@@ -77,6 +80,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   'quantity': dict1,
                 };
                 itemsData.add(getValue);
+
+                final focusCount = FocusNode();
+                focus.add(focusCount);
               }
             }
             return Form(
@@ -152,29 +158,64 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                           Column(
                             children: [
                               SizedBox(height: 16.0),
-                              dropDownField7(
-                                hintT: 'Select Items',
+                              dropDownSearchField(
                                 context,
-                                value: itemsData[i]["productName"] == ""
-                                    ? null
-                                    : itemsData[i]["productName"],
                                 listValue: data?.data?.items ?? [],
-                                onChanged: (String? newValue) {
+                                onChanged: ((x) {
+                                  focus[i].unfocus();
+
                                   setState(() {
                                     int index = data!.data!.items!.indexWhere(
-                                        (st) => st.itemName == newValue);
+                                        (st) => st.itemName == x.searchKey);
 
                                     final getValue = {
                                       'productID':
                                           "${data.data!.items?[index].id}",
-                                      'productName': "${newValue}",
+                                      'productName': "${x.searchKey}",
                                       'quantity': "${itemsData[i]["quantity"]}",
                                     };
                                     itemsData.removeAt(i);
                                     itemsData.insert(i, getValue);
                                   });
+                                }),
+                                focus: focus[i],
+                                validator: (x) {
+                                  int index = data!.data!.items!
+                                      .indexWhere((st) => st.itemName == x);
+
+                                  if (index == -1) {
+                                    return 'Please Choose Items';
+                                  }
+                                  return null;
                                 },
+                                hintText: 'Search Items',
+                                initValue: itemsData[i]["productName"] == ""
+                                    ? ""
+                                    : itemsData[i]["productName"] ?? "",
                               ),
+                              // dropDownField7(
+                              //   hintT: 'Select Items',
+                              //   context,
+                              //   value: itemsData[i]["productName"] == ""
+                              //       ? null
+                              //       : itemsData[i]["productName"],
+                              //   listValue: data?.data?.items ?? [],
+                              //   onChanged: (String? newValue) {
+                              //     setState(() {
+                              //       int index = data!.data!.items!.indexWhere(
+                              //           (st) => st.itemName == newValue);
+
+                              //       final getValue = {
+                              //         'productID':
+                              //             "${data.data!.items?[index].id}",
+                              //         'productName': "${newValue}",
+                              //         'quantity': "${itemsData[i]["quantity"]}",
+                              //       };
+                              //       itemsData.removeAt(i);
+                              //       itemsData.insert(i, getValue);
+                              //     });
+                              //   },
+                              // ),
 
                               SizedBox(height: 16.0),
                               Row(
@@ -234,6 +275,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                                                 };
 
                                                 itemsData.add(tempArr);
+                                                final focusCount = FocusNode();
+                                                focus.add(focusCount);
                                               });
                                             },
                                           )
@@ -380,28 +423,62 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                           Column(
                             children: [
                               SizedBox(height: 16.0),
-                              dropDownField7(
-                                hintT: 'Select Items',
+
+                              dropDownSearchField(
                                 context,
-                                value: itemsData[i]["productName"] == ""
-                                    ? null
-                                    : itemsData[i]["productName"],
                                 listValue: data?.data ?? [],
-                                onChanged: (String? newValue) {
+                                onChanged: ((x) {
+                                  focus[i].unfocus();
+
                                   setState(() {
                                     int index = data!.data!.indexWhere(
-                                        (st) => st.itemName == newValue);
+                                        (st) => st.itemName == x.searchKey);
 
                                     final getValue = {
-                                      'productID': "${data.data?[index].id}",
-                                      'productName': "${newValue}",
+                                      'productID': "${data.data![index].id}",
+                                      'productName': "${x.searchKey}",
                                       'quantity': "${itemsData[i]["quantity"]}",
                                     };
                                     itemsData.removeAt(i);
                                     itemsData.insert(i, getValue);
                                   });
+                                }),
+                                focus: focus[i],
+                                validator: (x) {
+                                  int index = data!.data!
+                                      .indexWhere((st) => st.itemName == x);
+
+                                  if (index == -1) {
+                                    return 'Please Choose Items';
+                                  }
+                                  return null;
                                 },
+                                hintText: 'Search Items',
+                                initValue: '',
                               ),
+
+                              // dropDownField7(
+                              //   hintT: 'Select Items',
+                              //   context,
+                              //   value: itemsData[i]["productName"] == ""
+                              //       ? null
+                              //       : itemsData[i]["productName"],
+                              //   listValue: data?.data ?? [],
+                              //   onChanged: (String? newValue) {
+                              //     setState(() {
+                              //       int index = data!.data!.indexWhere(
+                              //           (st) => st.itemName == newValue);
+
+                              //       final getValue = {
+                              //         'productID': "${data.data?[index].id}",
+                              //         'productName': "${newValue}",
+                              //         'quantity': "${itemsData[i]["quantity"]}",
+                              //       };
+                              //       itemsData.removeAt(i);
+                              //       itemsData.insert(i, getValue);
+                              //     });
+                              //   },
+                              // ),
 
                               SizedBox(height: 16.0),
                               Row(
@@ -461,6 +538,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                                                 };
 
                                                 itemsData.add(tempArr);
+                                                final focusCount = FocusNode();
+                                                focus.add(focusCount);
                                               });
                                             },
                                           )
@@ -470,6 +549,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                                             onPressed: () {
                                               setState(() {
                                                 itemsData.removeAt(i);
+                                                focus.removeAt(i);
                                               });
                                             },
                                           ),
@@ -519,7 +599,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
             );
           },
           error: (Object error, StackTrace stackTrace) {
-            return Center(child: Text("No data found!"));
+            return Center(child: Text("Connection closed, Please try again!"));
           },
           loading: () => Center(child: CircularProgressIndicator()),
         ),

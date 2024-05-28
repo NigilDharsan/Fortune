@@ -1,12 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
+import 'package:fortune/Model/ItemsModel.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/StocksModel.dart';
+import 'package:fortune/Src/ClientScreen/AddClientScreen.dart';
+import 'package:fortune/Src/ItemsScreen/AddItemsScreen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Edit_Screen.dart';
@@ -1163,6 +1167,184 @@ Widget StocksList(context,
               Container(
                 child: Text(
                   "Available Stocks: ${data.availableStock ?? ""}",
+                  style: DateT,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget ClientsList(context,
+    {required ClientsDataObject data,
+    required bool isHistory,
+    required WidgetRef ref}) {
+  Color? containerColor;
+  TextStyle? style;
+  SingleTon singleton = SingleTon();
+
+  return Container(
+    // width: MediaQuery.of(context).size.width / 1.5,
+    margin: EdgeInsets.only(
+      bottom: 20,
+    ),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //USER NAME
+              Container(
+                  margin: EdgeInsets.only(top: 15, bottom: 10),
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          data.cusFirstName ?? "",
+                          style: cardDetailT,
+                        ),
+                      ),
+                      // const Spacer(),
+                      singleton.permissionList.contains("stock-edit") == true
+                          ? InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddClientScreen(
+                                              isEdit: true,
+                                              clientId: "${data.customerId}",
+                                            ))).then((value) {
+                                  if (value == true) {
+                                    ref.refresh(stocksListProvider);
+                                  }
+                                });
+                              },
+                              child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: Center(
+                                      child: Icon(
+                                    Icons.mode_edit,
+                                    size: 25,
+                                  ))),
+                            )
+                          : Container(),
+                    ],
+                  )),
+              //DATE
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
+                child: Row(
+                  children: [
+                    Text(
+                      "GST No: ${data.gstNo ?? ""}",
+                      style: DateT,
+                    ),
+                  ],
+                ),
+              ),
+              //PHONE NUMBER
+              Container(
+                child: Text(
+                  "Address: ${data.address ?? ""}",
+                  style: DateT,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget ItemsList(context,
+    {required ItemData data, required bool isHistory, required WidgetRef ref}) {
+  Color? containerColor;
+  TextStyle? style;
+  SingleTon singleton = SingleTon();
+
+  return Container(
+    // width: MediaQuery.of(context).size.width / 1.5,
+    margin: EdgeInsets.only(
+      bottom: 20,
+    ),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //USER NAME
+              Container(
+                  margin: EdgeInsets.only(top: 15, bottom: 10),
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          data.itemName ?? "",
+                          style: cardDetailT,
+                        ),
+                      ),
+                      // const Spacer(),
+                      singleton.permissionList.contains("stock-edit") == true
+                          ? InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddItemsScreen(
+                                              isEdit: true,
+                                              itemId: "${data.id}",
+                                            ))).then((value) {
+                                  if (value == true) {
+                                    ref.refresh(itemsListProvider);
+                                  }
+                                });
+                              },
+                              child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: Center(
+                                      child: Icon(
+                                    Icons.mode_edit,
+                                    size: 25,
+                                  ))),
+                            )
+                          : Container(),
+                    ],
+                  )),
+              //DATE
+              Padding(
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
+                child: Row(
+                  children: [
+                    Text(
+                      "Date: ${data.createdAt ?? ""}",
+                      style: DateT,
+                    ),
+                  ],
+                ),
+              ),
+              //PHONE NUMBER
+              Container(
+                child: Text(
+                  "Available Stocks: ${data.itemCategory ?? ""}",
                   style: DateT,
                 ),
               ),

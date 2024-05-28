@@ -75,6 +75,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
 
   int client_id = 0;
   String company_id = "";
+  var focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -100,25 +101,25 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                       children: [
                         //CLIENT NAME
                         Title_Style(Title: 'Select Client', isStatus: true),
-                        dropDownField1(
+                        dropDownClientSearchField(
                           context,
-                          hintT: "Select Client",
-                          value: clientName,
                           listValue: data?.data?.clients ?? [],
-                          onChanged: (String? newValue) {
+                          onChanged: ((x) {
+                            focus.unfocus();
+
                             setState(() {
-                              if (newValue == "Add New") {
+                              if (x.searchKey == "Add New") {
                                 isAddNewClient = true;
-                                clientName = newValue;
+                                clientName = x.searchKey;
                                 _ClientName.text = " ";
                                 _ContactNumber.text = "";
                                 _ClientAddress.text = "";
                                 client_id = 0;
                               } else {
                                 isAddNewClient = false;
-                                clientName = newValue;
+                                clientName = x.searchKey;
                                 int index = data!.data!.clients!.indexWhere(
-                                    (st) => st.cusFirstName == newValue);
+                                    (st) => st.cusFirstName == x.searchKey);
                                 clientSelectedIndex = index;
                                 _ClientName.text =
                                     data.data!.clients![index].cusFirstName ??
@@ -132,8 +133,54 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                     data.data!.clients![index].customerId ?? 0;
                               }
                             });
+                          }),
+                          focus: focus,
+                          validator: (x) {
+                            int index = data!.data!.clients!
+                                .indexWhere((st) => st.cusFirstName == x);
+
+                            if (index == -1) {
+                              return 'Please Choose Client';
+                            }
+                            return null;
                           },
+                          hintText: 'Search Client name',
+                          initValue: '',
                         ),
+                        // dropDownField1(
+                        //   context,
+                        //   hintT: "Select Client",
+                        //   value: clientName,
+                        //   listValue: data?.data?.clients ?? [],
+                        //   onChanged: (String? newValue) {
+                        //     setState(() {
+                        //       if (newValue == "Add New") {
+                        //         isAddNewClient = true;
+                        //         clientName = newValue;
+                        //         _ClientName.text = " ";
+                        //         _ContactNumber.text = "";
+                        //         _ClientAddress.text = "";
+                        //         client_id = 0;
+                        //       } else {
+                        //         isAddNewClient = false;
+                        //         clientName = newValue;
+                        //         int index = data!.data!.clients!.indexWhere(
+                        //             (st) => st.cusFirstName == newValue);
+                        //         clientSelectedIndex = index;
+                        //         _ClientName.text =
+                        //             data.data!.clients![index].cusFirstName ??
+                        //                 "";
+                        //         _ContactNumber.text =
+                        //             data.data!.clients![index].cusMobileNo ??
+                        //                 "";
+                        //         _ClientAddress.text =
+                        //             data.data!.clients![index].address ?? "";
+                        //         client_id =
+                        //             data.data!.clients![index].customerId ?? 0;
+                        //       }
+                        //     });
+                        //   },
+                        // ),
                         //COMPANY NAME
                         Title_Style(Title: "Company Name", isStatus: true),
                         dropDownField2(
@@ -169,27 +216,28 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                             }),
                         //CLIENT CONTACT NUMBER
                         Title_Style(
-                            Title: 'Client Mobile Number', isStatus: true),
+                            Title: 'Client Mobile Number', isStatus: false),
                         textFormField(
-                          isEnabled: isAddNewClient == true ? true : false,
+                          isEnabled:
+                              true, //isAddNewClient == true ? true : false,
                           hintText: 'Mobile Number',
                           keyboardtype: TextInputType.phone,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(10)
                           ],
                           Controller: _ContactNumber,
-                          validating: (value) {
-                            if (isAddNewClient == true) {
-                              if (value!.isEmpty) {
-                                return "Please enter a Contact Number";
-                              } else if (!RegExp(r"^[0-9]{10}$")
-                                  .hasMatch(value)) {
-                                return "Please enter a valid 10-digit Contact Number";
-                              }
-                            }
+                          // validating: (value) {
+                          //   if (isAddNewClient == true) {
+                          //     if (value!.isEmpty) {
+                          //       return "Please enter a Contact Number";
+                          //     } else if (!RegExp(r"^[0-9]{10}$")
+                          //         .hasMatch(value)) {
+                          //       return "Please enter a valid 10-digit Contact Number";
+                          //     }
+                          //   }
 
-                            return null;
-                          },
+                          //   return null;
+                          // },
                           onChanged: null,
                         ),
                         //CLIENT ADDRESS
@@ -415,7 +463,8 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                   );
                 },
                 error: (Object error, StackTrace stackTrace) {
-                  return Text(error.toString());
+                  return Center(
+                      child: Text("Connection closed, Please try again!"));
                 },
                 loading: () => Center(child: CircularProgressIndicator()),
               ),

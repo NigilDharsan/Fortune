@@ -226,10 +226,10 @@ class _Service_Form_Edit_ScreenState
                               }),
                           //CLIENT CONTACT NUMBER
                           Title_Style(
-                              Title: 'Client Mobile Number', isStatus: true),
+                              Title: 'Client Mobile Number', isStatus: false),
                           textFormField(
                             hintText: 'Mobile Number',
-                            isEnabled: false,
+                            isEnabled: true,
                             keyboardtype: TextInputType.phone,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(10)
@@ -481,7 +481,8 @@ class _Service_Form_Edit_ScreenState
                     );
                   },
                   error: (Object error, StackTrace stackTrace) {
-                    return Text(error.toString());
+                    return Center(
+                        child: Text("Connection closed, Please try again!"));
                   },
                   loading: () => Center(child: CircularProgressIndicator()),
                 ),

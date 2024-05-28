@@ -4,22 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_Button.dart';
 import 'package:fortune/Common_Widgets/Common_List.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
+import 'package:fortune/Model/ItemsModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
-import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Src/FilterScreen.dart/FilterPhysicalStock.dart';
-import 'package:fortune/Src/StockActivity/AddPhysicalStocks.dart';
+import 'package:fortune/Src/ItemsScreen/AddItemsScreen.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
 
-class PhysicalStocksList extends ConsumerStatefulWidget {
-  PhysicalStocksList({super.key});
+class ItemsListScreen extends ConsumerStatefulWidget {
+  ItemsListScreen({super.key});
 
   @override
-  ConsumerState<PhysicalStocksList> createState() => _PhysicalStocksListState();
+  ConsumerState<ItemsListScreen> createState() => _ItemsListScreenState();
 }
 
-class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
+class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
   // var user_Role = "";
   Filter? filter;
   var formData;
@@ -35,16 +35,9 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
     singleton.formData = formData;
   }
 
-  // void getRole() async {
-  //   final qww = await getUserRole();
-  //   setState(() {
-  //     user_Role = qww;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    final _StocksListData = ref.watch(stocksListProvider);
+    final _StocksListData = ref.watch(itemsListProvider);
     SingleTon singleton = SingleTon();
 
     return singleton.permissionList.contains("stock-create") == true
@@ -53,9 +46,9 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AddPhysicalStockScreen(
+                      builder: (context) => AddItemsScreen(
                             isEdit: false,
-                            stockId: "",
+                            itemId: "",
                           ))).then((value) {
                 if (value == true) {
                   setState(() {
@@ -63,14 +56,14 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
                         {"company_id": "", "branch_id": "", "daterange": ""});
                     singleton.formData = formData;
 
-                    ref.refresh(stocksListProvider);
+                    ref.refresh(itemsListProvider);
                   });
                 }
               });
             }, floatT: "Add Service"),
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: 'Manage Physical Stocks',
+                title: 'Items',
                 actions: <Widget>[
                   Stack(children: [
                     Padding(
@@ -121,8 +114,6 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
                 isNav: true),
             body: _StocksListData.when(
               data: (data) {
-                filter = data?.data?.filter ?? Filter();
-
                 return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
@@ -134,8 +125,8 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
                           padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: _Stocks_List(
-                                context, data?.data?.stocks?.data ?? [], ref),
+                            child: _Items_List(
+                                context, data?.data?.items?.data ?? [], ref),
                           ),
                         ),
                       ],
@@ -203,8 +194,6 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
                 isNav: true),
             body: _StocksListData.when(
               data: (data) {
-                filter = data?.data?.filter ?? Filter();
-
                 return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
@@ -216,8 +205,8 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
                           padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: _Stocks_List(
-                                context, data?.data?.stocks?.data ?? [], ref),
+                            child: _Items_List(
+                                context, data?.data?.items?.data ?? [], ref),
                           ),
                         ),
                       ],
@@ -235,7 +224,7 @@ class _PhysicalStocksListState extends ConsumerState<PhysicalStocksList> {
   }
 }
 
-Widget _Stocks_List(context, List<StocksData>? data, WidgetRef ref) {
+Widget _Items_List(context, List<ItemData>? data, WidgetRef ref) {
   if ((data?.length ?? 0) != 0) {
     return ListView.builder(
       itemCount: data?.length ?? 0,
@@ -245,8 +234,8 @@ Widget _Stocks_List(context, List<StocksData>? data, WidgetRef ref) {
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 0),
-          child: StocksList(context,
-              data: data![index], isHistory: true, ref: ref),
+          child:
+              ItemsList(context, data: data![index], isHistory: true, ref: ref),
         );
       },
     );

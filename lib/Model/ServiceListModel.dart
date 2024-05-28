@@ -228,6 +228,7 @@ class Filter {
   List<ClientDetails>? clientDetails;
   List<Executives>? executives;
   List<Branch>? branch;
+  List<Clients>? clients;
 
   Status? status;
 
@@ -236,7 +237,8 @@ class Filter {
       this.clientDetails,
       this.executives,
       this.branch,
-      this.status});
+      this.status,
+      this.clients});
 
   Filter.fromJson(Map<String, dynamic> json) {
     if (json['company'] != null) {
@@ -263,6 +265,12 @@ class Filter {
         branch!.add(new Branch.fromJson(v));
       });
     }
+    if (json['clients'] != null) {
+      clients = <Clients>[];
+      json['clients'].forEach((v) {
+        clients!.add(new Clients.fromJson(v));
+      });
+    }
     status =
         json['status'] != null ? new Status.fromJson(json['status']) : null;
   }
@@ -281,6 +289,9 @@ class Filter {
     }
     if (this.branch != null) {
       data['branch'] = this.branch!.map((v) => v.toJson()).toList();
+    }
+    if (this.clients != null) {
+      data['clients'] = this.clients!.map((v) => v.toJson()).toList();
     }
     if (this.status != null) {
       data['status'] = this.status!.toJson();

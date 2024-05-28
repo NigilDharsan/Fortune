@@ -328,7 +328,8 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                     : Center(child: Text("No Data Fount!"));
               },
               error: (Object error, StackTrace stackTrace) {
-                return Center(child: Text("No data found!"));
+                return Center(
+                    child: Text("Connection closed, Please try again!"));
               },
               loading: () => Center(child: CircularProgressIndicator()),
             ),

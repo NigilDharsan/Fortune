@@ -26,6 +26,14 @@ class ConstantApi {
   static String stocksCreate = SERVER_ONE + "stocks";
   static String stocksUpdate = SERVER_ONE + "stocks";
 
+  static String itemsList = SERVER_ONE + "items/list";
+  static String itemsCreate = SERVER_ONE + "items";
+  static String itemsUpdate = SERVER_ONE + "items";
+
+  static String clientList = SERVER_ONE + "clients/list";
+  static String clientCreate = SERVER_ONE + "clients";
+  static String clientUpdate = SERVER_ONE + "clients";
+
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";
   static String BAD_RESPONSE = "Bad Response";

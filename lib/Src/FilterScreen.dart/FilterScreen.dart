@@ -105,22 +105,34 @@ class _FilterScreenState extends State<FilterScreen> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   children: [
-                    //CLIENT NAME
-                    Title_Style(Title: 'Select Sales Rep', isStatus: false),
-                    dropDownField3(
-                      context,
-                      hintT: "Service Rep",
-                      value: singleton.filterSalesrep,
-                      listValue:
-                          widget.filter?.executives?.toSet().toList() ?? [],
-                      onChanged: (String? newValue) {
-                        singleton.filterSalesrep = newValue ?? "";
+                    singleton.permissionList.contains("lead-employee-filter") ==
+                            true
+                        ? Column(
+                            children: [
+                              Title_Style(
+                                  Title: 'Select Sales Rep', isStatus: false),
+                              dropDownField3(
+                                context,
+                                hintT: "Service Rep",
+                                value: singleton.filterSalesrep,
+                                listValue: widget.filter?.executives
+                                        ?.toSet()
+                                        .toList() ??
+                                    [],
+                                onChanged: (String? newValue) {
+                                  singleton.filterSalesrep = newValue ?? "";
 
-                        Executives? item = widget.filter?.executives!
-                            .firstWhere((item) => item.name == newValue);
-                        singleton.filterSalesrepID = "${item?.companyId ?? 0}";
-                      },
-                    ),
+                                  Executives? item = widget.filter?.executives!
+                                      .firstWhere(
+                                          (item) => item.name == newValue);
+                                  singleton.filterSalesrepID =
+                                      "${item?.companyId ?? 0}";
+                                },
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    //CLIENT NAME
 
                     Title_Style(
                         Title: "Select Date range type", isStatus: false),
@@ -232,21 +244,30 @@ class _FilterScreenState extends State<FilterScreen> {
                       },
                     ),
 
+                    singleton.permissionList.contains("lead-company-filter") ==
+                            true
+                        ? Column(
+                            children: [
+                              Title_Style(
+                                  Title: "Company Name", isStatus: false),
+                              dropDownField4(
+                                hintT: 'Select Company',
+                                context,
+                                value: singleton.filterCompanyname,
+                                listValue: widget.filter?.company,
+                                onChanged: (String? newValue) {
+                                  singleton.filterCompanyname = newValue ?? "";
+                                  Company? item = widget.filter?.company!
+                                      .firstWhere((item) =>
+                                          item.companyBranch == newValue);
+                                  singleton.filterCompanynameID =
+                                      "${item?.companyId ?? 0}";
+                                },
+                              ),
+                            ],
+                          )
+                        : Container(),
                     //COMPANY NAME
-                    Title_Style(Title: "Company Name", isStatus: false),
-                    dropDownField4(
-                      hintT: 'Select Company',
-                      context,
-                      value: singleton.filterCompanyname,
-                      listValue: widget.filter?.company,
-                      onChanged: (String? newValue) {
-                        singleton.filterCompanyname = newValue ?? "";
-                        Company? item = widget.filter?.company!.firstWhere(
-                            (item) => item.companyBranch == newValue);
-                        singleton.filterCompanynameID =
-                            "${item?.companyId ?? 0}";
-                      },
-                    ),
 
                     const SizedBox(
                       height: 30,

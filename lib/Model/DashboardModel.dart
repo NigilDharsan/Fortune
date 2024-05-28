@@ -28,6 +28,9 @@ class DashboardModel {
 class Data {
   int? servicesCount;
   int? marketingCount;
+
+  int? itemCount;
+  int? clientCount;
   List<ServicesData1>? services;
   List<HistoryData>? marketings;
   List<HistoryData>? todayMarketings;
@@ -37,6 +40,9 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     servicesCount = json['servicesCount'];
     marketingCount = json['marketingCount'];
+    itemCount = json['itemCount'];
+    clientCount = json['clientCount'];
+
     if (json['services'] != null) {
       services = <ServicesData1>[];
       json['services'].forEach((v) {
@@ -63,6 +69,8 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['servicesCount'] = this.servicesCount;
     data['marketingCount'] = this.marketingCount;
+    data['itemCount'] = this.itemCount;
+    data['clientCount'] = this.clientCount;
 
     if (this.services != null) {
       data['services'] = this.services!.map((v) => v.toJson()).toList();

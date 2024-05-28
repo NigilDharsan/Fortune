@@ -227,7 +227,8 @@ class _DailyStockActivityListState
                 );
               },
               error: (Object error, StackTrace stackTrace) {
-                return Text(error.toString());
+                return Center(
+                    child: Text("Connection closed, Please try again!"));
               },
               loading: () => Center(child: CircularProgressIndicator()),
             ),

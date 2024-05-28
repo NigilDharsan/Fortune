@@ -2,9 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/ActivityEditModel.dart';
+import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
+import 'package:fortune/Model/ItemsEditModel.dart';
+import 'package:fortune/Model/ItemsModel.dart';
 import 'package:fortune/Model/LoginModel.dart';
 import 'package:fortune/Model/MarketingEditModel.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
@@ -613,5 +616,99 @@ class ApiService {
       }
     }
     return ServiceModel();
+  }
+
+  // Client Api
+
+  Future<ClientsModel> getClientListApi() async {
+    SingleTon singleTon = SingleTon();
+
+    final result = await requestPOST(
+        url: ConstantApi.clientList, formData: singleTon.formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ClientsModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ClientsModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ClientsModel();
+  }
+
+  Future<ActivityEditModel> getClientEditApi(String client_id) async {
+    final result = await requestGET(
+        url: ConstantApi.clientCreate + "/${client_id}/" + "edit", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ActivityEditModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ActivityEditModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ActivityEditModel();
+  }
+
+// Items Api
+
+  Future<ItemsModel> getItemsListApi() async {
+    SingleTon singleTon = SingleTon();
+
+    final result = await requestPOST(
+        url: ConstantApi.itemsList, formData: singleTon.formData, dio: _dio);
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ItemsModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ItemsModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ItemsModel();
+  }
+
+  Future<ItemsEditModel> getItemsEditApi(String item_id) async {
+    final result = await requestGET(
+        url: ConstantApi.itemsCreate + "/${item_id}/" + "edit", dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return ItemsEditModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = ItemsEditModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return ItemsEditModel();
   }
 }

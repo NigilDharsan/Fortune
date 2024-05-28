@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/ActivityEditModel.dart';
+import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
 import 'package:fortune/Model/EditModel.dart';
+import 'package:fortune/Model/ItemsEditModel.dart';
+import 'package:fortune/Model/ItemsModel.dart';
 import 'package:fortune/Model/MarketingEditModel.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
@@ -107,6 +110,27 @@ final stocksItemProvider =
 final stocksEditProvider = FutureProvider.autoDispose
     .family<StocksEditModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getStocksEditApi(id);
+});
+
+// Clients
+final clientsListProvider =
+    FutureProvider.autoDispose<ClientsModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getClientListApi();
+});
+
+final clientEditProvider = FutureProvider.autoDispose
+    .family<ActivityEditModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getClientEditApi(id);
+});
+
+// Items
+final itemsListProvider = FutureProvider.autoDispose<ItemsModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getItemsListApi();
+});
+
+final ItemsEditProvider =
+    FutureProvider.autoDispose.family<ItemsEditModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getItemsEditApi(id);
 });
 
 // PAGINATION IMPLEMENTATION

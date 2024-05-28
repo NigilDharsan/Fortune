@@ -166,6 +166,7 @@ class _Marketing_Form_Edit_ScreenState
                       children: [
                         //CLIENT NAME
                         Title_Style(Title: 'Select Client', isStatus: true),
+
                         dropDownField(
                           context,
                           hintT: "Select Client",
@@ -218,9 +219,9 @@ class _Marketing_Form_Edit_ScreenState
                             }),
                         //CLIENT CONTACT NUMBER
                         Title_Style(
-                            Title: 'Client Mobile Number', isStatus: true),
+                            Title: 'Client Mobile Number', isStatus: false),
                         textFormField(
-                          isEnabled: false,
+                          isEnabled: true,
                           hintText: 'Mobile Number',
                           keyboardtype: TextInputType.phone,
                           inputFormatters: [
@@ -459,7 +460,8 @@ class _Marketing_Form_Edit_ScreenState
                   );
                 },
                 error: (Object error, StackTrace stackTrace) {
-                  return Text(error.toString());
+                  return Center(
+                      child: Text("Connection closed, Please try again!"));
                 },
                 loading: () => Center(child: CircularProgressIndicator()),
               ),

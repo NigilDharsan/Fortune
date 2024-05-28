@@ -54,7 +54,7 @@ class _Marketing_History_ListState
           );
         },
         error: (Object error, StackTrace stackTrace) {
-          return Center(child: Text("No data found!"));
+          return Center(child: Text("Connection closed, Please try again!"));
         },
         loading: () => Center(child: CircularProgressIndicator()),
       ),
