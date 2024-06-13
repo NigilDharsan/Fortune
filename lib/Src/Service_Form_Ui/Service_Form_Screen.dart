@@ -33,6 +33,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
   TextEditingController _ClientName = TextEditingController();
   TextEditingController _ContactNumber = TextEditingController();
   TextEditingController _ClientAddress = TextEditingController();
+  TextEditingController _Requirement = TextEditingController();
 
   File? _selectedFiles;
   List<Executives> _selectedItems = [];
@@ -181,6 +182,24 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                         //     });
                         //   },
                         // ),
+
+                        //REQUIRMENT
+                        Title_Style(Title: 'Requirement', isStatus: true),
+                        textFormField(
+                            isEnabled: true,
+                            hintText: "Requirement",
+                            keyboardtype: TextInputType.text,
+                            Controller: _Requirement,
+                            validating: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please Enter Requirement";
+                              }
+                              if (value == null) {
+                                return "Please Enter Requirement";
+                              }
+                              return null;
+                            }),
+
                         //COMPANY NAME
                         Title_Style(Title: "Company Name", isStatus: true),
                         dropDownField2(
@@ -398,7 +417,8 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                             } else if (singleton.permissionList
                                         .contains("service-assign") ==
                                     true &&
-                                _selectedItems.length == 0) {
+                                _selectedItems.length == 0 &&
+                                (data?.data?.executives?.length ?? 0) != 0) {
                               ShowToastMessage("Select executive");
                             } else {
                               List<String> idList = _selectedItems
@@ -410,6 +430,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                               var formData = FormData.fromMap({
                                 "is_new_client":
                                     isAddNewClient == true ? "1" : "0",
+                                "requirment": _Requirement.text,
                                 "client_id": client_id,
                                 "cus_mobile_no": _ContactNumber.text,
                                 "cus_first_name": _ClientName.text,

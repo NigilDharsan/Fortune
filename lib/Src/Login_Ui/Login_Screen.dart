@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -50,11 +52,19 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
 
   getDeviceID() async {
     final deviceInfoPlugin = DeviceInfoPlugin();
-    final deviceInfo = await deviceInfoPlugin.deviceInfo;
-    final allInfo = deviceInfo.data;
-    print('Running on ${allInfo.values.last}');
-
-    device_id = allInfo.values.last; // e.g. "Moto G (4)"
+    if (Platform.isIOS) {
+      var iosDeviceInfo = await deviceInfoPlugin.iosInfo;
+      setState(() {
+        device_id =
+            iosDeviceInfo.identifierForVendor ?? ""; // e.g. "Moto G (4)"
+      });
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfoPlugin.androidInfo;
+      setState(() {
+        device_id = androidDeviceInfo.id; // e.g. "Moto G (4)"
+      });
+    }
+    print('Running on ${device_id}');
   }
 
 //

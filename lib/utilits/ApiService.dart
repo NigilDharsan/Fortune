@@ -671,7 +671,7 @@ class ApiService {
     SingleTon singleTon = SingleTon();
 
     final result = await requestPOST(
-        url: ConstantApi.itemsList, formData: singleTon.formData, dio: _dio);
+        url: ConstantApi.itemsList, formData: FormData(), dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");

@@ -572,12 +572,12 @@ Widget dropDownField4(
       ),
       items: listValue?.map((Company option) {
         return DropdownMenuItem<String>(
-          value: option.companyBranch,
+          value: option.name,
           child: Padding(
             padding: const EdgeInsets.only(
               left: 10,
             ),
-            child: Text(option.companyBranch ?? ""),
+            child: Text(option.name ?? ""),
           ),
         );
       }).toList(),
@@ -824,6 +824,72 @@ Widget dropDownClientSearchField(
       suggestionDirection: SuggestionDirection.down,
       suggestions: listValue
           .map((e) => SearchFieldListItem<Clients>(e.cusFirstName ?? ""))
+          .toList(),
+      suggestionState: Suggestion.expand,
+      textInputAction: TextInputAction.next,
+      searchStyle: TextStyle(
+        fontSize: 16,
+        color: Colors.black.withOpacity(0.8),
+      ),
+      validator: validator,
+      searchInputDecoration: InputDecoration(
+        hintText: hintText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        fillColor: Colors.transparent,
+        filled: true,
+      ),
+      // searchInputDecoration: InputDecoration(
+      //   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      //   hintText: hintText,
+      //   hintStyle: phoneHT,
+      //   border: OutlineInputBorder(
+      //     borderRadius: BorderRadius.circular(10),
+      //     borderSide: BorderSide(color: white2),
+      //   ),
+      //   enabledBorder: OutlineInputBorder(
+      //     borderRadius: BorderRadius.circular(10),
+      //     borderSide: BorderSide(color: white2),
+      //   ),
+      //   fillColor: white2,
+      //   filled: true,
+      // ),
+      maxSuggestionsInViewPort: 5,
+      itemHeight: 40,
+      onSuggestionTap: onChanged,
+    ),
+  );
+}
+
+Widget dropDownClientGSTSearchField(
+  context, {
+  required FocusNode? focus,
+  required List<Clients> listValue,
+  required String? Function(String?)? validator,
+  required void Function(SearchFieldListItem<Clients> x)? onChanged,
+  required String hintText,
+  required String initValue,
+}) {
+  return Container(
+    height: 60,
+    // padding: const EdgeInsets.symmetric(horizontal: 10.0),
+
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10), color: Colors.white),
+    child: SearchField(
+      initialValue:
+          initValue == "" ? null : SearchFieldListItem<Clients>(initValue),
+      focusNode: focus,
+      suggestionDirection: SuggestionDirection.down,
+      suggestions: listValue
+          .map((e) => SearchFieldListItem<Clients>(e.gstNo ?? ""))
           .toList(),
       suggestionState: Suggestion.expand,
       textInputAction: TextInputAction.next,

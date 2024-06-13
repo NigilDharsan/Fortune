@@ -39,6 +39,7 @@ class _FilterDailyStockScreenState extends State<FilterDailyStockScreen> {
   var dateRange = "";
 
   SingleTon singleton = SingleTon();
+  final GlobalKey<FormFieldState> _formKey = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -96,92 +97,127 @@ class _FilterDailyStockScreenState extends State<FilterDailyStockScreen> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   children: [
-                    // DATE RANGE
-                    Title_Style(Title: "Date range", isStatus: false),
-
-                    InkWell(
-                      onTap: () async {
-                        final DateTimeRange? picked = await showDateRangePicker(
-                          context: context,
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2200),
-                          initialDateRange: DateTimeRange(
-                            start: DateTime.now(),
-                            end: DateTime.now(),
-                          ),
-                        );
-
-                        if (picked != null) {
-                          setState(() {
-                            // fromDate = picked.start;
-                            // toDate = picked.end;
-                            String formatdate =
-                                DateFormat("dd/MM/yyyy").format(picked.start);
-
-                            String todate =
-                                DateFormat("dd/MM/yyyy").format(picked.end);
-
-                            setState(() {
-                              singleton.filterDaterange =
-                                  "${formatdate}-${todate}";
-                            });
-                          });
-                        }
-                      },
-                      child: Container(
-                        height: 44,
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                          child: Row(
+                    singleton.permissionList.contains("activity-date-filter") ==
+                            true
+                        ? Column(
                             children: [
-                              Text(singleton.filterDaterange ?? ""),
-                              Spacer(),
-                              Icon(Icons.date_range)
+                              Title_Style(Title: "Date range", isStatus: false),
+                              InkWell(
+                                onTap: () async {
+                                  final DateTimeRange? picked =
+                                      await showDateRangePicker(
+                                    context: context,
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2200),
+                                    initialDateRange: DateTimeRange(
+                                      start: DateTime.now(),
+                                      end: DateTime.now(),
+                                    ),
+                                  );
+
+                                  if (picked != null) {
+                                    setState(() {
+                                      // fromDate = picked.start;
+                                      // toDate = picked.end;
+                                      String formatdate =
+                                          DateFormat("dd/MM/yyyy")
+                                              .format(picked.start);
+
+                                      String todate = DateFormat("dd/MM/yyyy")
+                                          .format(picked.end);
+
+                                      setState(() {
+                                        singleton.filterDaterange =
+                                            "${formatdate}-${todate}";
+                                      });
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  height: 44,
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    child: Row(
+                                      children: [
+                                        Text(singleton.filterDaterange ?? ""),
+                                        Spacer(),
+                                        Icon(Icons.date_range)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
-                          ),
-                        ),
-                      ),
-                    ),
+                          )
+                        : Container(),
+// DATE RANGE
 
                     //COMPANY NAME
-                    Title_Style(Title: "Company Name", isStatus: false),
-                    dropDownField4(
-                      hintT: 'Select Company',
-                      context,
-                      value: singleton.filterCompanyname,
-                      listValue: widget.filter?.company,
-                      onChanged: (String? newValue) {
-                        singleton.filterCompanyname = newValue ?? "";
-                        Company? item = widget.filter?.company!.firstWhere(
-                            (item) => item.companyBranch == newValue);
-                        singleton.filterCompanynameID =
-                            "${item?.companyId ?? 0}";
+                    singleton.permissionList
+                                .contains("activity-company-filter") ==
+                            true
+                        ? Column(
+                            children: [
+                              Title_Style(
+                                  Title: "Company Name", isStatus: false),
+                              dropDownField4(
+                                hintT: 'Select Company',
+                                context,
+                                value: singleton.filterCompanyname,
+                                listValue: widget.filter?.company,
+                                onChanged: (String? newValue) {
+                                  singleton.filterCompanyname = newValue ?? "";
+                                  Company? item = widget.filter?.company!
+                                      .firstWhere(
+                                          (item) => item.name == newValue);
+                                  singleton.filterCompanynameID =
+                                      "${item?.companyId ?? 0}";
 
-                        setState(() {
-                          filterBranch = widget.filter?.branch!
-                              .where((data) => "${data.companyId}".contains(
-                                  singleton.filterCompanynameID ?? ""))
-                              .map((data) => data)
-                              .toList();
-                        });
-                      },
-                    ),
+                                  setState(() {
+                                    singleton.filterBranchname = null;
+                                    singleton.filterBranchnameID = null;
 
-                    //COMPANY NAME
-                    Title_Style(Title: "Branch Name", isStatus: false),
-                    dropDownField6(
-                      hintT: 'Select Branch',
-                      context,
-                      value: singleton.filterBranchname,
-                      listValue: filterBranch,
-                      onChanged: (String? newValue) {
-                        singleton.filterBranchname = newValue ?? "";
-                        Branch? item = filterBranch!
-                            .firstWhere((item) => item.branchName == newValue);
-                        singleton.filterBranchnameID = "${item.id ?? 0}";
-                      },
-                    ),
+                                    filterBranch = widget.filter?.branch!
+                                        .where((data) => "${data.companyId}"
+                                            .contains(
+                                                singleton.filterCompanynameID ??
+                                                    ""))
+                                        .map((data) => data)
+                                        .toList();
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                        : Container(),
+
+                    singleton.permissionList.contains("stock-branch-filter") ==
+                            true
+                        ? Column(
+                            children: [
+                              //BRANCH NAME
+                              Title_Style(
+                                  Title: "Branch Name", isStatus: false),
+                              dropDownField6(
+                                hintT: 'Select Branch',
+                                context,
+                                value: singleton.filterBranchname,
+                                listValue: filterBranch,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    singleton.filterBranchname = newValue ?? "";
+                                    Branch? item = filterBranch!.firstWhere(
+                                        (item) => item.branchName == newValue);
+                                    singleton.filterBranchnameID =
+                                        "${item.id ?? 0}";
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                        : Container(),
 
                     const SizedBox(
                       height: 30,

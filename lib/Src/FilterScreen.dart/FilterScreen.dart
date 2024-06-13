@@ -35,6 +35,7 @@ class _FilterScreenState extends State<FilterScreen> {
 
   String? status;
   int? clientSelectedIndex;
+  List<Branch>? filterBranch = [];
 
   List<String> _selectState = [
     'completed',
@@ -48,6 +49,7 @@ class _FilterScreenState extends State<FilterScreen> {
   List<String> nextfollowup = ["Today", "Tomorrow"];
 
   SingleTon singleton = SingleTon();
+  final GlobalKey<FormFieldState> _formKey = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -258,10 +260,23 @@ class _FilterScreenState extends State<FilterScreen> {
                                 onChanged: (String? newValue) {
                                   singleton.filterCompanyname = newValue ?? "";
                                   Company? item = widget.filter?.company!
-                                      .firstWhere((item) =>
-                                          item.companyBranch == newValue);
+                                      .firstWhere(
+                                          (item) => item.name == newValue);
                                   singleton.filterCompanynameID =
                                       "${item?.companyId ?? 0}";
+
+                                  setState(() {
+                                    singleton.filterBranchname = null;
+                                    singleton.filterBranchnameID = null;
+
+                                    filterBranch = widget.filter?.branch!
+                                        .where((data) => "${data.companyId}"
+                                            .contains(
+                                                singleton.filterCompanynameID ??
+                                                    ""))
+                                        .map((data) => data)
+                                        .toList();
+                                  });
                                 },
                               ),
                             ],
@@ -269,6 +284,31 @@ class _FilterScreenState extends State<FilterScreen> {
                         : Container(),
                     //COMPANY NAME
 
+                    singleton.permissionList.contains("lead-branch-filter") ==
+                            true
+                        ? Column(
+                            children: [
+                              //BRANCH NAME
+                              Title_Style(
+                                  Title: "Branch Name", isStatus: false),
+                              dropDownField6(
+                                hintT: 'Select Branch',
+                                context,
+                                value: singleton.filterBranchname,
+                                listValue: filterBranch,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    singleton.filterBranchname = newValue ?? "";
+                                    Branch? item = filterBranch!.firstWhere(
+                                        (item) => item.branchName == newValue);
+                                    singleton.filterBranchnameID =
+                                        "${item.id ?? 0}";
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                        : Container(),
                     const SizedBox(
                       height: 30,
                     ),

@@ -39,6 +39,7 @@ class _Service_Form_Edit_ScreenState
   TextEditingController _ClientName = TextEditingController();
   TextEditingController _ContactNumber = TextEditingController();
   TextEditingController _ClientAddress = TextEditingController();
+  TextEditingController _Requirement = TextEditingController();
 
   File? _selectedFiles;
   List<Executives> _selectedItems = [];
@@ -199,6 +200,22 @@ class _Service_Form_Edit_ScreenState
                             ],
                             onChanged: (String? newValue) {},
                           ),
+                          //REQUIRMENT
+                          Title_Style(Title: 'Requirement', isStatus: true),
+                          textFormField(
+                              isEnabled: true,
+                              hintText: "Requirement",
+                              keyboardtype: TextInputType.text,
+                              Controller: _Requirement,
+                              validating: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please Enter Requirement";
+                                }
+                                if (value == null) {
+                                  return "Please Enter Requirement";
+                                }
+                                return null;
+                              }),
                           //COMPANY NAME
                           Title_Style(Title: "Company Name", isStatus: true),
                           dropDownField(
@@ -420,7 +437,8 @@ class _Service_Form_Edit_ScreenState
                               if (singleton.permissionList
                                           .contains("service-assign") ==
                                       true &&
-                                  _selectedItems.length == 0) {
+                                  _selectedItems.length == 0 &&
+                                  (data.data?.executives?.length ?? 0) != 0) {
                                 ShowToastMessage("Select executive");
                               } else {
                                 List<String> idList = _selectedItems
@@ -429,6 +447,7 @@ class _Service_Form_Edit_ScreenState
 
                                 var formData = FormData.fromMap({
                                   "status": selectStatus_id,
+                                  "requirment": _Requirement.text,
                                   "status_note": _StatusNote.text,
                                   for (var i = 0; i < idList.length; i++)
                                     'assign_executive[$i]': idList[i],

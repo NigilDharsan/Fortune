@@ -29,17 +29,24 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
   TextEditingController _ClientName = TextEditingController();
   TextEditingController _PlanofAction = TextEditingController();
   TextEditingController _Reference = TextEditingController();
+  TextEditingController _Requirement = TextEditingController();
 
   TextEditingController _ContactNumber = TextEditingController();
 
   String? selectStatus;
   String selectStatus_id = "";
+  String? selectMarketing_Type;
 
   List<String> _selectState = [
     'completed',
     'pending',
     'processing',
     "cancelled"
+  ];
+
+  List<String> _selectMarketingType = [
+    'Sales',
+    'Leads',
   ];
 
   String TimeVal = '';
@@ -210,6 +217,37 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                               }
                               return null;
                             }),
+
+                        //REQUIRMENT
+                        Title_Style(Title: 'Requirement', isStatus: true),
+                        textFormField(
+                            isEnabled: true,
+                            hintText: "Requirement",
+                            keyboardtype: TextInputType.text,
+                            Controller: _Requirement,
+                            validating: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please Enter Requirement";
+                              }
+                              if (value == null) {
+                                return "Please Enter Requirement";
+                              }
+                              return null;
+                            }),
+
+                        //SELECT TYPE
+                        Title_Style(Title: "Select Type", isStatus: true),
+                        dropDownField(
+                          context,
+                          hintT: 'Select Type',
+                          value: selectMarketing_Type,
+                          listValue: _selectMarketingType,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectMarketing_Type = newValue ?? "";
+                            });
+                          },
+                        ),
                         //COMPANY NAME
                         Title_Style(Title: "Company Name", isStatus: true),
                         dropDownField2(
@@ -230,7 +268,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         //CLIENT NAME
                         Title_Style(Title: 'Client Name', isStatus: true),
                         textFormField(
-                            isEnabled: isAddNewClient == true ? true : false,
+                            isEnabled: true,
                             hintText: "Client Name",
                             keyboardtype: TextInputType.text,
                             Controller: _ClientName,
@@ -272,7 +310,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         //CLIENT ADDRESS
                         Title_Style(Title: "Client Address", isStatus: true),
                         textfieldDescription(
-                            readOnly: isAddNewClient == true ? false : true,
+                            readOnly: true,
                             Controller: _ClientAddress,
                             hintText: 'Enter Address',
                             validating: (value) {
@@ -424,10 +462,14 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             } else if (singleton.permissionList
                                         .contains("lead-assign") ==
                                     true &&
-                                _selectedItems.length == 0) {
+                                _selectedItems.length == 0 &&
+                                (data?.data?.executives?.length ?? 0) != 0) {
                               ShowToastMessage("Select executive");
                             } else if (selectStatus_id == "") {
                               ShowToastMessage("Select Status");
+                            } else if (selectMarketing_Type == "" ||
+                                selectMarketing_Type != null) {
+                              ShowToastMessage("Select Type");
                             } else {
                               List<int> idList = _selectedItems
                                   .map((item) => item.id ?? 0)
@@ -436,6 +478,8 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                               Map<String, dynamic> data = {
                                 "is_new_client":
                                     isAddNewClient == true ? "1" : "0",
+                                "requirment": _Requirement.text,
+                                "marketing_type": selectMarketing_Type,
                                 "client_id": client_id,
                                 "reference": _Reference.text,
                                 "cus_mobile_no": _ContactNumber.text,

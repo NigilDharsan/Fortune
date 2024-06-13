@@ -95,12 +95,20 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                   itemBuilder: (BuildContext context) => [
                         PopupMenuItem(
                             child: InkWell(
-                                onTap: () {
+                                onTap: () async {
                                   String Boolvalue = "false";
                                   Routes(Boolvalue);
                                   accessToken("");
                                   UserId("");
                                   // UserRole("");
+                                  UserPermission([]);
+                                  SingleTon singleton = SingleTon();
+                                  singleton.permissionList = [];
+
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  await prefs.setStringList('permissions', []);
 
                                   print('ROUTES : ${Routes(Boolvalue)}');
                                   Navigator.pushAndRemoveUntil(
@@ -167,13 +175,17 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                 true
                             ? InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ItemsListScreen())).then(
-                                      (value) =>
-                                          ref.refresh(dashboardProvider));
+                                  if (singleton.permissionList
+                                          .contains("item-list") ==
+                                      true) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ItemsListScreen())).then(
+                                        (value) =>
+                                            ref.refresh(dashboardProvider));
+                                  } else {}
                                 },
                                 child: _CountCard(
                                     countT: "${data?.data?.itemCount ?? 0}",
@@ -187,13 +199,17 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                 true
                             ? InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ClientListScreen())).then(
-                                      (value) =>
-                                          ref.refresh(dashboardProvider));
+                                  if (singleton.permissionList
+                                          .contains("customer-list") ==
+                                      true) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ClientListScreen())).then(
+                                        (value) =>
+                                            ref.refresh(dashboardProvider));
+                                  } else {}
                                 },
                                 child: _CountCard(
                                     countT: "${data?.data?.clientCount ?? 0}",
@@ -208,25 +224,31 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       height: 20,
                     ),
                     Row(
-                      mainAxisAlignment:
-                          (singleton.permissionList.contains("lead-list") ==
-                                      true &&
-                                  singleton.permissionList
-                                          .contains("service-list") ==
-                                      true)
-                              ? MainAxisAlignment.spaceEvenly
-                              : MainAxisAlignment.center,
+                      mainAxisAlignment: (singleton.permissionList
+                                      .contains("dashboard-marketing-count") ==
+                                  true &&
+                              singleton.permissionList
+                                      .contains("dashboard-service-count") ==
+                                  true)
+                          ? MainAxisAlignment.spaceEvenly
+                          : MainAxisAlignment.center,
                       children: [
-                        singleton.permissionList.contains("lead-list") == true
+                        singleton.permissionList
+                                    .contains("dashboard-marketing-count") ==
+                                true
                             ? InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Marketing_List_Screen())).then(
-                                      (value) =>
-                                          ref.refresh(dashboardProvider));
+                                  if (singleton.permissionList
+                                          .contains("lead-list") ==
+                                      true) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Marketing_List_Screen())).then(
+                                        (value) =>
+                                            ref.refresh(dashboardProvider));
+                                  } else {}
                                 },
                                 child: _CountCard(
                                     countT:
@@ -236,17 +258,22 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                     color: red1),
                               )
                             : Container(),
-                        singleton.permissionList.contains("service-list") ==
+                        singleton.permissionList
+                                    .contains("dashboard-service-count") ==
                                 true
                             ? InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Service_List_Screen())).then(
-                                      (value) =>
-                                          ref.refresh(dashboardProvider));
+                                  if (singleton.permissionList
+                                          .contains("service-list") ==
+                                      true) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Service_List_Screen())).then(
+                                        (value) =>
+                                            ref.refresh(dashboardProvider));
+                                  }
                                 },
                                 child: _CountCard(
                                     countT: "${data?.data?.servicesCount ?? 0}",
@@ -283,7 +310,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                 },
                                 child: _ActivityCard(
                                     iconFile: Icons.edit_document,
-                                    cardName: " Daily Stock Activity ",
+                                    cardName: " Daily activity ",
                                     isWhite: true,
                                     color: green1),
                               )
@@ -400,7 +427,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                         margin: EdgeInsets.only(
                                             top: 20, bottom: 10, left: 10),
                                         child: Text(
-                                          "Service didn’t closed for more than 5 days",
+                                          "Service not closed for more than 5 days",
                                           style: TBlack,
                                           maxLines: 2,
                                           overflow: TextOverflow
@@ -478,7 +505,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                         margin: EdgeInsets.only(
                                             top: 20, bottom: 10, left: 10),
                                         child: Text(
-                                          "Marketings didn’t updated for more than 5 days",
+                                          "Marketing not updated for morethan 5 days",
                                           style: TBlack,
                                           maxLines: 2,
                                           overflow: TextOverflow

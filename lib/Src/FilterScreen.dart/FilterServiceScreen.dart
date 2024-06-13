@@ -27,6 +27,7 @@ class _FilterServiceScreenState extends State<FilterServiceScreen> {
 
   String? status;
   int? clientSelectedIndex;
+  List<Branch>? filterBranch = [];
 
   List<String> _selectState = [
     'completed',
@@ -101,22 +102,33 @@ class _FilterServiceScreenState extends State<FilterServiceScreen> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   children: [
-                    //CLIENT NAME
-                    Title_Style(Title: 'Service Rep', isStatus: false),
-                    dropDownField3(
-                      context,
-                      hintT: "Service Rep",
-                      value: singleton.filterSalesrep,
-                      listValue:
-                          widget.filter?.executives?.toSet().toList() ?? [],
-                      onChanged: (String? newValue) {
-                        singleton.filterSalesrep = newValue ?? "";
+                    singleton.permissionList.contains("service-filter-user") ==
+                            true
+                        ? Column(
+                            children: [
+                              Title_Style(
+                                  Title: 'Service Rep', isStatus: false),
+                              dropDownField3(
+                                context,
+                                hintT: "Service Rep",
+                                value: singleton.filterSalesrep,
+                                listValue: widget.filter?.executives
+                                        ?.toSet()
+                                        .toList() ??
+                                    [],
+                                onChanged: (String? newValue) {
+                                  singleton.filterSalesrep = newValue ?? "";
 
-                        Executives? item = widget.filter?.executives!
-                            .firstWhere((item) => item.name == newValue);
-                        singleton.filterSalesrepID = "${item?.companyId ?? 0}";
-                      },
-                    ),
+                                  Executives? item = widget.filter?.executives!
+                                      .firstWhere(
+                                          (item) => item.name == newValue);
+                                  singleton.filterSalesrepID =
+                                      "${item?.companyId ?? 0}";
+                                },
+                              ),
+                            ],
+                          )
+                        : Container(),
 
                     // DATE RANGE
                     Title_Style(Title: "Date range", isStatus: false),
@@ -190,37 +202,87 @@ class _FilterServiceScreenState extends State<FilterServiceScreen> {
                     ),
 
                     //CLIENT NAME
-                    Title_Style(Title: "Client Name", isStatus: false),
-                    dropDownField5(
-                      hintT: 'Select Client',
-                      context,
-                      value: singleton.filterClientname,
-                      listValue: widget.filter?.clientDetails,
-                      onChanged: (String? newValue) {
-                        singleton.filterClientname = newValue ?? "";
+                    // Title_Style(Title: "Client Name", isStatus: false),
 
-                        ClientDetails? item = widget.filter?.clientDetails!
-                            .firstWhere(
-                                (item) => item.cusFirstName == newValue);
-                        singleton.filterClientnameID = "${item?.clientId ?? 0}";
-                      },
-                    ),
+                    // dropDownField5(
+                    //   hintT: 'Select Client',
+                    //   context,
+                    //   value: singleton.filterClientname,
+                    //   listValue: widget.filter?.clientDetails,
+                    //   onChanged: (String? newValue) {
+                    //     singleton.filterClientname = newValue ?? "";
 
-                    //COMPANY NAME
-                    Title_Style(Title: "Company Name", isStatus: false),
-                    dropDownField4(
-                      hintT: 'Select Company',
-                      context,
-                      value: singleton.filterCompanyname,
-                      listValue: widget.filter?.company,
-                      onChanged: (String? newValue) {
-                        singleton.filterCompanyname = newValue ?? "";
-                        Company? item = widget.filter?.company!.firstWhere(
-                            (item) => item.companyBranch == newValue);
-                        singleton.filterCompanynameID =
-                            "${item?.companyId ?? 0}";
-                      },
-                    ),
+                    //     ClientDetails? item = widget.filter?.clientDetails!
+                    //         .firstWhere(
+                    //             (item) => item.cusFirstName == newValue);
+                    //     singleton.filterClientnameID = "${item?.clientId ?? 0}";
+                    //   },
+                    // ),
+
+                    singleton.permissionList
+                                .contains("service-filter-company") ==
+                            true
+                        ? Column(
+                            children: [
+                              Title_Style(
+                                  Title: "Company Name", isStatus: false),
+                              dropDownField4(
+                                hintT: 'Select Company',
+                                context,
+                                value: singleton.filterCompanyname,
+                                listValue: widget.filter?.company,
+                                onChanged: (String? newValue) {
+                                  singleton.filterCompanyname = newValue ?? "";
+                                  Company? item = widget.filter?.company!
+                                      .firstWhere(
+                                          (item) => item.name == newValue);
+                                  singleton.filterCompanynameID =
+                                      "${item?.companyId ?? 0}";
+
+                                  setState(() {
+                                    singleton.filterBranchname = null;
+                                    singleton.filterBranchnameID = null;
+
+                                    filterBranch = widget.filter?.branch!
+                                        .where((data) => "${data.companyId}"
+                                            .contains(
+                                                singleton.filterCompanynameID ??
+                                                    ""))
+                                        .map((data) => data)
+                                        .toList();
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                        : Container(),
+
+                    singleton.permissionList
+                                .contains("service-filter-branch") ==
+                            true
+                        ? Column(
+                            children: [
+                              //BRANCH NAME
+                              Title_Style(
+                                  Title: "Branch Name", isStatus: false),
+                              dropDownField6(
+                                hintT: 'Select Branch',
+                                context,
+                                value: singleton.filterBranchname,
+                                listValue: filterBranch,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    singleton.filterBranchname = newValue ?? "";
+                                    Branch? item = filterBranch!.firstWhere(
+                                        (item) => item.branchName == newValue);
+                                    singleton.filterBranchnameID =
+                                        "${item.id ?? 0}";
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                        : Container(),
 
                     const SizedBox(
                       height: 30,

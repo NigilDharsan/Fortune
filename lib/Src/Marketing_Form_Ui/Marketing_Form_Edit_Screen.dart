@@ -35,6 +35,7 @@ class _Marketing_Form_Edit_ScreenState
   TextEditingController _PlanofAction = TextEditingController();
   TextEditingController _ContactNumber = TextEditingController();
   TextEditingController _Reference = TextEditingController();
+  TextEditingController _Requirement = TextEditingController();
 
   String TimeVal = '';
   TimeOfDay? _selectedTime;
@@ -81,12 +82,18 @@ class _Marketing_Form_Edit_ScreenState
 
   String? selectStatus;
   String? selectStatus_id;
+  String? selectMarketing_Type;
 
   String? Degree;
   String? clientName;
   String? companyName;
   String? assignExecutive;
   String? status;
+
+  List<String> _selectMarketingType = [
+    'Sales',
+    'Leads',
+  ];
 
   SingleTon singleton = SingleTon();
 
@@ -188,6 +195,39 @@ class _Marketing_Form_Edit_ScreenState
                               }
                               if (value == null) {
                                 return "Please Enter Reference";
+                              }
+                              return null;
+                            }),
+                        //REQUIRMENT
+                        Title_Style(Title: 'Requirement', isStatus: true),
+                        textFormField(
+                            isEnabled: true,
+                            hintText: "Requirement",
+                            keyboardtype: TextInputType.text,
+                            Controller: _Requirement,
+                            validating: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please Enter Requirement";
+                              }
+                              if (value == null) {
+                                return "Please Enter Requirement";
+                              }
+                              return null;
+                            }),
+
+                        //REQUIRMENT
+                        Title_Style(Title: 'Requirement', isStatus: true),
+                        textFormField(
+                            isEnabled: true,
+                            hintText: "Requirement",
+                            keyboardtype: TextInputType.text,
+                            Controller: _Requirement,
+                            validating: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please Enter Requirement";
+                              }
+                              if (value == null) {
+                                return "Please Enter Requirement";
                               }
                               return null;
                             }),
@@ -390,8 +430,7 @@ class _Marketing_Form_Edit_ScreenState
                           },
                         ),
 
-                        singleton.permissionList.contains("service-assign") ==
-                                true
+                        singleton.permissionList.contains("lead-assign") == true
                             ? Column(
                                 children: [
                                   Title_Style(
@@ -430,8 +469,12 @@ class _Marketing_Form_Edit_ScreenState
                             if (singleton.permissionList
                                         .contains("service-assign") ==
                                     true &&
-                                _selectedItems.length == 0) {
+                                _selectedItems.length == 0 &&
+                                (data.data?.executives?.length ?? 0) != 0) {
                               ShowToastMessage("Select executive");
+                            } else if (selectMarketing_Type == "" ||
+                                selectMarketing_Type != null) {
+                              ShowToastMessage("Select Type");
                             } else {
                               List<String> idList = _selectedItems
                                   .map((item) => "${item.id ?? 0}")
@@ -440,6 +483,8 @@ class _Marketing_Form_Edit_ScreenState
                                 "status_note": _StatusNote.text,
                                 "status": selectStatus_id,
                                 "reference": _Reference.text,
+                                "requirment": _Requirement.text,
+                                "marketing_type": selectMarketing_Type,
                                 for (var i = 0; i < idList.length; i++)
                                   'assign_executive[$i]': idList[i],
                                 "_method": "PUT",

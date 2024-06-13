@@ -1214,7 +1214,7 @@ Widget ClientsList(context,
                         ),
                       ),
                       // const Spacer(),
-                      singleton.permissionList.contains("stock-edit") == true
+                      singleton.permissionList.contains("customer-edit") == true
                           ? InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -1302,31 +1302,32 @@ Widget ItemsList(context,
                         ),
                       ),
                       // const Spacer(),
-                      singleton.permissionList.contains("stock-edit") == true
-                          ? InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AddItemsScreen(
-                                              isEdit: true,
-                                              itemId: "${data.id}",
-                                            ))).then((value) {
-                                  if (value == true) {
-                                    ref.refresh(itemsListProvider);
-                                  }
-                                });
-                              },
-                              child: Container(
-                                  height: 30,
-                                  width: 30,
-                                  child: Center(
-                                      child: Icon(
-                                    Icons.mode_edit,
-                                    size: 25,
-                                  ))),
-                            )
-                          : Container(),
+                      // singleton.permissionList.contains("stock-edit") == true
+                      //     ?
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddItemsScreen(
+                                        isEdit: true,
+                                        itemId: "${data.id}",
+                                      ))).then((value) {
+                            if (value == true) {
+                              ref.refresh(itemsListProvider);
+                            }
+                          });
+                        },
+                        child: Container(
+                            height: 30,
+                            width: 30,
+                            child: Center(
+                                child: Icon(
+                              Icons.mode_edit,
+                              size: 25,
+                            ))),
+                      )
+                      // : Container(),
                     ],
                   )),
               //DATE
@@ -1335,7 +1336,7 @@ Widget ItemsList(context,
                 child: Row(
                   children: [
                     Text(
-                      "Date: ${data.createdAt ?? ""}",
+                      "Item Type: ${data.itemType ?? ""}",
                       style: DateT,
                     ),
                   ],
@@ -1344,7 +1345,7 @@ Widget ItemsList(context,
               //PHONE NUMBER
               Container(
                 child: Text(
-                  "Available Stocks: ${data.itemCategory ?? ""}",
+                  "Item Category: ${data.itemCategory ?? ""}",
                   style: DateT,
                 ),
               ),

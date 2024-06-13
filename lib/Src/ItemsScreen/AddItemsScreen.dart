@@ -141,47 +141,47 @@ class _AddItemsScreenState extends ConsumerState<AddItemsScreen> {
                 Title_Style(Title: 'Item name', isStatus: true),
                 textFormField(
                     isEnabled: true,
-                    hintText: "Enter Contact GST No",
+                    hintText: "Enter Item Name",
                     keyboardtype: TextInputType.text,
                     Controller: _ItemName,
                     validating: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Please Enter ${'GST No'}";
+                        return "Please Enter ${'Item Name'}";
                       }
                       if (value == null) {
-                        return "Please Enter ${'GST No'}";
+                        return "Please Enter ${'Item Name'}";
                       }
                       return null;
                     }),
                 //CLIENT CONTACT NUMBER
-                Title_Style(Title: 'Client Name', isStatus: true),
+                Title_Style(Title: 'Item Type', isStatus: true),
                 textFormField(
                     isEnabled: true,
-                    hintText: "Enter Customer Name",
+                    hintText: "Enter Item type",
                     keyboardtype: TextInputType.text,
                     Controller: _ItemType,
                     validating: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Please Enter ${'Customer Name'}";
+                        return "Please Enter ${'Item Type'}";
                       }
                       if (value == null) {
-                        return "Please Enter ${'Customer Name'}";
+                        return "Please Enter ${'Item Type'}";
                       }
                       return null;
                     }),
                 //CLIENT CONTACT NUMBER
-                Title_Style(Title: 'Client Name', isStatus: true),
+                Title_Style(Title: 'Item Category', isStatus: true),
                 textFormField(
                     isEnabled: true,
-                    hintText: "Enter Customer Name",
+                    hintText: "Enter Category",
                     keyboardtype: TextInputType.text,
                     Controller: _Itemcategory,
                     validating: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Please Enter ${'Customer Name'}";
+                        return "Please Enter ${'Category'}";
                       }
                       if (value == null) {
-                        return "Please Enter ${'Customer Name'}";
+                        return "Please Enter ${'Category'}";
                       }
                       return null;
                     }),

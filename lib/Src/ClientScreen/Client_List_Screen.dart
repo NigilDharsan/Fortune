@@ -7,7 +7,7 @@ import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Src/ClientScreen/AddClientScreen.dart';
-import 'package:fortune/Src/FilterScreen.dart/FilterPhysicalStock.dart';
+import 'package:fortune/Src/FilterScreen.dart/FilterClientScreeen.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
@@ -30,8 +30,7 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
     // TODO: implement initState
     super.initState();
 
-    formData =
-        FormData.fromMap({"company_id": "", "branch_id": "", "daterange": ""});
+    formData = FormData.fromMap({"cus_first_name": "", "gst_no": ""});
     singleton.formData = formData;
   }
 
@@ -40,7 +39,7 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
     final _StocksListData = ref.watch(clientsListProvider);
     SingleTon singleton = SingleTon();
 
-    return singleton.permissionList.contains("stock-create") == true
+    return singleton.permissionList.contains("customer-create") == true
         ? Scaffold(
             floatingActionButton: Floating_Button(context, onTap: () {
               Navigator.push(
@@ -52,8 +51,8 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                           ))).then((value) {
                 if (value == true) {
                   setState(() {
-                    formData = FormData.fromMap(
-                        {"company_id": "", "branch_id": "", "daterange": ""});
+                    formData =
+                        FormData.fromMap({"cus_first_name": "", "gst_no": ""});
                     singleton.formData = formData;
 
                     ref.refresh(stocksListProvider);
@@ -76,19 +75,19 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => FilterPhysicalStock(
+                                  builder: (context) => FilterClientScreen(
                                         filter: filter,
                                       ))).then((value) {
                             if (value == true) {
                               setState(() {
                                 formData = FormData.fromMap({
-                                  "company_id": singleton.filterCompanynameID,
-                                  "branch_id": singleton.filterBranchnameID,
-                                  "daterange": singleton.filterDaterange
+                                  "cus_first_name": singleton.filterClientname,
+                                  "gst_no": singleton.filterClientnameID
                                 });
+
                                 singleton.formData = formData;
 
-                                ref.refresh(stocksListProvider);
+                                ref.refresh(clientsListProvider);
                               });
                             }
                           });
@@ -145,7 +144,7 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
         : Scaffold(
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: 'Manage Physical Stocks',
+                title: 'Clients',
                 actions: <Widget>[
                   Stack(children: [
                     Padding(
@@ -158,15 +157,14 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => FilterPhysicalStock(
+                                  builder: (context) => FilterClientScreen(
                                         filter: filter,
                                       ))).then((value) {
                             if (value == true) {
                               setState(() {
                                 formData = FormData.fromMap({
-                                  "company_id": singleton.filterCompanynameID,
-                                  "branch_id": singleton.filterBranchnameID,
-                                  "daterange": singleton.filterDaterange
+                                  "cus_first_name": singleton.filterClientname,
+                                  "gst_no": singleton.filterClientnameID
                                 });
                                 singleton.formData = formData;
 

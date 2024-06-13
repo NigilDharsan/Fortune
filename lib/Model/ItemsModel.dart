@@ -125,7 +125,7 @@ class ItemData {
   String? itemName;
   String? itemType;
   String? itemCategory;
-  Null? addedBy;
+  int? addedBy;
   String? createdAt;
   String? updatedAt;
 
