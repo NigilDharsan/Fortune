@@ -220,17 +220,16 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
 
                         //REQUIRMENT
                         Title_Style(Title: 'Requirement', isStatus: true),
-                        textFormField(
-                            isEnabled: true,
-                            hintText: "Requirement",
-                            keyboardtype: TextInputType.text,
+                        textfieldDescription(
+                            readOnly: false,
                             Controller: _Requirement,
+                            hintText: 'Enter Requirement',
                             validating: (value) {
                               if (value == null || value.isEmpty) {
-                                return "Please Enter Requirement";
+                                return "Please Enter ${'Requirement'}";
                               }
                               if (value == null) {
-                                return "Please Enter Requirement";
+                                return "Please Enter ${'Requirement'}";
                               }
                               return null;
                             }),
@@ -310,7 +309,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                         //CLIENT ADDRESS
                         Title_Style(Title: "Client Address", isStatus: true),
                         textfieldDescription(
-                            readOnly: true,
+                            readOnly: false,
                             Controller: _ClientAddress,
                             hintText: 'Enter Address',
                             validating: (value) {
@@ -468,7 +467,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             } else if (selectStatus_id == "") {
                               ShowToastMessage("Select Status");
                             } else if (selectMarketing_Type == "" ||
-                                selectMarketing_Type != null) {
+                                selectMarketing_Type == null) {
                               ShowToastMessage("Select Type");
                             } else {
                               List<int> idList = _selectedItems
@@ -478,7 +477,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                               Map<String, dynamic> data = {
                                 "is_new_client":
                                     isAddNewClient == true ? "1" : "0",
-                                "requirment": _Requirement.text,
+                                "requirement": _Requirement.text,
                                 "marketing_type": selectMarketing_Type,
                                 "client_id": client_id,
                                 "reference": _Reference.text,

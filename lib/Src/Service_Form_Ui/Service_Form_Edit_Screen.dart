@@ -144,6 +144,7 @@ class _Service_Form_Edit_ScreenState
                     _ClientAddress.text = data?.data?.data?[0].address ?? "";
                     _ContactNumber.text =
                         data?.data?.data?[0].cusMobileNo ?? "";
+                    _Requirement.text = data?.data?.data?[0].requirement ?? "";
 
                     int index = data!.data!.companies!.indexWhere(
                         (st) => st.companyId == data.data?.data?[0].companyId);
@@ -202,17 +203,16 @@ class _Service_Form_Edit_ScreenState
                           ),
                           //REQUIRMENT
                           Title_Style(Title: 'Requirement', isStatus: true),
-                          textFormField(
-                              isEnabled: true,
-                              hintText: "Requirement",
-                              keyboardtype: TextInputType.text,
+                          textfieldDescription(
+                              readOnly: false,
                               Controller: _Requirement,
+                              hintText: 'Enter Requirement',
                               validating: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please Enter Requirement";
+                                  return "Please Enter ${'Requirement'}";
                                 }
                                 if (value == null) {
-                                  return "Please Enter Requirement";
+                                  return "Please Enter ${'Requirement'}";
                                 }
                                 return null;
                               }),
@@ -231,7 +231,7 @@ class _Service_Form_Edit_ScreenState
                               hintText: "Client Name",
                               keyboardtype: TextInputType.text,
                               Controller: _ClientName,
-                              isEnabled: false,
+                              isEnabled: true,
                               validating: (value) {
                                 if (value == null || value.isEmpty) {
                                   return "Please Enter ${'Client Name'}";
@@ -263,7 +263,7 @@ class _Service_Form_Edit_ScreenState
                           //CLIENT ADDRESS
                           Title_Style(Title: "Client Address", isStatus: true),
                           textfieldDescription(
-                              readOnly: true,
+                              readOnly: false,
                               Controller: _ClientAddress,
                               hintText: 'Enter Address',
                               validating: (value) {
@@ -447,7 +447,7 @@ class _Service_Form_Edit_ScreenState
 
                                 var formData = FormData.fromMap({
                                   "status": selectStatus_id,
-                                  "requirment": _Requirement.text,
+                                  "requirement": _Requirement.text,
                                   "status_note": _StatusNote.text,
                                   for (var i = 0; i < idList.length; i++)
                                     'assign_executive[$i]': idList[i],

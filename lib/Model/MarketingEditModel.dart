@@ -225,35 +225,40 @@ class MarketingEditData {
   String? reference;
   String? createdAt;
   String? updatedAt;
+  String? requirement;
+  String? enquiry_type;
 
-  MarketingEditData(
-      {this.leadId,
-      this.salesrepInvolved,
-      this.customerId,
-      this.clientName,
-      this.companyId,
-      this.address,
-      this.contactNo,
-      this.contactPerson,
-      this.contactPersonNo,
-      this.architectDetails,
-      this.consultant,
-      this.builder,
-      this.leadGivenBy,
-      this.typeOfUnit,
-      this.tonnageExp,
-      this.leadEnteredDate,
-      this.currentFollowDetails,
-      this.planForNextMeet,
-      this.nextFollowupDate,
-      this.leadDocument,
-      this.instructions,
-      this.enquiryType,
-      this.addedby,
-      this.status,
-      this.reference,
-      this.createdAt,
-      this.updatedAt});
+  MarketingEditData({
+    this.leadId,
+    this.salesrepInvolved,
+    this.customerId,
+    this.clientName,
+    this.companyId,
+    this.address,
+    this.contactNo,
+    this.contactPerson,
+    this.contactPersonNo,
+    this.architectDetails,
+    this.consultant,
+    this.builder,
+    this.leadGivenBy,
+    this.typeOfUnit,
+    this.tonnageExp,
+    this.leadEnteredDate,
+    this.currentFollowDetails,
+    this.planForNextMeet,
+    this.nextFollowupDate,
+    this.leadDocument,
+    this.instructions,
+    this.enquiryType,
+    this.addedby,
+    this.status,
+    this.reference,
+    this.createdAt,
+    this.updatedAt,
+    this.requirement,
+    this.enquiry_type,
+  });
 
   MarketingEditData.fromJson(Map<String, dynamic> json) {
     leadId = json['lead_id'];
@@ -283,6 +288,8 @@ class MarketingEditData {
     reference = json['reference'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    requirement = json['requirement'];
+    enquiry_type = json['enquiry_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -314,6 +321,9 @@ class MarketingEditData {
     data['reference'] = this.reference;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['requirement'] = this.requirement;
+    data['enquiry_type'] = this.enquiry_type;
+
     return data;
   }
 }

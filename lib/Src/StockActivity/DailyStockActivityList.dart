@@ -71,7 +71,7 @@ class _DailyStockActivityListState
             }, floatT: "Add Service"),
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: 'Daily Stock Activities',
+                title: 'Daily Activities',
                 actions: <Widget>[
                   Stack(children: [
                     Padding(
@@ -153,7 +153,7 @@ class _DailyStockActivityListState
         : Scaffold(
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: 'Daily Stock Activities',
+                title: 'Daily Activities',
                 actions: <Widget>[
                   Stack(children: [
                     Padding(

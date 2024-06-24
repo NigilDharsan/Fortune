@@ -196,19 +196,12 @@ class _Login_ScreenState extends ConsumerState<Login_Screen> {
 
                         if (postResponse.success == true) {
                           ShowToastMessage(postResponse.message ?? "");
-                          accessToken(postResponse.data?.token ?? "");
+                          accessToken(postResponse.data?.token);
                           UserId(postResponse.data?.name ?? "");
                           // UserRole(postResponse.data?.role ?? "");
-                          UserPermission(postResponse.data?.permissions ?? []);
                           SingleTon singleton = SingleTon();
                           singleton.permissionList =
                               postResponse.data?.permissions ?? [];
-
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-
-                          await prefs.setStringList('permissions',
-                              postResponse.data?.permissions ?? []);
 
                           Navigator.pushReplacement(
                               context,

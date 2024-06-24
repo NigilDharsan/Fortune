@@ -688,15 +688,24 @@ Widget Marketing_List(context,
             height: 5,
           ),
           //PREVIOUS FOLLOWED DATE
-          Text(
-            'Previous Followed on : ',
-            style: cardDetailT,
+
+          //REPORTED BY
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Type : ',
+                style: cardDetailT,
+              ),
+              Flexible(
+                child: Text(
+                  data.enquiry_type ?? "",
+                  style: phoneHT,
+                ), //'${data.marketingExecutives?.map((item) => item.name).join(', ')}'
+              ),
+            ],
           ),
 
-          Text(
-            data.date ?? "",
-            style: phoneHT,
-          ),
           const SizedBox(
             height: 5,
           ),
@@ -724,40 +733,40 @@ Widget Marketing_List(context,
               Flexible(
                 child: Text(
                   overflow: TextOverflow.ellipsis,
-                  '${data.marketingExecutives?.map((item) => item.name).join(', ')}',
+                  data.updatedby ?? "",
                   style: phoneHT,
-                ),
+                ), //'${data.marketingExecutives?.map((item) => item.name).join(', ')}'
               ),
             ],
           ),
           const SizedBox(
             width: 5,
           ),
-          Text(
-            'Plan on next : ',
-            style: cardDetailT,
-          ),
-          Container(
-              width: MediaQuery.sizeOf(context).width / 1.2,
-              child: Text(
-                "${data.planForNextMeet}",
-                style: phoneHT,
-                maxLines: 3,
-              )),
-          const SizedBox(
-            width: 5,
-          ),
-          Text(
-            'Status Note : ',
-            style: cardDetailT,
-          ),
-          Container(
-              width: MediaQuery.sizeOf(context).width / 1.2,
-              child: Text(
-                "${data.statusNote ?? ""}",
-                style: phoneHT,
-                maxLines: 3,
-              )),
+          // Text(
+          //   'Plan on next : ',
+          //   style: cardDetailT,
+          // ),
+          // Container(
+          //     width: MediaQuery.sizeOf(context).width / 1.2,
+          //     child: Text(
+          //       "${data.planForNextMeet}",
+          //       style: phoneHT,
+          //       maxLines: 3,
+          //     )),
+          // const SizedBox(
+          //   width: 5,
+          // ),
+          // Text(
+          //   'Status Note : ',
+          //   style: cardDetailT,
+          // ),
+          // Container(
+          //     width: MediaQuery.sizeOf(context).width / 1.2,
+          //     child: Text(
+          //       "${data.statusNote ?? ""}",
+          //       style: phoneHT,
+          //       maxLines: 3,
+          //     )),
           const SizedBox(
             height: 15,
           ),
@@ -901,6 +910,23 @@ Widget Marketing_History(
           const SizedBox(
             height: 5,
           ),
+          //TYPE
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Type : ',
+                style: cardDetailT,
+              ),
+              Flexible(
+                child: Text(
+                  data.enquiry_type ?? "",
+                  style: phoneHT,
+                ), //'${data.marketingExecutives?.map((item) => item.name).join(', ')}'
+              ),
+            ],
+          ),
+
           //PREVIOUS FOLLOWED DATE
           Text(
             'Previous Followed on : ',

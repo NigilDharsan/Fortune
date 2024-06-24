@@ -185,17 +185,16 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
 
                         //REQUIRMENT
                         Title_Style(Title: 'Requirement', isStatus: true),
-                        textFormField(
-                            isEnabled: true,
-                            hintText: "Requirement",
-                            keyboardtype: TextInputType.text,
+                        textfieldDescription(
+                            readOnly: false,
                             Controller: _Requirement,
+                            hintText: 'Enter Requirement',
                             validating: (value) {
                               if (value == null || value.isEmpty) {
-                                return "Please Enter Requirement";
+                                return "Please Enter ${'Requirement'}";
                               }
                               if (value == null) {
-                                return "Please Enter Requirement";
+                                return "Please Enter ${'Requirement'}";
                               }
                               return null;
                             }),
@@ -220,7 +219,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                         //CLIENT NAME
                         Title_Style(Title: 'Client Name', isStatus: true),
                         textFormField(
-                            isEnabled: isAddNewClient == true ? true : false,
+                            isEnabled: true,
                             hintText: "Client Name",
                             keyboardtype: TextInputType.text,
                             Controller: _ClientName,
@@ -262,7 +261,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                         //CLIENT ADDRESS
                         Title_Style(Title: "Client Address", isStatus: true),
                         textfieldDescription(
-                            readOnly: isAddNewClient == true ? false : true,
+                            readOnly: false,
                             Controller: _ClientAddress,
                             hintText: 'Enter Address',
                             validating: (value) {
@@ -430,7 +429,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                               var formData = FormData.fromMap({
                                 "is_new_client":
                                     isAddNewClient == true ? "1" : "0",
-                                "requirment": _Requirement.text,
+                                "requirement": _Requirement.text,
                                 "client_id": client_id,
                                 "cus_mobile_no": _ContactNumber.text,
                                 "cus_first_name": _ClientName.text,

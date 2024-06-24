@@ -132,6 +132,8 @@ class HistoryData {
   List<MarketingExecutives>? marketingExecutives;
   String? nextFollowupDate;
   String? planForNextMeet;
+  String? enquiry_type;
+  String? updatedby;
 
   HistoryData(
       {this.leadId,
@@ -143,7 +145,9 @@ class HistoryData {
       this.statusNote,
       this.marketingExecutives,
       this.nextFollowupDate,
-      this.planForNextMeet});
+      this.planForNextMeet,
+      this.enquiry_type,
+      this.updatedby});
 
   HistoryData.fromJson(Map<String, dynamic> json) {
     leadId = json['lead_id'];
@@ -161,6 +165,8 @@ class HistoryData {
     }
     nextFollowupDate = json['next_followup_date'];
     planForNextMeet = json['plan_for_next_meet'];
+    enquiry_type = json['enquiry_type'];
+    updatedby = json['updatedby'];
   }
 
   Map<String, dynamic> toJson() {
@@ -178,6 +184,9 @@ class HistoryData {
     }
     data['next_followup_date'] = this.nextFollowupDate;
     data['plan_for_next_meet'] = this.planForNextMeet;
+    data['enquiry_type'] = this.enquiry_type;
+    data['updatedby'] = this.updatedby;
+
     return data;
   }
 }

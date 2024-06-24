@@ -19,7 +19,6 @@ import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Text_Style.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Home_DashBoard_Screen extends ConsumerStatefulWidget {
   const Home_DashBoard_Screen({super.key});
@@ -43,12 +42,8 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
 
   getUsername() async {
     var getname = await getuserId();
-    var getpermission = await getUserPermission();
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
     setState(() {
       username = getname;
-      singleton.permissionList = prefs.getStringList("permissions") ?? [];
     });
   }
 
@@ -101,15 +96,8 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                   accessToken("");
                                   UserId("");
                                   // UserRole("");
-                                  UserPermission([]);
                                   SingleTon singleton = SingleTon();
                                   singleton.permissionList = [];
-
-                                  final SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-
-                                  await prefs.setStringList('permissions', []);
-
                                   print('ROUTES : ${Routes(Boolvalue)}');
                                   Navigator.pushAndRemoveUntil(
                                     context,
@@ -130,6 +118,8 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
         backgroundColor: white5,
         body: _dashbaordData.when(
           data: (data) {
+            singleton.permissionList =
+                data?.data?.userRolePermission?.permissions ?? [];
             return Padding(
               padding: const EdgeInsets.only(left: 0, right: 0),
               child: SingleChildScrollView(
@@ -137,7 +127,11 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(height: 50, child: Booking_Map()),
+                    Container(
+                        height: 50,
+                        child: Booking_Map(
+                          checkIncheckOut: data?.data?.checkIncheckOut,
+                        )),
                     const SizedBox(
                       height: 10,
                     ),

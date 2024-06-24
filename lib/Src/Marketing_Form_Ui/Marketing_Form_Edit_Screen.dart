@@ -138,6 +138,8 @@ class _Marketing_Form_Edit_ScreenState
 
                   if (!isvalueUpdated) {
                     final salesrep = data.data?.data?.salesrepInvolved ?? "";
+                    _Requirement.text = data?.data?.data?.requirement ?? "";
+                    selectMarketing_Type = data?.data?.data?.enquiry_type ?? "";
 
                     List<String> servicerepsList = salesrep.split(',');
 
@@ -200,37 +202,33 @@ class _Marketing_Form_Edit_ScreenState
                             }),
                         //REQUIRMENT
                         Title_Style(Title: 'Requirement', isStatus: true),
-                        textFormField(
-                            isEnabled: true,
-                            hintText: "Requirement",
-                            keyboardtype: TextInputType.text,
+                        textfieldDescription(
+                            readOnly: false,
                             Controller: _Requirement,
+                            hintText: 'Enter Requirement',
                             validating: (value) {
                               if (value == null || value.isEmpty) {
-                                return "Please Enter Requirement";
+                                return "Please Enter ${'Requirement'}";
                               }
                               if (value == null) {
-                                return "Please Enter Requirement";
+                                return "Please Enter ${'Requirement'}";
                               }
                               return null;
                             }),
 
-                        //REQUIRMENT
-                        Title_Style(Title: 'Requirement', isStatus: true),
-                        textFormField(
-                            isEnabled: true,
-                            hintText: "Requirement",
-                            keyboardtype: TextInputType.text,
-                            Controller: _Requirement,
-                            validating: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please Enter Requirement";
-                              }
-                              if (value == null) {
-                                return "Please Enter Requirement";
-                              }
-                              return null;
-                            }),
+                        //SELECT TYPE
+                        Title_Style(Title: "Select Type", isStatus: true),
+                        dropDownField(
+                          context,
+                          hintT: 'Select Type',
+                          value: selectMarketing_Type,
+                          listValue: _selectMarketingType,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectMarketing_Type = newValue ?? "";
+                            });
+                          },
+                        ),
 
                         //COMPANY NAME
                         Title_Style(Title: "Company Name", isStatus: true),
@@ -282,7 +280,7 @@ class _Marketing_Form_Edit_ScreenState
                         //CLIENT ADDRESS
                         Title_Style(Title: "Client Address", isStatus: true),
                         textfieldDescription(
-                            readOnly: true,
+                            readOnly: false,
                             Controller: _ClientAddress,
                             hintText: 'Enter Address',
                             validating: (value) {
@@ -473,7 +471,7 @@ class _Marketing_Form_Edit_ScreenState
                                 (data.data?.executives?.length ?? 0) != 0) {
                               ShowToastMessage("Select executive");
                             } else if (selectMarketing_Type == "" ||
-                                selectMarketing_Type != null) {
+                                selectMarketing_Type == null) {
                               ShowToastMessage("Select Type");
                             } else {
                               List<String> idList = _selectedItems
@@ -483,7 +481,7 @@ class _Marketing_Form_Edit_ScreenState
                                 "status_note": _StatusNote.text,
                                 "status": selectStatus_id,
                                 "reference": _Reference.text,
-                                "requirment": _Requirement.text,
+                                "requirement": _Requirement.text,
                                 "marketing_type": selectMarketing_Type,
                                 for (var i = 0; i < idList.length; i++)
                                   'assign_executive[$i]': idList[i],

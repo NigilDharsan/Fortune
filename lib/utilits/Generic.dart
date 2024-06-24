@@ -41,7 +41,7 @@ Future<dynamic> getToken() async {
 UserId(dynamic val) async {
   await _secureStorage.write(
       key: userId!, value: val!, aOptions: _androidOptions());
-  print("value!:${val!}" + "$userId");
+  print("USER ID value!:${val!}" + "$userId");
 }
 
 Future<dynamic> getuserId() async {
@@ -51,31 +51,31 @@ Future<dynamic> getuserId() async {
   return user_id;
 }
 
-UserPermission(dynamic val) async {
-  await _secureStorage.write(
-      key: userPermission!, value: val!, aOptions: _androidOptions());
-  print("value!:${val!}" + "$userPermission");
-}
+// UserPermission(dynamic val) async {
+//   await _secureStorage.write(
+//       key: userPermission!, value: val!, aOptions: _androidOptions());
+//   print("User Permission value!:${val!}" + "$userPermission");
+// }
 
-Future<dynamic> getUserPermission() async {
-  dynamic user_id = await _secureStorage.read(
-      key: userPermission!, aOptions: _androidOptions());
-  print("valuesss:$user_id");
-  return user_id;
-}
+// Future<dynamic> getUserPermission() async {
+//   dynamic user_id = await _secureStorage.read(
+//       key: userPermission!, aOptions: _androidOptions());
+//   print("valuesss:$user_id");
+//   return user_id;
+// }
 
-UsercheckIN(dynamic val) async {
-  await _secureStorage.write(
-      key: usercheckIN!, value: val!, aOptions: _androidOptions());
-  print("value!:${val!}" + "$usercheckIN");
-}
+// UsercheckIN(dynamic val) async {
+//   await _secureStorage.write(
+//       key: usercheckIN!, value: val!, aOptions: _androidOptions());
+//   print("Check IN value!:${val!}" + "$usercheckIN");
+// }
 
-Future<dynamic> getUsercheckIN() async {
-  dynamic user_id =
-      await _secureStorage.read(key: usercheckIN!, aOptions: _androidOptions());
-  print("valuesss:$user_id");
-  return user_id;
-}
+// Future<dynamic> getUsercheckIN() async {
+//   dynamic user_id =
+//       await _secureStorage.read(key: usercheckIN!, aOptions: _androidOptions());
+//   print("valuesss:$user_id");
+//   return user_id;
+// }
 
 Routes(dynamic val) async {
   await _secureStorage.write(

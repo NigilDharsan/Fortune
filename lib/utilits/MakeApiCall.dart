@@ -17,6 +17,7 @@ Future<dynamic> requestGET({required String url, required Dio dio}) async {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $accessToken'
     };
+    print("Url: $url, AccessToken: $accessToken, formData: ");
 
     final response = await dio.get(url);
     switch (response.statusCode) {
@@ -81,12 +82,11 @@ Future<dynamic> requestPOST(
     };
     dio.options.baseUrl = url;
 
+    print("Url: $url, AccessToken: $accessToken, formData: $formData");
     final response = await dio.post(url, data: formData);
     print(response);
     switch (response.statusCode) {
       case 200:
-        final jsonResponse = {'success': true, 'response': response.data};
-        return jsonResponse;
       case 201:
         final jsonResponse = {'success': true, 'response': response.data};
         return jsonResponse;
@@ -94,12 +94,13 @@ Future<dynamic> requestPOST(
       //   final result = jsonDee.body);
       //   final jsonResponse = {'success': false, 'response': result};
       //   return jsonResponse;
-      // case 401:
-      //   final jsonResponse = {
-      //     'success': false,
-      //     'response': ConstantApi.UNAUTHORIZED
-      //   };
-      //   return jsonResponse;
+      case 401:
+        final jsonResponse = {
+          'success': false,
+          'response': ConstantApi.UNAUTHORIZED
+        };
+        print("Api call Succeed, with 401 Status code");
+        return jsonResponse;
       // case 500:
       // case 501:
       // case 502:

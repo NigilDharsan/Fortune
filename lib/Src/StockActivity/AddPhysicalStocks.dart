@@ -334,7 +334,9 @@ class _AddPhysicalStockScreenState
                               return null;
                             },
                             hintText: 'Search Items',
-                            initValue: '',
+                            initValue: itemsData[i]["productName"] == ""
+                                ? ""
+                                : itemsData[i]["productName"] ?? "",
                           ),
                           SizedBox(height: 16.0),
                           Row(
