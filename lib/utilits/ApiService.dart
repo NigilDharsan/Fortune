@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/ActivityEditModel.dart';
+import 'package:fortune/Model/AttendanceLogsModel.dart';
 import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
@@ -171,16 +172,16 @@ class ApiService {
     }
   }
 
-  Future<SuccessModel> getUserLogApi(FormData formData) async {
+  Future<AttendanceLogsModel> getUserLogApi(FormData formData) async {
     final result = await requestPOST(
         url: ConstantApi.usersLogdUrl, formData: formData, dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
-      return SuccessModel?.fromJson(result["response"]);
+      return AttendanceLogsModel?.fromJson(result["response"]);
     } else {
       try {
-        var resultval = SuccessModel.fromJson(result["response"]);
+        var resultval = AttendanceLogsModel.fromJson(result["response"]);
         // Toast.show(resultval.message.toString(), context);
         print(result["response"]);
         return resultval;
@@ -189,7 +190,7 @@ class ApiService {
         // Toast.show(result["response"], context);
       }
     }
-    return SuccessModel();
+    return AttendanceLogsModel();
   }
 
   Future<DashboardModel> getDashboardApi() async {

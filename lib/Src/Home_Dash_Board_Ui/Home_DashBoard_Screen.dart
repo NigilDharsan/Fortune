@@ -9,6 +9,7 @@ import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Src/ClientScreen/Client_List_Screen.dart';
 import 'package:fortune/Src/ItemsScreen/Items_List_Screen.dart';
 import 'package:fortune/Src/Login_Ui/Login_Screen.dart';
+import 'package:fortune/Src/Logs/AttendanceLogs.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
 import 'package:fortune/Src/Marketing_History_List/Marketing_History_List.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_List_Screen.dart';
@@ -88,6 +89,19 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                     color: white1,
                   ),
                   itemBuilder: (BuildContext context) => [
+                        PopupMenuItem(
+                            child: InkWell(
+                                onTap: () async {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AttendanceLogsScreen()));
+                                },
+                                child: Text(
+                                  'Attendance Logs',
+                                  style: refferalCountT,
+                                ))),
                         PopupMenuItem(
                             child: InkWell(
                                 onTap: () async {

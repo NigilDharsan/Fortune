@@ -54,9 +54,10 @@ dependencies:
   path_provider:
   http:
   device_info_plus:
-  firebase_core:
-  firebase_messaging:
   searchfield:
+
+  firebase_core: 
+  firebase_messaging: 
   # google_maps_flutter:
 
 

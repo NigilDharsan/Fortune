@@ -6,7 +6,7 @@ class ConstantApi {
   static String loginUrl = SERVER_ONE + "login";
 
   static String dashboardUrl = SERVER_ONE + "dashboard";
-  static String usersLogdUrl = SERVER_ONE + "users/log";
+  // static String usersLogdUrl = SERVER_ONE + "users/log";
   static String usersCheckOutUrl = SERVER_ONE + "users/checkout";
 
   static String servicesList = SERVER_ONE + "services/list";
@@ -34,6 +34,8 @@ class ConstantApi {
   static String clientList = SERVER_ONE + "clients/list";
   static String clientCreate = SERVER_ONE + "clients";
   static String clientUpdate = SERVER_ONE + "clients";
+
+  static String usersLogdUrl = SERVER_ONE + "log_hours/list";
 
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";

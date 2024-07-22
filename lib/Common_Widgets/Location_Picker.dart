@@ -30,6 +30,7 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
   String currentAddress = "";
   var isLoading = false;
   var isDismiss = false;
+  var isCheckIN = false;
 
   String? CurrentLocation;
   Future<Position> getPosition() async {
@@ -112,18 +113,14 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
   void initState() {
     super.initState();
     // Fetch current location when the page loads
+
+    isCheckIN = widget.checkIncheckOut?.isUserCheckInToday == 1 ? true : false;
+
     getCurrentLocation();
     getCheck();
   }
 
   void getCheck() async {
-    // var isCheckValue = await getUsercheckIN() ?? "false";
-
-    // setState(() {
-    //   isCheckIN = isCheckValue;
-    // });
-    // print(isCheckIN);
-
     if (isDismiss == true) {
       Navigator.of(context).pop();
     } else {
@@ -140,7 +137,7 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd/MM/yyyy hh:mm a').format(now);
-//"The check in date time field must match the format d/m/Y h:i A."
+//  "The check in date time field must match the format d/m/Y h:i A."
 
     final apiService = ApiService(ref.read(dioProvider));
 
@@ -172,13 +169,19 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
 
     if (postResponse.success == true) {
       ShowToastMessage(postResponse.message ?? "");
+
+      setState(() {
+        if (widget.checkIncheckOut?.isUserCheckInToday == 1) {
+          widget.checkIncheckOut?.isUserCheckInToday = 0;
+          isCheckIN = false;
+        } else {
+          widget.checkIncheckOut?.isUserCheckInToday = 1;
+          isCheckIN = true;
+        }
+      });
+
       getCheck();
     } else {
-      // if (isCheckIN == "true") {
-      //   await UsercheckIN("false");
-      // } else {
-      //   await UsercheckIN("true");
-      // }
       ShowToastMessage(postResponse.message ?? "");
     }
   }
@@ -210,18 +213,9 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
       });
 
       postCheckIN();
-      // if (isCheckIN == "true") {
-      //   UsercheckIN("false");
-      // } else {
-      //   UsercheckIN("true");
-      // }
+
       // ShowToastMessage(postResponse.message ?? "");
     } else {
-      // if (isCheckIN == "true") {
-      //   await UsercheckIN("false");
-      // } else {
-      //   await UsercheckIN("true");
-      // }
       ShowToastMessage(postResponse.message ?? "");
     }
     // getCheck();
@@ -286,7 +280,7 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
                   ),
                   TextField(
                     controller: _remarksController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Remarks",
                     ),
                   ),
@@ -370,10 +364,10 @@ class _Booking_MapState extends ConsumerState<Booking_Map> {
                           child: Row(
                             children: [
                               Text(
-                                '${widget.checkIncheckOut?.isUserCheckInToday == 1 ? "Check Out" : isDismiss == true ? "Check Out" : "Check In"}',
+                                '${isCheckIN == true ? "Check Out" : "Check In"}',
                                 style: ButtonT1,
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward,
                                 color: blue3,
                               )

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/ActivityEditModel.dart';
+import 'package:fortune/Model/AttendanceLogsModel.dart';
 import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
@@ -23,6 +24,11 @@ import 'package:tuple/tuple.dart';
 final apiServiceProvider = Provider<ApiService>((ref) {
   final dio = ref.read(dioProvider);
   return ApiService(dio);
+});
+
+final userLogsProvider = FutureProvider.autoDispose
+    .family<AttendanceLogsModel?, FormData>((ref, formData) async {
+  return ref.watch(apiServiceProvider).getUserLogApi(formData);
 });
 
 final dashboardProvider =

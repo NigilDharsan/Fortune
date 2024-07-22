@@ -6,8 +6,9 @@ import 'package:fortune/utilits/Generic.dart';
 import 'ConstantsApi.dart';
 
 Future<dynamic> requestGET({required String url, required Dio dio}) async {
+  String? accessToken = await getToken();
+
   try {
-    String? accessToken = await getToken();
     // if (accessToken != "") {
     //   options.headers['Authorization'] = 'Bearer $accessToken';
     // }
@@ -72,9 +73,9 @@ Future<dynamic> requestGET({required String url, required Dio dio}) async {
 
 Future<dynamic> requestPOST(
     {required String url, required FormData formData, required Dio dio}) async {
-  try {
-    String? accessToken = await getToken();
+  String? accessToken = await getToken();
 
+  try {
     dio.options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
