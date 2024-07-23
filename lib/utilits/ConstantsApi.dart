@@ -35,6 +35,8 @@ class ConstantApi {
   static String clientCreate = SERVER_ONE + "clients";
   static String clientUpdate = SERVER_ONE + "clients";
 
+  static String logRequestSaveURL = SERVER_ONE + "log_request/save";
+
   static String usersLogdUrl = SERVER_ONE + "log_hours/list";
 
   static String SOMETHING_WRONG = "Some thing wrong";

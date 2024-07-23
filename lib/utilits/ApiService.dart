@@ -124,6 +124,33 @@ class ApiService {
     }
   }
 
+  Future<T> _requestPOST3<T>(
+    String path, {
+    FormData? data,
+  }) async {
+    try {
+      String? accessToken = await getToken();
+
+      _dio.options.headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken'
+      };
+
+      final response = await _dio.post(path, data: data);
+
+      return _fromJson<T>(response.data);
+    } on DioException catch (e) {
+      // Handle DioError, you can log or display an error message.
+
+      return _fromJson<T>(e.response?.data);
+    } catch (e) {
+      // Handle other exceptions here
+
+      throw e;
+    }
+  }
+
   Future<dynamic> get<T>(BuildContext context, String path) async {
     return _requestGET<T>(context, path);
   }
@@ -138,6 +165,10 @@ class ApiService {
 
   Future<T> post2<T>(String path, FormData data) async {
     return _requestPOST2<T>(path, data: data);
+  }
+
+  Future<T> post3<T>(String path, FormData data) async {
+    return _requestPOST3<T>(path, data: data);
   }
 
   Future<T> login<T>(String path, FormData data) async {
