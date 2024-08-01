@@ -10,6 +10,7 @@ import 'Common_Colors.dart';
 final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 String? accesstokens = 'accessToken';
 String? userId = 'user_id';
+String? userName = 'user_name';
 String? userPermission = 'user_permission';
 String? usercheckIN = 'user_checkin';
 
@@ -49,6 +50,19 @@ Future<dynamic> getuserId() async {
       await _secureStorage.read(key: userId!, aOptions: _androidOptions());
   print("valuesss:$user_id");
   return user_id;
+}
+
+UserName(dynamic val) async {
+  await _secureStorage.write(
+      key: userName!, value: val!, aOptions: _androidOptions());
+  print("USER ID value!:${val!}" + "$userName");
+}
+
+Future<dynamic> getuserName() async {
+  dynamic user_name =
+      await _secureStorage.read(key: userName!, aOptions: _androidOptions());
+  print("valuesss:$userName");
+  return user_name;
 }
 
 // UserPermission(dynamic val) async {
@@ -159,6 +173,10 @@ class SingleTon {
 
   String? filterNextFollowUp;
   String? filterNextFollowUpID;
+
+  String? filterMonth;
+  String? filterYear;
+  String? filterUserID;
 
   bool? filterEnable = false;
 }

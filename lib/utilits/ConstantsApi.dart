@@ -37,6 +37,9 @@ class ConstantApi {
 
   static String logRequestSaveURL = SERVER_ONE + "log_request/save";
 
+  static String usersLogHoursSaveUrl = SERVER_ONE + "log_hours/save";
+  static String usersLogHoursUpdatedUrl = SERVER_ONE + "log_hours";
+
   static String usersLogdUrl = SERVER_ONE + "log_hours/list";
 
   static String SOMETHING_WRONG = "Some thing wrong";

@@ -1,3 +1,5 @@
+import 'package:fortune/Model/ServiceModel.dart';
+
 class AttendanceLogsModel {
   bool? success;
   Data? data;
@@ -24,7 +26,7 @@ class AttendanceLogsModel {
 
 class Data {
   List<LogHours>? logHours;
-  Filter? filter;
+  FilterLog? filter;
 
   Data({this.logHours, this.filter});
 
@@ -36,7 +38,7 @@ class Data {
       });
     }
     filter =
-        json['filter'] != null ? new Filter.fromJson(json['filter']) : null;
+        json['filter'] != null ? new FilterLog.fromJson(json['filter']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +55,7 @@ class Data {
 
 class LogHours {
   String? userName;
+  int? userId;
   int? id;
   String? logDate;
   String? checkInTime;
@@ -60,19 +63,23 @@ class LogHours {
   String? totalLoggedHrs;
   String? actionLink;
   String? actionLinkText;
+  String? requestReason;
 
   LogHours(
       {this.userName,
+      this.userId,
       this.id,
       this.logDate,
       this.checkInTime,
       this.checkOutTime,
       this.totalLoggedHrs,
       this.actionLink,
-      this.actionLinkText});
+      this.actionLinkText,
+      this.requestReason});
 
   LogHours.fromJson(Map<String, dynamic> json) {
     userName = json['user_name'];
+    userId = json['user_id'];
     id = json['id'];
     logDate = json['log_date'];
     checkInTime = json['check_in_time'];
@@ -80,11 +87,13 @@ class LogHours {
     totalLoggedHrs = json['total_logged_hrs'];
     actionLink = json['action_link'];
     actionLinkText = json['action_link_text'];
+    requestReason = json['requestReason'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['user_name'] = this.userName;
+    data['user_id'] = this.userId;
     data['id'] = this.id;
     data['log_date'] = this.logDate;
     data['check_in_time'] = this.checkInTime;
@@ -92,18 +101,19 @@ class LogHours {
     data['total_logged_hrs'] = this.totalLoggedHrs;
     data['action_link'] = this.actionLink;
     data['action_link_text'] = this.actionLinkText;
+    data['requestReason'] = this.requestReason;
     return data;
   }
 }
 
-class Filter {
+class FilterLog {
   Months? months;
   Years? years;
   List<Executives>? executives;
 
-  Filter({this.months, this.years, this.executives});
+  FilterLog({this.months, this.years, this.executives});
 
-  Filter.fromJson(Map<String, dynamic> json) {
+  FilterLog.fromJson(Map<String, dynamic> json) {
     months =
         json['months'] != null ? new Months.fromJson(json['months']) : null;
     years = json['years'] != null ? new Years.fromJson(json['years']) : null;
@@ -161,63 +171,6 @@ class Years {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['2024'] = this.i2024;
-    return data;
-  }
-}
-
-class Executives {
-  int? id;
-  int? companyId;
-  int? branchId;
-  String? name;
-  Null? mobile;
-  String? email;
-  Null? emailVerifiedAt;
-  String? fcmToken;
-  int? status;
-  String? createdAt;
-  String? updatedAt;
-
-  Executives(
-      {this.id,
-      this.companyId,
-      this.branchId,
-      this.name,
-      this.mobile,
-      this.email,
-      this.emailVerifiedAt,
-      this.fcmToken,
-      this.status,
-      this.createdAt,
-      this.updatedAt});
-
-  Executives.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    companyId = json['company_id'];
-    branchId = json['branch_id'];
-    name = json['name'];
-    mobile = json['mobile'];
-    email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
-    fcmToken = json['fcm_token'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['company_id'] = this.companyId;
-    data['branch_id'] = this.branchId;
-    data['name'] = this.name;
-    data['mobile'] = this.mobile;
-    data['email'] = this.email;
-    data['email_verified_at'] = this.emailVerifiedAt;
-    data['fcm_token'] = this.fcmToken;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

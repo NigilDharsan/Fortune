@@ -55,6 +55,7 @@ dependencies:
   http:
   device_info_plus:
   searchfield:
+  infinite_scroll_pagination:
 
   firebase_core: 
   firebase_messaging: 
