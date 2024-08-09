@@ -41,7 +41,7 @@ class _Service_Form_Edit_ScreenState
   TextEditingController _ClientAddress = TextEditingController();
   TextEditingController _Requirement = TextEditingController();
 
-  File? _selectedFiles;
+  List<File> _selectedFiles = [];
   List<Executives> _selectedItems = [];
 
   Future<void> _pickFiles() async {
@@ -53,7 +53,7 @@ class _Service_Form_Edit_ScreenState
 
     if (result != null) {
       setState(() {
-        _selectedFiles = File(result.files.single.path!);
+        _selectedFiles.add(File(result.files.single.path!));
       });
     } else {
       print("User canceled the file picker.");
@@ -62,7 +62,7 @@ class _Service_Form_Edit_ScreenState
 
   void _removeImage(int index) {
     setState(() {
-      _selectedFiles = null;
+      _selectedFiles.removeAt(index);
     });
   }
 
@@ -114,14 +114,18 @@ class _Service_Form_Edit_ScreenState
       return file;
     }
 
-    getImagePath(String imageUrl) async {
-      if (imageUrl != "") {
-        File? _Filespath = await downloadAndSaveImage(imageUrl);
+    getImagePath(List<String> imageUrl) async {
+      List<File> _selectedFiles1 = [];
 
-        setState(() {
-          _selectedFiles = _Filespath;
-        });
+      for (var obj in imageUrl) {
+        if (obj != "") {
+          File? _Filespath = await downloadAndSaveImage(obj);
+          _selectedFiles1.add(_Filespath!);
+        }
       }
+      setState(() {
+        _selectedFiles = _selectedFiles1;
+      });
     }
 
     return Scaffold(
@@ -183,7 +187,7 @@ class _Service_Form_Edit_ScreenState
                                   : selectStatus_id == "4"
                                       ? "cancelled"
                                       : "";
-                      getImagePath(data.data?.data?[0].reportUpload ?? "");
+                      getImagePath(data.data?.data?[0].reportUpload ?? []);
                     }
 
                     return Padding(
@@ -300,10 +304,11 @@ class _Service_Form_Edit_ScreenState
                                 context, "Pick PDF", _pickFiles),
                           ),
                           Container(
-                            height: (_selectedFiles?.path ?? "") == "" ? 0 : 90,
+                            height: _selectedFiles == []
+                                ? 0
+                                : _selectedFiles.length * 90,
                             child: ListView.builder(
-                              itemCount:
-                                  (_selectedFiles?.path ?? "") == "" ? 0 : 1,
+                              itemCount: _selectedFiles.length,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return InkWell(
@@ -341,8 +346,9 @@ class _Service_Form_Edit_ScreenState
                                                     .width /
                                                 2,
                                             child: Text(
-                                              _selectedFiles?.path != null
-                                                  ? _selectedFiles!.path
+                                              _selectedFiles[index].path != null
+                                                  ? _selectedFiles[index]
+                                                      .path
                                                       .split('/')
                                                       .last
                                                   : "",
@@ -454,21 +460,29 @@ class _Service_Form_Edit_ScreenState
                                   "_method": "PUT",
                                 });
 
-                                if (_selectedFiles != null) {
-                                  List<int> fileBytes =
-                                      await _selectedFiles!.readAsBytes();
+                                if (_selectedFiles != []) {
+                                  for (int i = 0;
+                                      i < _selectedFiles.length;
+                                      i++) {
+                                    List<int> fileBytes =
+                                        await _selectedFiles[i].readAsBytes();
 
-                                  final filename = _selectedFiles?.path != null
-                                      ? _selectedFiles!.path.split('/').last
-                                      : "file.jpg";
-                                  formData.files.addAll([
-                                    MapEntry(
-                                        'report_upload',
-                                        await MultipartFile.fromBytes(
-                                          fileBytes,
-                                          filename: filename,
-                                        )),
-                                  ]);
+                                    final filename = _selectedFiles[i].path !=
+                                            ""
+                                        ? _selectedFiles[i].path.split('/').last
+                                        : "file.jpg";
+
+                                    formData.files.addAll([
+                                      MapEntry(
+                                          'report_upload[$i]',
+                                          await MultipartFile.fromBytes(
+                                            fileBytes,
+                                            filename: filename,
+                                          )),
+                                    ]);
+                                  }
+                                  // formData.fields.add(MapEntry(
+                                  //     'education[$i][institute]', eduHistory[i].university_id));
                                 }
 
                                 LoadingOverlay.show(context);

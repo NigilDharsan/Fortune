@@ -54,6 +54,7 @@ dependencies:
   path_provider:
   http:
   device_info_plus:
+  package_info_plus:
   searchfield:
   infinite_scroll_pagination:
 

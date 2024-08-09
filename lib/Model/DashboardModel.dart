@@ -122,6 +122,9 @@ class Data {
   List<HistoryData>? todayMarketings;
   CheckIncheckOut? checkIncheckOut;
   UserRolePermission? userRolePermission;
+  String? appVersion;
+  String? appUrl;
+  String? appUrlIOS;
 
   Data(
       {this.usersCount,
@@ -133,7 +136,10 @@ class Data {
       this.marketings,
       this.todayMarketings,
       this.checkIncheckOut,
-      this.userRolePermission});
+      this.userRolePermission,
+      this.appVersion,
+      this.appUrl,
+      this.appUrlIOS});
 
   Data.fromJson(Map<String, dynamic> json) {
     usersCount = json['usersCount'];
@@ -165,6 +171,9 @@ class Data {
     userRolePermission = json['userRolePermission'] != null
         ? new UserRolePermission.fromJson(json['userRolePermission'])
         : null;
+    appVersion = json['appVersion'];
+    appUrl = json['appUrl'];
+    appUrlIOS = json['appUrlIOS'];
   }
 
   Map<String, dynamic> toJson() {
@@ -190,6 +199,10 @@ class Data {
     if (this.userRolePermission != null) {
       data['userRolePermission'] = this.userRolePermission!.toJson();
     }
+    data['appVersion'] = this.appVersion;
+    data['appUrl'] = this.appUrl;
+    data['appUrlIOS'] = this.appUrlIOS;
+
     return data;
   }
 }

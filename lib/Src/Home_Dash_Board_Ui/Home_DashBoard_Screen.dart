@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,6 +22,8 @@ import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Text_Style.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home_DashBoard_Screen extends ConsumerStatefulWidget {
   const Home_DashBoard_Screen({super.key});
@@ -32,6 +36,7 @@ class Home_DashBoard_Screen extends ConsumerStatefulWidget {
 class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
   var username = "";
   SingleTon singleton = SingleTon();
+  var appURL = "";
 
   @override
   void initState() {
@@ -46,6 +51,54 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
     setState(() {
       username = getname;
     });
+  }
+
+  void checkForUpdate(BuildContext context, String latestVersion) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    String currentVersion = packageInfo.version; // e.g. "1.0.0"
+
+    // Fetch the latest version from your server (for demonstration, assuming a string comparison)
+
+    if (isUpdateRequired(currentVersion, latestVersion)) {
+      showForceUpdateDialog(context,
+          "A new version ($latestVersion) of the app is available. Your current version is $currentVersion. Please update to continue using the app.");
+    }
+  }
+
+  bool isUpdateRequired(String currentVersion, String latestVersion) {
+    // Implement your version comparison logic here
+    return currentVersion !=
+        latestVersion; // Simple string comparison for demonstration
+  }
+
+  void showForceUpdateDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Update Available"),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                _redirectToStore();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _redirectToStore() async {
+    if (await canLaunch(appURL)) {
+      await launch(appURL);
+    } else {
+      throw 'Could not launch $appURL';
+    }
   }
 
   @override
@@ -134,6 +187,14 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
           data: (data) {
             singleton.permissionList =
                 data?.data?.userRolePermission?.permissions ?? [];
+
+            if (Platform.isIOS) {
+              appURL = data?.data?.appUrlIOS ?? "";
+            } else if (Platform.isAndroid) {
+              appURL = data?.data?.appUrl ?? "";
+            }
+
+            checkForUpdate(context, data?.data?.appVersion ?? "");
             return Padding(
               padding: const EdgeInsets.only(left: 0, right: 0),
               child: SingleChildScrollView(

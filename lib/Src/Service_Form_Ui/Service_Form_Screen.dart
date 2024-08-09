@@ -35,7 +35,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
   TextEditingController _ClientAddress = TextEditingController();
   TextEditingController _Requirement = TextEditingController();
 
-  File? _selectedFiles;
+  List<File> _selectedFiles = [];
   List<Executives> _selectedItems = [];
 
   Future<void> _pickFiles() async {
@@ -47,7 +47,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
 
     if (result != null) {
       setState(() {
-        _selectedFiles = File(result.files.single.path!);
+        _selectedFiles.add(File(result.files.single.path!));
       });
     } else {
       print("User canceled the file picker.");
@@ -56,7 +56,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
 
   void _removeImage(int index) {
     setState(() {
-      _selectedFiles = null;
+      _selectedFiles.removeAt(index);
     });
   }
 
@@ -298,10 +298,11 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                               context, "Pick PDF", _pickFiles),
                         ),
                         Container(
-                          height: (_selectedFiles?.path ?? "") == "" ? 0 : 90,
+                          height: _selectedFiles == []
+                              ? 0
+                              : _selectedFiles.length * 90,
                           child: ListView.builder(
-                            itemCount:
-                                (_selectedFiles?.path ?? "") == "" ? 0 : 1,
+                            itemCount: _selectedFiles.length,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return InkWell(
@@ -337,8 +338,9 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                                   .width /
                                               2,
                                           child: Text(
-                                            _selectedFiles?.path != null
-                                                ? _selectedFiles!.path
+                                            _selectedFiles != []
+                                                ? _selectedFiles[index]
+                                                    .path
                                                     .split('/')
                                                     .last
                                                 : "",
@@ -440,22 +442,28 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                 "company_id": company_id,
                               });
 
-                              if (_selectedFiles != null) {
-                                List<int> fileBytes =
-                                    await _selectedFiles!.readAsBytes();
+                              if (_selectedFiles != []) {
+                                for (int i = 0;
+                                    i < _selectedFiles.length;
+                                    i++) {
+                                  List<int> fileBytes =
+                                      await _selectedFiles[i].readAsBytes();
 
-                                final filename = _selectedFiles?.path != null
-                                    ? _selectedFiles!.path.split('/').last
-                                    : "file.jpg";
+                                  final filename = _selectedFiles[i].path != ""
+                                      ? _selectedFiles[i].path.split('/').last
+                                      : "file.jpg";
 
-                                formData.files.addAll([
-                                  MapEntry(
-                                      'report_upload',
-                                      await MultipartFile.fromBytes(
-                                        fileBytes,
-                                        filename: filename,
-                                      )),
-                                ]);
+                                  formData.files.addAll([
+                                    MapEntry(
+                                        'report_upload[$i]',
+                                        await MultipartFile.fromBytes(
+                                          fileBytes,
+                                          filename: filename,
+                                        )),
+                                  ]);
+                                }
+                                // formData.fields.add(MapEntry(
+                                //     'education[$i][institute]', eduHistory[i].university_id));
                               }
                               final result = await ref
                                   .read(servicePostProvider(formData).future);

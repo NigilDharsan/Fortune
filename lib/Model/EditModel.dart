@@ -225,7 +225,7 @@ class EditData {
   String? unitLocation;
   String? typeOfService;
   String? natureOfComplaint;
-  String? reportUpload;
+  List<String>? reportUpload;
   String? reportDescription;
   String? technicianId;
   String? reportFromTechnician;
@@ -314,7 +314,17 @@ class EditData {
     unitLocation = json['unit_location'];
     typeOfService = json['type_of_service'];
     natureOfComplaint = json['nature_of_complaint'];
-    reportUpload = json['report_upload'];
+
+    if (json['report_upload'] is String) {
+      final str = json['report_upload'];
+
+      final strArr = [];
+      strArr.add(str);
+      reportUpload = strArr.cast<String>();
+    } else if (json['report_upload'] is List<dynamic>) {
+      reportUpload = json['report_upload'].cast<String>();
+    } else {}
+
     reportDescription = json['report_description'];
     technicianId = json['technician_id'];
     reportFromTechnician = json['report_from_technician'];
