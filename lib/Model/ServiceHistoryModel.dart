@@ -131,7 +131,7 @@ class ServicesData1 {
   String? statusNote;
   List<ServiceExecutives>? serviceExecutives;
   ServiceExecutives? reportedBy;
-  String? serviceDoc;
+  List<String>? serviceDoc;
 
   ServicesData1(
       {this.status,
@@ -162,7 +162,16 @@ class ServicesData1 {
     reportedBy = json['reported_by'] != null
         ? new ServiceExecutives.fromJson(json['reported_by'])
         : null;
-    serviceDoc = json['service_doc'];
+
+    if (json['service_doc'] is String) {
+      final str = json['service_doc'];
+
+      final strArr = [];
+      strArr.add(str);
+      serviceDoc = strArr.cast<String>();
+    } else if (json['service_doc'] is List<dynamic>) {
+      serviceDoc = json['service_doc'].cast<String>();
+    } else {}
   }
 
   Map<String, dynamic> toJson() {

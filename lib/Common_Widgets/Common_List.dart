@@ -280,11 +280,13 @@ Widget Service_HistoryList(
                   alignment: Alignment.topLeft,
                   child: Row(
                     children: [
-                      Text(
-                        data.clientName ?? "",
-                        style: cardDetailT,
+                      Expanded(
+                        child: Text(
+                          data.clientName ?? "",
+                          style: cardDetailT,
+                        ),
                       ),
-                      const Spacer(),
+                      // const Spacer(),
                       Container(
                           alignment: Alignment.topLeft,
                           decoration: BoxDecoration(
@@ -387,16 +389,24 @@ Widget Service_HistoryList(
         isHistory == true
             ? InkWell(
                 onTap: () async {
-                  String docurl = '${data.serviceDoc}';
+                  if (data.serviceDoc?.length != 0 && data.serviceDoc != null) {
+                    if (data.serviceDoc?.length == 1) {
+                      String docurl = '${data.serviceDoc?[0]}';
 
-                  if (docurl == "" || docurl == "null") {
-                    ShowToastMessage("No Document Found!");
-                  } else {
-                    final Uri url = Uri.parse(docurl);
+                      if (docurl == "" || docurl == "null") {
+                        ShowToastMessage("No Document Found!");
+                      } else {
+                        final Uri url = Uri.parse(docurl);
 
-                    if (!await launchUrl(url)) {
-                      ShowToastMessage("No Document Found!");
+                        if (!await launchUrl(url)) {
+                          ShowToastMessage("No Document Found!");
+                        }
+                      }
+                    } else {
+                      showListDialog(context, data.serviceDoc!);
                     }
+                  } else {
+                    ShowToastMessage("No Document Found!");
                   }
                 },
                 child: Container(
@@ -438,6 +448,44 @@ Widget Service_HistoryList(
             : Container(),
       ],
     ),
+  );
+}
+
+void showListDialog(BuildContext context, List<String> serviceDoc) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Document List'),
+        content: Container(
+          width: double.minPositive,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: serviceDoc.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text("Document ${index + 1}"),
+                onTap: () async {
+                  Navigator.of(context).pop();
+
+                  String docurl = '${serviceDoc[index]}';
+
+                  if (docurl == "" || docurl == "null") {
+                    ShowToastMessage("No Document Found!");
+                  } else {
+                    final Uri url = Uri.parse(docurl);
+
+                    if (!await launchUrl(url)) {
+                      ShowToastMessage("No Document Found!");
+                    }
+                  }
+                },
+              );
+            },
+          ),
+        ),
+      );
+    },
   );
 }
 
