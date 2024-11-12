@@ -7,7 +7,7 @@ import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Src/ClientScreen/AddClientScreen.dart';
-import 'package:fortune/Src/FilterScreen.dart/FilterClientScreeen.dart';
+import 'package:fortune/Src/FilterScreen/FilterClientScreeen.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';

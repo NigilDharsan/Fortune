@@ -9,6 +9,7 @@ import 'package:fortune/Common_Widgets/Location_Picker.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Src/ClientScreen/Client_List_Screen.dart';
+import 'package:fortune/Src/GeneralActivity/GeneralActivityList.dart';
 import 'package:fortune/Src/ItemsScreen/Items_List_Screen.dart';
 import 'package:fortune/Src/Login_Ui/Login_Screen.dart';
 import 'package:fortune/Src/Logs/AttendanceLogs.dart';
@@ -16,6 +17,7 @@ import 'package:fortune/Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
 import 'package:fortune/Src/Marketing_History_List/Marketing_History_List.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_List_Screen.dart';
 import 'package:fortune/Src/Service_History_List_Ui/Service_Status_List_Screen.dart';
+import 'package:fortune/Src/Spares/SparesList.dart';
 import 'package:fortune/Src/StockActivity/DailyStockActivityList.dart';
 import 'package:fortune/Src/StockActivity/PhysicalStocksList.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
@@ -401,6 +403,56 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                     cardName: "Physical Stock",
                                     isWhite: true,
                                     color: orange1),
+                              )
+                            : Container(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: (singleton.permissionList
+                                      .contains("activity-list") ==
+                                  true &&
+                              singleton.permissionList.contains("stock-list") ==
+                                  true)
+                          ? MainAxisAlignment.spaceEvenly
+                          : MainAxisAlignment.center,
+                      children: [
+                        singleton.permissionList.contains("activity-list") ==
+                                true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Spareslist())).then((value) =>
+                                      ref.refresh(dashboardProvider));
+                                },
+                                child: _ActivityCard(
+                                    iconFile: Icons.electrical_services,
+                                    cardName: " Spares ",
+                                    isWhite: true,
+                                    color: brown1),
+                              )
+                            : Container(),
+                        singleton.permissionList.contains("stock-list") == true
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GeneralActivityListScreen()))
+                                      .then((value) =>
+                                          ref.refresh(dashboardProvider));
+                                },
+                                child: _ActivityCard(
+                                    iconFile: Icons.generating_tokens,
+                                    cardName: "General Activity",
+                                    isWhite: true,
+                                    color: black1),
                               )
                             : Container(),
                       ],

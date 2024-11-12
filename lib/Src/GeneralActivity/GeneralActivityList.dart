@@ -6,22 +6,21 @@ import 'package:fortune/Common_Widgets/Common_List.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
-import 'package:fortune/Src/FilterScreen/FilterScreen.dart';
-import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
-import 'package:fortune/Src/Marketing_History_List/Marketing_History_List.dart';
+import 'package:fortune/Src/GeneralActivity/AddGeneralActivity.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
 
-class Marketing_List_Screen extends ConsumerStatefulWidget {
-  const Marketing_List_Screen({super.key});
+class GeneralActivityListScreen extends ConsumerStatefulWidget {
+  const GeneralActivityListScreen({super.key});
 
   @override
-  ConsumerState<Marketing_List_Screen> createState() =>
-      _Marketing_List_ScreenState();
+  ConsumerState<GeneralActivityListScreen> createState() =>
+      _GeneralActivityListScreenState();
 }
 
-class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
+class _GeneralActivityListScreenState
+    extends ConsumerState<GeneralActivityListScreen> {
   // var user_Role = "";
   var dateRange = "";
   var formData;
@@ -92,7 +91,7 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
               Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Marketing_Form_Screen()))
+                          builder: (context) => AddgeneralactivityScreen()))
                   .then((value) {
                 if (value == true) {
                   formData = FormData.fromMap({
@@ -112,7 +111,7 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
             }, floatT: "Add Marketing"),
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: "Marketing List",
+                title: "General Activity List",
                 actions: <Widget>[
                   Stack(children: [
                     Padding(
@@ -122,30 +121,30 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                         icon: Icon(Icons.filter_list),
                         onPressed: () {
                           // Add your search functionality here
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FilterScreen(
-                                        filter: filter,
-                                      ))).then((value) {
-                            if (value == true) {
-                              formData = FormData.fromMap({
-                                "executive_id": singleton.filterSalesrepID,
-                                "status_id": singleton.filterStatusID,
-                                "daterange": singleton.filterDaterange,
-                                "company_id": singleton.filterCompanynameID,
-                                "daterange_type":
-                                    singleton.filterDaterangeTypeID,
-                                "next_followup": singleton.filterNextFollowUpID,
-                                "page": 1
-                              });
-                              singleton.formData = formData;
-                              i = 0;
-                              isRefresh = true;
-                              marketingData = [];
-                              ref.refresh(marketingListProvider);
-                            }
-                          });
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => FilterScreen(
+                          //               filter: filter,
+                          //             ))).then((value) {
+                          //   if (value == true) {
+                          //     formData = FormData.fromMap({
+                          //       "executive_id": singleton.filterSalesrepID,
+                          //       "status_id": singleton.filterStatusID,
+                          //       "daterange": singleton.filterDaterange,
+                          //       "company_id": singleton.filterCompanynameID,
+                          //       "daterange_type":
+                          //           singleton.filterDaterangeTypeID,
+                          //       "next_followup": singleton.filterNextFollowUpID,
+                          //       "page": 1
+                          //     });
+                          //     singleton.formData = formData;
+                          //     i = 0;
+                          //     isRefresh = true;
+                          //     marketingData = [];
+                          //     ref.refresh(marketingListProvider);
+                          //   }
+                          // });
                         },
                       ),
                     ),
@@ -212,7 +211,7 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
         : Scaffold(
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: "Marketing List",
+                title: "General Activity List",
                 actions: <Widget>[
                   Stack(children: [
                     Padding(
@@ -222,30 +221,30 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                         icon: Icon(Icons.filter_list),
                         onPressed: () {
                           // Add your search functionality here
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FilterScreen(
-                                        filter: filter,
-                                      ))).then((value) {
-                            if (value == true) {
-                              formData = FormData.fromMap({
-                                "executive_id": singleton.filterSalesrepID,
-                                "status_id": singleton.filterStatusID,
-                                "daterange": singleton.filterDaterange,
-                                "company_id": singleton.filterCompanynameID,
-                                "daterange_type":
-                                    singleton.filterDaterangeTypeID,
-                                "next_followup": singleton.filterNextFollowUpID,
-                                "page": 1
-                              });
-                              singleton.formData = formData;
-                              i = 0;
-                              isRefresh = true;
-                              marketingData = [];
-                              ref.refresh(marketingListProvider);
-                            }
-                          });
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => FilterScreen(
+                          //               filter: filter,
+                          //             ))).then((value) {
+                          //   if (value == true) {
+                          //     formData = FormData.fromMap({
+                          //       "executive_id": singleton.filterSalesrepID,
+                          //       "status_id": singleton.filterStatusID,
+                          //       "daterange": singleton.filterDaterange,
+                          //       "company_id": singleton.filterCompanynameID,
+                          //       "daterange_type":
+                          //           singleton.filterDaterangeTypeID,
+                          //       "next_followup": singleton.filterNextFollowUpID,
+                          //       "page": 1
+                          //     });
+                          //     singleton.formData = formData;
+                          //     i = 0;
+                          //     isRefresh = true;
+                          //     marketingData = [];
+                          //     ref.refresh(marketingListProvider);
+                          //   }
+                          // });
                         },
                       ),
                     ),
@@ -310,14 +309,14 @@ Widget _Marketing_List(WidgetRef ref, List<MarketingListData>? data) {
               padding: const EdgeInsets.only(bottom: 0),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Marketing_History_List(
-                                marketing_id: "${data[index].leadId}",
-                              )));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => Marketing_History_List(
+                  //               marketing_id: "${data[index].leadId}",
+                  //             )));
                 },
-                child: Marketing_List(context,
+                child: GeneralActivity_List(context,
                     isTag: data![index].status ?? "",
                     data: data![index],
                     isHistory: true,

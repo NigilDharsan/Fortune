@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Model/AttendanceLogsModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
-import 'package:fortune/Src/FilterScreen.dart/FilterLogScreen.dart';
+import 'package:fortune/Src/FilterScreen/FilterLogScreen.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/ApiService.dart';
 import 'package:fortune/utilits/Common_Colors.dart';

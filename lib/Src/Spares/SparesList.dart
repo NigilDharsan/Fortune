@@ -4,24 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_Button.dart';
 import 'package:fortune/Common_Widgets/Common_List.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
-import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
-import 'package:fortune/Src/FilterScreen/FilterDailyStockScreen.dart';
-import 'package:fortune/Src/StockActivity/AddDailyStockActivity.dart';
+import 'package:fortune/Model/StocksModel.dart';
+import 'package:fortune/Src/Spares/AddSpares.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
 import 'package:fortune/utilits/Common_Colors.dart';
 import 'package:fortune/utilits/Generic.dart';
 
-class DailyStockActivityList extends ConsumerStatefulWidget {
-  DailyStockActivityList({super.key});
+class Spareslist extends ConsumerStatefulWidget {
+  Spareslist({super.key});
 
   @override
-  ConsumerState<DailyStockActivityList> createState() =>
-      _DailyStockActivityListState();
+  ConsumerState<Spareslist> createState() => _SpareslistState();
 }
 
-class _DailyStockActivityListState
-    extends ConsumerState<DailyStockActivityList> {
+class _SpareslistState extends ConsumerState<Spareslist> {
   // var user_Role = "";
   Filter? filter;
   var formData;
@@ -46,17 +43,18 @@ class _DailyStockActivityListState
 
   @override
   Widget build(BuildContext context) {
-    final _ActivityListData = ref.watch(activityListProvider);
+    final _StocksListData = ref.watch(stocksListProvider);
+    SingleTon singleton = SingleTon();
 
-    return singleton.permissionList.contains("activity-create") == true
+    return singleton.permissionList.contains("stock-create") == true
         ? Scaffold(
             floatingActionButton: Floating_Button(context, onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => InvoiceFormScreen(
+                      builder: (context) => AddSpareScreen(
                             isEdit: false,
-                            activityId: '',
+                            stockId: "",
                           ))).then((value) {
                 if (value == true) {
                   setState(() {
@@ -64,14 +62,14 @@ class _DailyStockActivityListState
                         {"company_id": "", "branch_id": "", "daterange": ""});
                     singleton.formData = formData;
 
-                    ref.refresh(activityListProvider);
+                    ref.refresh(stocksListProvider);
                   });
                 }
               });
             }, floatT: "Add Service"),
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: 'Daily Activities',
+                title: 'Spares',
                 actions: <Widget>[
                   Stack(children: [
                     Padding(
@@ -81,25 +79,25 @@ class _DailyStockActivityListState
                         icon: Icon(Icons.filter_list),
                         onPressed: () {
                           // Add your search functionality here
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FilterDailyStockScreen(
-                                        filter: filter,
-                                      ))).then((value) {
-                            if (value == true) {
-                              setState(() {
-                                formData = FormData.fromMap({
-                                  "company_id": singleton.filterCompanynameID,
-                                  "branch_id": singleton.filterBranchnameID,
-                                  "daterange": singleton.filterDaterange
-                                });
-                                singleton.formData = formData;
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => FilterPhysicalStock(
+                          //               filter: filter,
+                          //             ))).then((value) {
+                          //   if (value == true) {
+                          //     setState(() {
+                          //       formData = FormData.fromMap({
+                          //         "company_id": singleton.filterCompanynameID,
+                          //         "branch_id": singleton.filterBranchnameID,
+                          //         "daterange": singleton.filterDaterange
+                          //       });
+                          //       singleton.formData = formData;
 
-                                ref.refresh(activityListProvider);
-                              });
-                            }
-                          });
+                          //       ref.refresh(stocksListProvider);
+                          //     });
+                          //   }
+                          // });
                         },
                       ),
                     ),
@@ -120,7 +118,7 @@ class _DailyStockActivityListState
                 ],
                 isGreen: false,
                 isNav: true),
-            body: _ActivityListData.when(
+            body: _StocksListData.when(
               data: (data) {
                 filter = data?.data?.filter ?? Filter();
 
@@ -135,8 +133,8 @@ class _DailyStockActivityListState
                           padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: _Activities_List(context,
-                                data?.data?.activities?.data ?? [], ref),
+                            child: _Stocks_List(
+                                context, data?.data?.stocks?.data ?? [], ref),
                           ),
                         ),
                       ],
@@ -153,7 +151,7 @@ class _DailyStockActivityListState
         : Scaffold(
             backgroundColor: white5,
             appBar: Custom_AppBar(
-                title: 'Daily Activities',
+                title: 'Spares',
                 actions: <Widget>[
                   Stack(children: [
                     Padding(
@@ -163,25 +161,25 @@ class _DailyStockActivityListState
                         icon: Icon(Icons.filter_list),
                         onPressed: () {
                           // Add your search functionality here
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FilterDailyStockScreen(
-                                        filter: filter,
-                                      ))).then((value) {
-                            if (value == true) {
-                              setState(() {
-                                formData = FormData.fromMap({
-                                  "company_id": singleton.filterCompanynameID,
-                                  "branch_id": singleton.filterBranchnameID,
-                                  "daterange": singleton.filterDaterange
-                                });
-                                singleton.formData = formData;
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => FilterPhysicalStock(
+                          //               filter: filter,
+                          //             ))).then((value) {
+                          //   if (value == true) {
+                          //     setState(() {
+                          //       formData = FormData.fromMap({
+                          //         "company_id": singleton.filterCompanynameID,
+                          //         "branch_id": singleton.filterBranchnameID,
+                          //         "daterange": singleton.filterDaterange
+                          //       });
+                          //       singleton.formData = formData;
 
-                                ref.refresh(activityListProvider);
-                              });
-                            }
-                          });
+                          //       ref.refresh(stocksListProvider);
+                          //     });
+                          //   }
+                          // });
                         },
                       ),
                     ),
@@ -202,7 +200,7 @@ class _DailyStockActivityListState
                 ],
                 isGreen: false,
                 isNav: true),
-            body: _ActivityListData.when(
+            body: _StocksListData.when(
               data: (data) {
                 filter = data?.data?.filter ?? Filter();
 
@@ -217,8 +215,8 @@ class _DailyStockActivityListState
                           padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: _Activities_List(context,
-                                data?.data?.activities?.data ?? [], ref),
+                            child: _Stocks_List(
+                                context, data?.data?.stocks?.data ?? [], ref),
                           ),
                         ),
                       ],
@@ -236,7 +234,7 @@ class _DailyStockActivityListState
   }
 }
 
-Widget _Activities_List(context, List<ActivitiesData>? data, WidgetRef ref) {
+Widget _Stocks_List(context, List<StocksData>? data, WidgetRef ref) {
   if ((data?.length ?? 0) != 0) {
     return ListView.builder(
       itemCount: data?.length ?? 0,
@@ -246,7 +244,7 @@ Widget _Activities_List(context, List<ActivitiesData>? data, WidgetRef ref) {
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 0),
-          child: ActivitiesList(context,
+          child: StocksList(context,
               data: data![index], isHistory: true, ref: ref),
         );
       },

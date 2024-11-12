@@ -1055,6 +1055,280 @@ Widget Marketing_History(
   );
 }
 
+//MARKETING LIST
+Widget GeneralActivity_List(context,
+    {required MarketingListData data,
+    required String isTag,
+    required bool isHistory,
+    required WidgetRef ref}) {
+  SingleTon singleton = SingleTon();
+
+  Color? containerColor;
+  TextStyle? style;
+  switch (isTag) {
+    case "Hot":
+      containerColor = orange2;
+      style = red;
+      break;
+    case "completed":
+      containerColor = green1;
+      style = white;
+      break;
+    case "processing":
+      containerColor = orange2;
+      style = red;
+      break;
+    case "pending":
+      containerColor = blue5;
+      style = white;
+      break;
+    case "cancelled":
+      containerColor = red1;
+      style = white;
+      break;
+    default:
+      containerColor = Colors.white;
+      break;
+  }
+  return Container(
+    // width: MediaQuery.of(context).size.width / 1.5,
+    margin: EdgeInsets.only(
+      bottom: 20,
+    ),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 15,
+          ),
+          // isHistory == true
+          //     ? Container()
+          //     : Row(
+          //         mainAxisAlignment: MainAxisAlignment.end,
+          //         children: [
+          //           InkWell(
+          //             onTap: () {
+          //               Navigator.push(
+          //                   context,
+          //                   MaterialPageRoute(
+          //                       builder: (context) => Marketing_Form_Screen()));
+          //             },
+          //             child: Container(
+          //                 height: 30,
+          //                 width: 30,
+          //                 child: Center(
+          //                     child: Icon(
+          //                   Icons.edit_rounded,
+          //                 ))),
+          //           ),
+          //           const SizedBox(
+          //             width: 15,
+          //           ),
+          //           InkWell(
+          //             onTap: () {},
+          //             child: Container(
+          //                 height: 30,
+          //                 width: 30,
+          //                 child: Center(
+          //                     child: Icon(
+          //                   Icons.delete,
+          //                 ))),
+          //           ),
+          //         ],
+          //       ),
+          isHistory == true
+              ? Container()
+              : const SizedBox(
+                  height: 5,
+                ),
+          //USER NAME
+          Container(
+              alignment: Alignment.topLeft,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Client Detail : ',
+                    style: cardDetailT,
+                  ),
+                  const Spacer(),
+                  singleton.permissionList.contains("lead-edit") == true
+                      ? Container(
+                          alignment: Alignment.topLeft,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: containerColor),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 5, bottom: 5),
+                            child: Text(
+                              isTag,
+                              style: style,
+                            ),
+                          ))
+                      : Container(),
+                ],
+              )),
+          Row(
+            children: [
+              Container(
+                width: MediaQuery.sizeOf(context).width / 3,
+                child: Text(
+                  data.clientName ?? "",
+                  style: phoneHT,
+                  maxLines: 2,
+                ),
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () {
+                  // Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => Marketing_Form_Edit_Screen(
+                  //                 marketing_id: "${data.leadId ?? 0}")))
+                  //     .then((value) {
+                  //   if (value == true) {
+                  //     var formData = FormData.fromMap({
+                  //       "executive_id": "",
+                  //       "client_id": "",
+                  //       "status_id": "",
+                  //       "daterange": "",
+                  //       "page": 1
+                  //     });
+                  //     singleton.formData = formData;
+
+                  //     ref.refresh(marketingListProvider);
+                  //   }
+                  // });
+                },
+                child: Container(
+                    height: 30,
+                    width: 30,
+                    child: Center(
+                        child: Icon(
+                      Icons.edit_rounded,
+                    ))),
+              )
+            ],
+          ),
+          //detail
+          Container(
+              width: MediaQuery.sizeOf(context).width / 1.2,
+              child: Text(
+                "${data.address}",
+                style: phoneHT,
+                maxLines: 3,
+              )),
+          const SizedBox(
+            height: 5,
+          ),
+          //PREVIOUS FOLLOWED DATE
+
+          //REPORTED BY
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Type : ',
+                style: cardDetailT,
+              ),
+              Flexible(
+                child: Text(
+                  data.enquiry_type ?? "",
+                  style: phoneHT,
+                ), //'${data.marketingExecutives?.map((item) => item.name).join(', ')}'
+              ),
+            ],
+          ),
+
+          const SizedBox(
+            height: 5,
+          ),
+          //NEXT FOLLOW DATE
+          Text(
+            'Current Follow Up :  ',
+            style: cardDetailT,
+          ),
+          Text(
+            data.nextFollowupDate ?? "",
+            style: phoneHT,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+
+          Text(
+            'Next Follow Up :  ',
+            style: cardDetailT,
+          ),
+          Text(
+            data.nextFollowupDate ?? "",
+            style: phoneHT,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+
+          //REPORTED BY
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Status : ',
+                style: cardDetailT,
+              ),
+              Flexible(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  data.updatedby ?? "",
+                  style: phoneHT,
+                ), //'${data.marketingExecutives?.map((item) => item.name).join(', ')}'
+              ),
+            ],
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          // Text(
+          //   'Plan on next : ',
+          //   style: cardDetailT,
+          // ),
+          // Container(
+          //     width: MediaQuery.sizeOf(context).width / 1.2,
+          //     child: Text(
+          //       "${data.planForNextMeet}",
+          //       style: phoneHT,
+          //       maxLines: 3,
+          //     )),
+          // const SizedBox(
+          //   width: 5,
+          // ),
+          // Text(
+          //   'Status Note : ',
+          //   style: cardDetailT,
+          // ),
+          // Container(
+          //     width: MediaQuery.sizeOf(context).width / 1.2,
+          //     child: Text(
+          //       "${data.statusNote ?? ""}",
+          //       style: phoneHT,
+          //       maxLines: 3,
+          //     )),
+          const SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 Widget ActivitiesList(context,
     {required ActivitiesData data,
     required bool isHistory,

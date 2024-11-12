@@ -205,7 +205,7 @@ class ApiService {
 
   Future<AttendanceLogsModel> getUserLogApi(FormData formData) async {
     final result = await requestPOST(
-        url: ConstantApi.usersLogdUrl, formData: formData, dio: _dio);
+        url: ConstantApi.usersLogListUrl, formData: formData, dio: _dio);
     if (result["success"] == true) {
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
