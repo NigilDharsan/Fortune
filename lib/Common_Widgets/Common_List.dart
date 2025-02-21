@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
+import 'package:fortune/Model/GeneralListModel.dart';
 import 'package:fortune/Model/ItemsModel.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
+import 'package:fortune/Model/SparesListModel.dart';
 import 'package:fortune/Model/StocksModel.dart';
 import 'package:fortune/Src/ClientScreen/AddClientScreen.dart';
 import 'package:fortune/Src/ItemsScreen/AddItemsScreen.dart';
@@ -15,6 +17,7 @@ import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_Form_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Edit_Screen.dart';
 import 'package:fortune/Src/Service_Form_Ui/Service_Form_Screen.dart';
+import 'package:fortune/Src/Spares/AddSpares.dart';
 import 'package:fortune/Src/StockActivity/AddDailyStockActivity.dart';
 import 'package:fortune/Src/StockActivity/AddPhysicalStocks.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
@@ -1056,11 +1059,13 @@ Widget Marketing_History(
 }
 
 //MARKETING LIST
-Widget GeneralActivity_List(context,
-    {required MarketingListData data,
-    required String isTag,
-    required bool isHistory,
-    required WidgetRef ref}) {
+Widget GeneralActivity_List(
+  context, {
+  required GeneralListData data,
+  required String isTag,
+  required bool isHistory,
+  required Function() incrementCounter,
+}) {
   SingleTon singleton = SingleTon();
 
   Color? containerColor;
@@ -1157,21 +1162,19 @@ Widget GeneralActivity_List(context,
                     style: cardDetailT,
                   ),
                   const Spacer(),
-                  singleton.permissionList.contains("lead-edit") == true
-                      ? Container(
-                          alignment: Alignment.topLeft,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: containerColor),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, top: 5, bottom: 5),
-                            child: Text(
-                              isTag,
-                              style: style,
-                            ),
-                          ))
-                      : Container(),
+                  Container(
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: containerColor),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, top: 5, bottom: 5),
+                        child: Text(
+                          isTag,
+                          style: style,
+                        ),
+                      )),
                 ],
               )),
           Row(
@@ -1179,34 +1182,14 @@ Widget GeneralActivity_List(context,
               Container(
                 width: MediaQuery.sizeOf(context).width / 3,
                 child: Text(
-                  data.clientName ?? "",
+                  data.cusFirstName ?? "",
                   style: phoneHT,
                   maxLines: 2,
                 ),
               ),
               const Spacer(),
               InkWell(
-                onTap: () {
-                  // Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (context) => Marketing_Form_Edit_Screen(
-                  //                 marketing_id: "${data.leadId ?? 0}")))
-                  //     .then((value) {
-                  //   if (value == true) {
-                  //     var formData = FormData.fromMap({
-                  //       "executive_id": "",
-                  //       "client_id": "",
-                  //       "status_id": "",
-                  //       "daterange": "",
-                  //       "page": 1
-                  //     });
-                  //     singleton.formData = formData;
-
-                  //     ref.refresh(marketingListProvider);
-                  //   }
-                  // });
-                },
+                onTap: incrementCounter,
                 child: Container(
                     height: 30,
                     width: 30,
@@ -1218,13 +1201,13 @@ Widget GeneralActivity_List(context,
             ],
           ),
           //detail
-          Container(
-              width: MediaQuery.sizeOf(context).width / 1.2,
-              child: Text(
-                "${data.address}",
-                style: phoneHT,
-                maxLines: 3,
-              )),
+          // Container(
+          //     width: MediaQuery.sizeOf(context).width / 1.2,
+          //     child: Text(
+          //       "${data.statusNote}",
+          //       style: phoneHT,
+          //       maxLines: 3,
+          //     )),
           const SizedBox(
             height: 5,
           ),
@@ -1240,7 +1223,7 @@ Widget GeneralActivity_List(context,
               ),
               Flexible(
                 child: Text(
-                  data.enquiry_type ?? "",
+                  data.type ?? "",
                   style: phoneHT,
                 ), //'${data.marketingExecutives?.map((item) => item.name).join(', ')}'
               ),
@@ -1256,7 +1239,7 @@ Widget GeneralActivity_List(context,
             style: cardDetailT,
           ),
           Text(
-            data.nextFollowupDate ?? "",
+            data.currentFollowup ?? "",
             style: phoneHT,
           ),
           const SizedBox(
@@ -1268,7 +1251,7 @@ Widget GeneralActivity_List(context,
             style: cardDetailT,
           ),
           Text(
-            data.nextFollowupDate ?? "",
+            data.nextFollowup ?? "",
             style: phoneHT,
           ),
           const SizedBox(
@@ -1280,13 +1263,13 @@ Widget GeneralActivity_List(context,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Status : ',
+                'Status Note: ',
                 style: cardDetailT,
               ),
               Flexible(
                 child: Text(
                   overflow: TextOverflow.ellipsis,
-                  data.updatedby ?? "",
+                  data.statusNote ?? "",
                   style: phoneHT,
                 ), //'${data.marketingExecutives?.map((item) => item.name).join(', ')}'
               ),
@@ -1515,6 +1498,100 @@ Widget StocksList(context,
               Container(
                 child: Text(
                   "Available Stocks: ${data.availableStock ?? ""}",
+                  style: DateT,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget SparesList(context,
+    {required SparesData data,
+    required bool isHistory,
+    required WidgetRef ref}) {
+  Color? containerColor;
+  TextStyle? style;
+  SingleTon singleton = SingleTon();
+
+  return Container(
+    // width: MediaQuery.of(context).size.width / 1.5,
+    margin: EdgeInsets.only(
+      bottom: 20,
+    ),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //USER NAME
+              Container(
+                  margin: EdgeInsets.only(top: 15, bottom: 10),
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          data.itemName ?? "",
+                          style: cardDetailT,
+                        ),
+                      ),
+                      // const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddSpareScreen(
+                                        isEdit: true,
+                                        stockId: "${data.servicerepsInvolved}",
+                                      ))).then((value) {
+                            if (value == true) {
+                              final formData = FormData.fromMap({
+                                "servicereps_involved": "",
+                                "page_count": 1
+                              });
+                              singleton.formData = formData;
+
+                              ref.refresh(spareListProvider);
+                            }
+                          });
+                        },
+                        child: Container(
+                            height: 30,
+                            width: 30,
+                            child: Center(
+                                child: Icon(
+                              Icons.mode_edit,
+                              size: 25,
+                            ))),
+                      ),
+                    ],
+                  )),
+              //DATE
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 5, bottom: 5),
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         "Date: ${data.date ?? ""}",
+              //         style: DateT,
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              //PHONE NUMBER
+              Container(
+                child: Text(
+                  "Quantity: ${data.quantity ?? ""}",
                   style: DateT,
                 ),
               ),

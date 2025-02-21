@@ -381,7 +381,7 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                                 },
                                 child: _ActivityCard(
                                     iconFile: Icons.edit_document,
-                                    cardName: " Daily activity ",
+                                    cardName: " Warehouse activity ",
                                     isWhite: true,
                                     color: green1),
                               )
@@ -411,50 +411,37 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                       height: 20,
                     ),
                     Row(
-                      mainAxisAlignment: (singleton.permissionList
-                                      .contains("activity-list") ==
-                                  true &&
-                              singleton.permissionList.contains("stock-list") ==
-                                  true)
-                          ? MainAxisAlignment.spaceEvenly
-                          : MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        singleton.permissionList.contains("activity-list") ==
-                                true
-                            ? InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Spareslist())).then((value) =>
-                                      ref.refresh(dashboardProvider));
-                                },
-                                child: _ActivityCard(
-                                    iconFile: Icons.electrical_services,
-                                    cardName: " Spares ",
-                                    isWhite: true,
-                                    color: brown1),
-                              )
-                            : Container(),
-                        singleton.permissionList.contains("stock-list") == true
-                            ? InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  GeneralActivityListScreen()))
-                                      .then((value) =>
-                                          ref.refresh(dashboardProvider));
-                                },
-                                child: _ActivityCard(
-                                    iconFile: Icons.generating_tokens,
-                                    cardName: "General Activity",
-                                    isWhite: true,
-                                    color: black1),
-                              )
-                            : Container(),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Spareslist())).then(
+                                (value) => ref.refresh(dashboardProvider));
+                          },
+                          child: _ActivityCard(
+                              iconFile: Icons.electrical_services,
+                              cardName: " Spares ",
+                              isWhite: true,
+                              color: brown1),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        GeneralActivityListScreen())).then(
+                                (value) => ref.refresh(dashboardProvider));
+                          },
+                          child: _ActivityCard(
+                              iconFile: Icons.generating_tokens,
+                              cardName: "General Activity",
+                              isWhite: true,
+                              color: black1),
+                        )
                       ],
                     ),
                     //TODAY LIST

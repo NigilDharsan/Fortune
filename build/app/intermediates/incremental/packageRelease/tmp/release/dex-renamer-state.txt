@@ -1,4 +1,4 @@
-#Wed May 08 15:31:03 IST 2024
-base.0=/Users/nigildharsan/Documents/Flutter Project/Fortune/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+#Wed Jan 22 14:49:21 IST 2025
+base.0=/Users/nigildharsan/Documents/Flutter Project/fortune/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

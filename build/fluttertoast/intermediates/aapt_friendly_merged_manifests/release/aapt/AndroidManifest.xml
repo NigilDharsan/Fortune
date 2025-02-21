@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.ponnamkarthik.toast.fluttertoast" >
 
-    <uses-sdk
-        android:minSdkVersion="21"
-        android:targetSdkVersion="21" />
+    <uses-sdk android:minSdkVersion="19" />
 
 </manifest>

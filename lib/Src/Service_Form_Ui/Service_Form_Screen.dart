@@ -10,6 +10,7 @@ import 'package:fortune/Common_Widgets/Common_Button.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Common_Widgets/Image_Path.dart';
 import 'package:fortune/Common_Widgets/Text_Form_Field.dart';
+import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
@@ -146,7 +147,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                             return null;
                           },
                           hintText: 'Search Client name',
-                          initValue: '',
+                          initValue: _ClientName.text,
                         ),
                         // dropDownField1(
                         //   context,

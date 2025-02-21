@@ -1,31 +1,31 @@
 {
     "logs": [
         {
-            "outputFile": "dev.fluttercommunity.plus.device_info.device_info_plus-merged_res-10:/values-th/values-th.xml",
+            "outputFile": "dev.fluttercommunity.plus.device_info.device_info_plus-merged_res-25:/values-th/values-th.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/d08c73bfb05384f2e52578171dbd141e/transformed/core-1.6.0/res/values-th/values-th.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res/values-th/values-th.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,151,254,352,450,553,658,770",
+                        "endColumns": "95,102,97,97,102,104,111,100",
+                        "endOffsets": "146,249,347,445,548,653,765,866"
                     }
                 }
             ]
         },
         {
-            "outputFile": "dev.fluttercommunity.plus.device_info.device_info_plus-mergeReleaseResources-8:/values-th/values-th.xml",
+            "outputFile": "dev.fluttercommunity.plus.device_info.device_info_plus-mergeReleaseResources-23:/values-th/values-th.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/d08c73bfb05384f2e52578171dbd141e/transformed/core-1.6.0/res/values-th/values-th.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res/values-th/values-th.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,151,254,352,450,553,658,770",
+                        "endColumns": "95,102,97,97,102,104,111,100",
+                        "endOffsets": "146,249,347,445,548,653,765,866"
                     }
                 }
             ]

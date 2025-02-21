@@ -43,6 +43,9 @@ class _Service_Form_Edit_ScreenState
 
   List<File> _selectedFiles = [];
   List<Executives> _selectedItems = [];
+  List<FocusNode> focus = [];
+  List<Map<String, dynamic>> itemsData = [];
+  List<int> itemsDeleteID = [];
 
   Future<void> _pickFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -123,9 +126,9 @@ class _Service_Form_Edit_ScreenState
           _selectedFiles1.add(_Filespath!);
         }
       }
-      setState(() {
-        _selectedFiles = _selectedFiles1;
-      });
+      // setState(() {
+      _selectedFiles = _selectedFiles1;
+      // });
     }
 
     return Scaffold(
@@ -158,6 +161,16 @@ class _Service_Form_Edit_ScreenState
                     }
 
                     if (!isvalueUpdated) {
+                      itemsData = [
+                        {
+                          'item_id': "",
+                          'productName': "",
+                          'quantity': "",
+                        }
+                      ];
+                      final focusCount = FocusNode();
+                      focus = [focusCount];
+
                       final salesrep =
                           data.data?.data?[0].servicerepsInvolved ?? "";
 
@@ -281,20 +294,12 @@ class _Service_Form_Edit_ScreenState
                               }),
 
                           //STATUS NOTE
-                          Title_Style(Title: 'Status Note', isStatus: true),
+                          Title_Style(Title: 'Status Note', isStatus: false),
                           textfieldDescription(
                               readOnly: false,
                               Controller: _StatusNote,
                               hintText: 'Enter Status Note',
-                              validating: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Please Enter ${'Note'}";
-                                }
-                                if (value == null) {
-                                  return "Please Enter ${'Note'}";
-                                }
-                                return null;
-                              }),
+                              validating: null),
 
                           Title_Style(Title: 'Spare Used List', isStatus: true),
                           Padding(
@@ -437,6 +442,248 @@ class _Service_Form_Edit_ScreenState
                           const SizedBox(
                             height: 30,
                           ),
+
+                          for (int i = 0;
+                              i < (data.data?.serviceSpare?.length ?? 0);
+                              i++)
+                            Column(
+                              children: [
+                                SizedBox(height: 16.0),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    controller: TextEditingController()
+                                      ..text =
+                                          "${data.data?.serviceSpare?[i].spare?.item?.itemName}",
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 20.0, horizontal: 20.0),
+                                      labelText: 'Spare Items',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(height: 16.0),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 20),
+                                        child: TextFormField(
+                                          readOnly: true,
+                                          controller: TextEditingController()
+                                            ..text =
+                                                "${data.data?.serviceSpare?[i].quantity}",
+                                          onChanged: (typed) {},
+                                          decoration: InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 20.0,
+                                                    horizontal: 20.0),
+                                            labelText: 'Quantity',
+                                            border: OutlineInputBorder(),
+                                            hintText: 'Enter quantity',
+                                          ),
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return "Enter Quantity";
+                                            }
+
+                                            return null;
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 35),
+                                      child: IconButton(
+                                        alignment: Alignment.topRight,
+                                        icon: Icon(Icons.remove_circle),
+                                        onPressed: () {
+                                          setState(() {
+                                            itemsDeleteID.add(data.data
+                                                    ?.serviceSpare?[i].id ??
+                                                0);
+                                            data.data?.serviceSpare
+                                                ?.removeAt(i);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                SizedBox(
+                                    height: 30.0), // Add space between items
+                              ],
+                            ),
+
+                          // Add space between items
+                          Title_Style(Title: "Add Spares", isStatus: false),
+
+                          for (int i = 0; i < itemsData.length; i++)
+                            Column(
+                              children: [
+                                SizedBox(height: 16.0),
+
+                                dropDownSparesSearchField(
+                                  context,
+                                  listValue: data.data?.spareItem ?? [],
+                                  onChanged: ((x) {
+                                    focus[i].unfocus();
+
+                                    setState(() {
+                                      int index = data!.data!.spareItem!
+                                          .indexWhere((st) =>
+                                              st.itemName == x.searchKey);
+
+                                      final getValue = {
+                                        'item_id':
+                                            "${data.data!.spareItem![index].spareId}",
+                                        'productName': "${x.searchKey}",
+                                        'quantity':
+                                            "${itemsData[i]["quantity"]}",
+                                      };
+                                      itemsData.removeAt(i);
+                                      itemsData.insert(i, getValue);
+                                    });
+                                  }),
+                                  focus: focus[i],
+                                  validator: (x) {
+                                    int index = data!.data!.spareItem!
+                                        .indexWhere((st) => st.itemName == x);
+
+                                    if (index == -1) {
+                                      return null;
+                                    }
+                                    return null;
+                                  },
+                                  hintText: 'Search Items',
+                                  initValue: itemsData[i]["productName"] == ""
+                                      ? ""
+                                      : itemsData[i]["productName"] ?? "",
+                                ),
+                                SizedBox(height: 16.0),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 20),
+                                        child: TextFormField(
+                                          controller: TextEditingController()
+                                            ..text =
+                                                itemsData[i]["quantity"] ?? "",
+                                          onChanged: (typed) {
+                                            // setState(() {
+                                            final getValue = {
+                                              'item_id':
+                                                  "${itemsData[i]["item_id"]}",
+                                              'productName':
+                                                  "${itemsData[i]["productName"]}",
+                                              'quantity': typed,
+                                            };
+                                            itemsData.removeAt(i);
+                                            itemsData.insert(i, getValue);
+                                          },
+                                          keyboardType: TextInputType.number,
+
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            TextInputFormatter.withFunction(
+                                                (oldValue, newValue) {
+                                              if (newValue.text.isEmpty) {
+                                                return newValue; // Allow empty input
+                                              }
+                                              final int value =
+                                                  int.tryParse(newValue.text) ??
+                                                      0;
+
+                                              int index = data.data!.spareItem!
+                                                  .indexWhere((st) =>
+                                                      st.spareId ==
+                                                      int.parse(itemsData[i]
+                                                          ['item_id']));
+                                              int qty = 0;
+                                              if (index >= 0) {
+                                                qty = data.data!.spareItem
+                                                            ?.length !=
+                                                        0
+                                                    ? (data
+                                                            .data!
+                                                            .spareItem?[index]
+                                                            .quantity ??
+                                                        0)
+                                                    : 0;
+                                              }
+
+                                              if (value <= (qty)) {
+                                                return newValue; // Allow if value is less than or equal to 10000
+                                              }
+                                              return oldValue; // Reject the input if it exceeds 10000
+                                            }),
+                                          ], // Only numbers can be entered
+
+                                          decoration: InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 20.0,
+                                                    horizontal: 20.0),
+                                            labelText: 'Quantity',
+                                            border: OutlineInputBorder(),
+                                            hintText: 'Enter quantity',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 35),
+                                      child: i == 0
+                                          ? IconButton(
+                                              alignment: Alignment.topRight,
+                                              icon: Icon(Icons.add_box),
+                                              onPressed: () {
+                                                setState(() {
+                                                  final tempArr = {
+                                                    'item_id': "",
+                                                    'productName': "",
+                                                    'quantity': "",
+                                                  };
+
+                                                  itemsData.add(tempArr);
+                                                  final focusCount =
+                                                      FocusNode();
+                                                  focus.add(focusCount);
+                                                });
+                                              },
+                                            )
+                                          : IconButton(
+                                              alignment: Alignment.topRight,
+                                              icon: Icon(Icons.remove_circle),
+                                              onPressed: () {
+                                                setState(() {
+                                                  itemsData.removeAt(i);
+                                                  focus.removeAt(i);
+                                                });
+                                              },
+                                            ),
+                                    ),
+                                  ],
+                                ),
+
+                                SizedBox(
+                                    height: 30.0), // Add space between items
+                              ],
+                            ),
+                          const SizedBox(
+                            height: 30,
+                          ),
                           //BUTTON
                           CommonElevatedButton(context, "Update", () async {
                             if (_formKey.currentState!.validate()) {
@@ -451,16 +698,40 @@ class _Service_Form_Edit_ScreenState
                                     .map((item) => "${item.id ?? 0}")
                                     .toList();
 
-                                var formData = FormData.fromMap({
-                                  "status": selectStatus_id,
-                                  "requirement": _Requirement.text,
-                                  "status_note": _StatusNote.text,
-                                  for (var i = 0; i < idList.length; i++)
-                                    'assign_executive[$i]': idList[i],
-                                  "_method": "PUT",
-                                });
+                                final spareData = itemsData
+                                    .where(
+                                        (toElement) => toElement["new"] == true)
+                                    .toList();
+                                var formData = FormData();
+                                if (itemsData[0]['item_id'] != "") {
+                                  formData = FormData.fromMap({
+                                    "status": selectStatus_id,
+                                    "requirement": _Requirement.text,
+                                    "status_note": _StatusNote.text,
+                                    for (var i = 0; i < idList.length; i++)
+                                      'assign_executive[$i]': idList[i],
+                                    "_method": "PUT",
+                                    "deleted_spare": itemsDeleteID.join(","),
+                                    for (var i = 0; i < itemsData.length; i++)
+                                      'spare_lists[$i][spare_id]': itemsData[i]
+                                          ['item_id'],
+                                    for (var j = 0; j < itemsData.length; j++)
+                                      'spare_lists[$j][quantity]': itemsData[j]
+                                          ['quantity'],
+                                  });
+                                } else {
+                                  formData = FormData.fromMap({
+                                    "status": selectStatus_id,
+                                    "requirement": _Requirement.text,
+                                    "status_note": _StatusNote.text,
+                                    for (var i = 0; i < idList.length; i++)
+                                      'assign_executive[$i]': idList[i],
+                                    "_method": "PUT",
+                                    "deleted_spare": itemsDeleteID.join(","),
+                                  });
+                                }
 
-                                if (_selectedFiles != []) {
+                                if (_selectedFiles.length != 0) {
                                   for (int i = 0;
                                       i < _selectedFiles.length;
                                       i++) {

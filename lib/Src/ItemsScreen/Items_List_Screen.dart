@@ -25,14 +25,42 @@ class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
   var formData;
   SingleTon singleton = SingleTon();
 
+  ScrollController _scrollController = ScrollController();
+
+  List<ItemData> itemData = [];
+
+  var pageCount = 1;
+  var i = 0;
+  var isRefresh = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    formData =
-        FormData.fromMap({"company_id": "", "branch_id": "", "daterange": ""});
+    formData = FormData.fromMap(
+        {"company_id": "", "branch_id": "", "daterange": "", "page": 1});
     singleton.formData = formData;
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      // Reach the bottom of the list
+      // Fetch more data
+      pageCount++;
+      formData = FormData.fromMap({
+        "company_id": "",
+        "branch_id": "",
+        "daterange": "",
+        "page": pageCount
+      });
+      singleton.formData = formData;
+      i = 0;
+      ref.refresh(itemsListProvider); // Fetch more data with updated page count
+    }
   }
 
   @override
@@ -52,9 +80,17 @@ class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
                           ))).then((value) {
                 if (value == true) {
                   setState(() {
-                    formData = FormData.fromMap(
-                        {"company_id": "", "branch_id": "", "daterange": ""});
+                    formData = FormData.fromMap({
+                      "company_id": "",
+                      "branch_id": "",
+                      "daterange": "",
+                      "page": 1
+                    });
                     singleton.formData = formData;
+
+                    i = 0;
+                    isRefresh = true;
+                    itemData = [];
 
                     ref.refresh(itemsListProvider);
                   });
@@ -115,7 +151,18 @@ class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
                 isNav: true),
             body: _ItemsListData.when(
               data: (data) {
+                if (i != 0) {
+                  itemData.addAll(data?.data?.items?.data ?? []);
+                } else {
+                  if (itemData.length == 0 && !isRefresh) {
+                    itemData.addAll(data?.data?.items?.data ?? []);
+                  }
+                }
+                isRefresh = false;
+                i = 1;
+
                 return SingleChildScrollView(
+                  controller: _scrollController,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
@@ -126,8 +173,7 @@ class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
                           padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: _Items_List(
-                                context, data?.data?.items?.data ?? [], ref),
+                            child: _Items_List(context, itemData, ref),
                           ),
                         ),
                       ],
@@ -195,7 +241,18 @@ class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
                 isNav: true),
             body: _ItemsListData.when(
               data: (data) {
+                if (i != 0) {
+                  itemData.addAll(data?.data?.items?.data ?? []);
+                } else {
+                  if (itemData.length == 0 && !isRefresh) {
+                    itemData.addAll(data?.data?.items?.data ?? []);
+                  }
+                }
+                isRefresh = false;
+                i = 1;
+
                 return SingleChildScrollView(
+                  controller: _scrollController,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
@@ -206,8 +263,7 @@ class _ItemsListScreenState extends ConsumerState<ItemsListScreen> {
                           padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: _Items_List(
-                                context, data?.data?.items?.data ?? [], ref),
+                            child: _Items_List(context, itemData, ref),
                           ),
                         ),
                       ],

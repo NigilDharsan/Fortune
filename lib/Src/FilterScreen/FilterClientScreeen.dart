@@ -103,7 +103,7 @@ class _FilterClientScreenState extends State<FilterClientScreen> {
                         return null;
                       },
                       hintText: 'Search Client name',
-                      initValue: '',
+                      initValue: singleton.filterClientname ?? "",
                     ),
 
                     //COMPANY NAME

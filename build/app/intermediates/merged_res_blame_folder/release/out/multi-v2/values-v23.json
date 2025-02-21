@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.fortune.fortunepowerfastening.app-mergeReleaseResources-28:/values-v23/values-v23.xml",
+            "outputFile": "com.fortune.fortunepowerfastening.app-mergeReleaseResources-49:/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/e284401544ba482b40b90025405636f0/transformed/appcompat-1.6.1/res/values-v23/values-v23.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/c597f280415b43607621ab2a547b975d/transformed/appcompat-1.6.1/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",

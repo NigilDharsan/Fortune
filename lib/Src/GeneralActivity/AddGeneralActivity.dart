@@ -24,6 +24,8 @@ class AddgeneralactivityScreen extends ConsumerStatefulWidget {
 
 class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
   TextEditingController _DatePicker = TextEditingController();
+  TextEditingController _NextFollowDatePicker = TextEditingController();
+
   TextEditingController _StatusNote = TextEditingController();
   TextEditingController _ClientAddress = TextEditingController();
   TextEditingController _ClientName = TextEditingController();
@@ -38,15 +40,15 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
   String? selectMarketing_Type;
 
   List<String> _selectState = [
-    'completed',
-    'pending',
-    'processing',
-    "cancelled"
+    'Completed',
+    'Pending',
+    'Processing',
+    "Cancelled"
   ];
 
   List<String> _selectMarketingType = [
-    'Sales',
-    'Leads',
+    'Payment',
+    'Delivery',
   ];
 
   String TimeVal = '';
@@ -73,10 +75,6 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
     return formattedTime;
   }
 
-  List<String> _SelectClientName = ['Bosh', 'Pricol', 'Tessolv'];
-  List<String> _CompanyName = ['Zoho', 'wipro', 'Advance'];
-  List<String> _Status = ['Pending', 'Processing', 'Cancelled', "Completed"];
-  List<String> _AssignExecutive = ['Arun', 'Madhesh', 'Naveen', "Nivas"];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   List<Executives> _selectedItems = [];
@@ -182,7 +180,7 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
                             return null;
                           },
                           hintText: 'Search Client name',
-                          initValue: '',
+                          initValue: clientName ?? "",
                         ),
 
                         // dropDownField1(
@@ -271,7 +269,7 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
                         //NEXT FOLLOW UP DATE
                         Title_Style(Title: 'Next Followup up', isStatus: true),
                         TextFieldDatePicker(
-                            Controller: _DatePicker,
+                            Controller: _NextFollowDatePicker,
                             onChanged: null,
                             validating: (value) {
                               if (value!.isEmpty) {
@@ -307,8 +305,8 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
                                           .format(selectedDateTime);
                                   if (mounted) {
                                     setState(() {
-                                      _DatePicker.text = formatdate;
-                                      print(_DatePicker.text);
+                                      _NextFollowDatePicker.text = formatdate;
+                                      print(_NextFollowDatePicker.text);
                                     });
                                   }
                                 }
@@ -327,13 +325,13 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
                             setState(() {
                               selectStatus = newValue;
 
-                              selectStatus_id = selectStatus == "completed"
+                              selectStatus_id = selectStatus == "Completed"
                                   ? "1"
-                                  : selectStatus == "pending"
+                                  : selectStatus == "Pending"
                                       ? "2"
-                                      : selectStatus == "processing"
+                                      : selectStatus == "Processing"
                                           ? "3"
-                                          : selectStatus == "cancelled"
+                                          : selectStatus == "Cancelled"
                                               ? "4"
                                               : "";
                             });
@@ -383,8 +381,6 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
                           if (_formKey.currentState!.validate()) {
                             if (client_id == "") {
                               ShowToastMessage("Select client name");
-                            } else if (company_id == "") {
-                              ShowToastMessage("Select company name");
                             } else if (singleton.permissionList
                                         .contains("lead-assign") ==
                                     true &&
@@ -402,24 +398,25 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
                                   .toList();
 
                               Map<String, dynamic> data = {
-                                "is_new_client":
-                                    isAddNewClient == true ? "1" : "0",
-                                "requirement": _Requirement.text,
-                                "marketing_type": selectMarketing_Type,
+                                // "is_new_client":
+                                //     isAddNewClient == true ? "1" : "0",
+                                // "requirement": _Requirement.text,
                                 "client_id": client_id,
-                                "reference": _Reference.text,
-                                "cus_mobile_no": _ContactNumber.text,
-                                "cus_first_name": _ClientName.text,
-                                "address": _ClientAddress.text,
+                                // "reference": _Reference.text,
+                                // "cus_mobile_no": _ContactNumber.text,
+                                // "cus_first_name": _ClientName.text,
+                                // "address": _ClientAddress.text,
                                 "status_note": _StatusNote.text,
-                                "assign_executive": idList,
-                                "company_id": company_id,
-                                "status": selectStatus_id,
-                                "plan_for_next_meet": _PlanofAction.text,
-                                "next_followup_date": _DatePicker.text
+                                "salesrep_involved": idList.join(","),
+                                // "company_id": company_id,
+                                "status": selectStatus,
+                                "current_followup": _DatePicker.text,
+                                "next_followup": _NextFollowDatePicker.text,
+
+                                "type": selectMarketing_Type,
                               };
 
-                              addMarketingList(data);
+                              addGeneralList(data);
                             }
                           }
                         }),
@@ -444,13 +441,13 @@ class _AddgeneralactivityState extends ConsumerState<AddgeneralactivityScreen> {
     );
   }
 
-  void addMarketingList(Map<String, dynamic> data) async {
+  void addGeneralList(Map<String, dynamic> data) async {
     LoadingOverlay.show(context);
 
     final apiService = ApiService(ref.read(dioProvider));
 
     final postResponse =
-        await apiService.post1<SuccessModel>(ConstantApi.marketingStore, data);
+        await apiService.post1<SuccessModel>(ConstantApi.addGeneralUrl, data);
     LoadingOverlay.forcedStop();
 
     if (postResponse.success == true) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
 import 'package:fortune/Model/StockItemModel.dart';
@@ -734,6 +735,115 @@ Widget dropDownField7(
   );
 }
 
+Widget dropDownField8(
+  context, {
+  required String? value,
+  required List<Executives>? listValue,
+  required void Function(String?)? onChanged,
+  required String hintT,
+}) {
+  return Center(
+    child: Container(
+      height: 70,
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(10), color: white1),
+      child: Center(
+        child: DropdownButtonFormField<String>(
+          // padding: EdgeInsets.only(left: 30),
+          value: value,
+          isExpanded: true,
+          decoration: InputDecoration(
+            hintText: hintT,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            fillColor: Colors.transparent,
+            filled: true,
+          ),
+          icon: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Icon(
+              Icons.keyboard_arrow_down_sharp,
+              color: Colors.black,
+              size: 35,
+            ),
+          ),
+          items: listValue?.map((Executives option) {
+            return DropdownMenuItem<String>(
+              value: option.name,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                ),
+                child: Text(option.name ?? ""),
+              ),
+            );
+          }).toList(),
+          onChanged: onChanged,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget dropDownExecutivesSearchField(
+  context, {
+  required FocusNode? focus,
+  required List<Executives> listValue,
+  required String? Function(String?)? validator,
+  required void Function(SearchFieldListItem<Executives> x)? onChanged,
+  required String hintText,
+  required String initValue,
+}) {
+  return Container(
+    // height: 50,
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10), color: Colors.white),
+    child: SearchField(
+      controller:
+          initValue == "" ? null : TextEditingController(text: initValue),
+      focusNode: focus,
+      suggestionDirection: SuggestionDirection.down,
+      suggestions: listValue
+          .map((e) => SearchFieldListItem<Executives>(e.name ?? ""))
+          .toList(),
+      suggestionState: Suggestion.expand,
+      textInputAction: TextInputAction.next,
+      suggestionStyle: TextStyle(
+        fontSize: 18,
+        color: Colors.black.withOpacity(0.8),
+      ),
+      validator: validator,
+      searchInputDecoration: SearchInputDecoration(
+        hintText: hintText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        fillColor: Colors.transparent,
+        filled: true,
+      ),
+      maxSuggestionsInViewPort: 5,
+      itemHeight: 40,
+      onSuggestionTap: onChanged,
+    ),
+  );
+}
+
 Widget dropDownSearchField(
   context, {
   required FocusNode? focus,
@@ -751,9 +861,8 @@ Widget dropDownSearchField(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10), color: Colors.white),
     child: SearchField(
-      initialValue: initValue == ""
-          ? null
-          : SearchFieldListItem<StockItemData>(initValue),
+      controller:
+          initValue == "" ? null : TextEditingController(text: initValue),
       focusNode: focus,
       suggestionDirection: SuggestionDirection.down,
       suggestions: listValue
@@ -761,12 +870,78 @@ Widget dropDownSearchField(
           .toList(),
       suggestionState: Suggestion.expand,
       textInputAction: TextInputAction.next,
-      searchStyle: TextStyle(
+      suggestionStyle: TextStyle(
         fontSize: 18,
         color: Colors.black.withOpacity(0.8),
       ),
       validator: validator,
-      searchInputDecoration: InputDecoration(
+      searchInputDecoration: SearchInputDecoration(
+        hintText: hintText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        fillColor: Colors.transparent,
+        filled: true,
+      ),
+      // searchInputDecoration: InputDecoration(
+      //   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      //   hintText: hintText,
+      //   hintStyle: phoneHT,
+      //   border: OutlineInputBorder(
+      //     borderRadius: BorderRadius.circular(10),
+      //     borderSide: BorderSide(color: white2),
+      //   ),
+      //   enabledBorder: OutlineInputBorder(
+      //     borderRadius: BorderRadius.circular(10),
+      //     borderSide: BorderSide(color: white2),
+      //   ),
+      //   fillColor: white2,
+      //   filled: true,
+      // ),
+      maxSuggestionsInViewPort: 5,
+      itemHeight: 40,
+      onSuggestionTap: onChanged,
+    ),
+  );
+}
+
+Widget dropDownSparesSearchField(
+  context, {
+  required FocusNode? focus,
+  required List<SpareItem> listValue,
+  required String? Function(String?)? validator,
+  required void Function(SearchFieldListItem<SpareItem> x)? onChanged,
+  required String hintText,
+  required String initValue,
+}) {
+  return Container(
+    // height: 50,
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10), color: Colors.white),
+    child: SearchField(
+      controller:
+          initValue == "" ? null : TextEditingController(text: initValue),
+      focusNode: focus,
+      suggestionDirection: SuggestionDirection.down,
+      suggestions: listValue
+          .map((e) => SearchFieldListItem<SpareItem>(e.itemName ?? ""))
+          .toList(),
+      suggestionState: Suggestion.expand,
+      textInputAction: TextInputAction.next,
+      suggestionStyle: TextStyle(
+        fontSize: 18,
+        color: Colors.black.withOpacity(0.8),
+      ),
+      validator: validator,
+      searchInputDecoration: SearchInputDecoration(
         hintText: hintText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
@@ -818,8 +993,8 @@ Widget dropDownClientSearchField(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10), color: Colors.white),
     child: SearchField(
-      initialValue:
-          initValue == "" ? null : SearchFieldListItem<Clients>(initValue),
+      controller:
+          initValue == "" ? null : TextEditingController(text: initValue),
       focusNode: focus,
       suggestionDirection: SuggestionDirection.down,
       suggestions: listValue
@@ -827,12 +1002,12 @@ Widget dropDownClientSearchField(
           .toList(),
       suggestionState: Suggestion.expand,
       textInputAction: TextInputAction.next,
-      searchStyle: TextStyle(
+      suggestionStyle: TextStyle(
         fontSize: 16,
         color: Colors.black.withOpacity(0.8),
       ),
       validator: validator,
-      searchInputDecoration: InputDecoration(
+      searchInputDecoration: SearchInputDecoration(
         hintText: hintText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
@@ -884,8 +1059,8 @@ Widget dropDownClientGSTSearchField(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10), color: Colors.white),
     child: SearchField(
-      initialValue:
-          initValue == "" ? null : SearchFieldListItem<Clients>(initValue),
+      controller:
+          initValue == "" ? null : TextEditingController(text: initValue),
       focusNode: focus,
       suggestionDirection: SuggestionDirection.down,
       suggestions: listValue
@@ -893,12 +1068,12 @@ Widget dropDownClientGSTSearchField(
           .toList(),
       suggestionState: Suggestion.expand,
       textInputAction: TextInputAction.next,
-      searchStyle: TextStyle(
+      suggestionStyle: TextStyle(
         fontSize: 16,
         color: Colors.black.withOpacity(0.8),
       ),
       validator: validator,
-      searchInputDecoration: InputDecoration(
+      searchInputDecoration: SearchInputDecoration(
         hintText: hintText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
@@ -949,6 +1124,83 @@ class MultiSelectDropdown extends StatefulWidget {
 }
 
 class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
+  late List<bool> _isCheckedList;
+
+  @override
+  void initState() {
+    super.initState();
+    _isCheckedList = List<bool>.filled(widget.items.length, false);
+    for (int i = 0; i < widget.selectedItems.length; i++) {
+      int index = widget.items.indexOf(widget.selectedItems[i]);
+      if (index != -1) {
+        _isCheckedList[index] = true;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        InputDecorator(
+          decoration: InputDecoration(
+            labelText: 'Select Executive',
+            border: OutlineInputBorder(),
+          ),
+          child: SizedBox(
+            height: 200, // Adjust the height as needed
+            child: SingleChildScrollView(
+              child: Column(
+                children: List<Widget>.generate(
+                  widget.items.length,
+                  (int index) {
+                    return CheckboxListTile(
+                      title: Text(widget.items[index].name ?? ""),
+                      value: _isCheckedList[index],
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isCheckedList[index] = value ?? false;
+
+                          List<Executives> selectedItems = [];
+                          for (int i = 0; i < widget.items.length; i++) {
+                            if (_isCheckedList[i]) {
+                              selectedItems.add(widget.items[i]);
+                            }
+                          }
+                          widget.onChanged(selectedItems);
+                        });
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MultiSelectExectiveDropdown extends StatefulWidget {
+  final List<Executives> items;
+  final List<Executives> selectedItems;
+  final ValueChanged<List<Executives>> onChanged;
+
+  MultiSelectExectiveDropdown({
+    required this.items,
+    required this.selectedItems,
+    required this.onChanged,
+  });
+
+  @override
+  _MultiSelectExectiveDropdownState createState() =>
+      _MultiSelectExectiveDropdownState();
+}
+
+class _MultiSelectExectiveDropdownState
+    extends State<MultiSelectExectiveDropdown> {
   late List<bool> _isCheckedList;
 
   @override

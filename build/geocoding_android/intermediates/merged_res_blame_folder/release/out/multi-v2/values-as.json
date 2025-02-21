@@ -1,31 +1,31 @@
 {
     "logs": [
         {
-            "outputFile": "com.baseflow.geocoding.geocoding_android-mergeReleaseResources-8:/values-as/values-as.xml",
+            "outputFile": "com.baseflow.geocoding.geocoding_android-merged_res-25:/values-as/values-as.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/d08c73bfb05384f2e52578171dbd141e/transformed/core-1.6.0/res/values-as/values-as.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res/values-as/values-as.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,156,259,367,472,576,676,805",
+                        "endColumns": "100,102,107,104,103,99,128,100",
+                        "endOffsets": "151,254,362,467,571,671,800,901"
                     }
                 }
             ]
         },
         {
-            "outputFile": "com.baseflow.geocoding.geocoding_android-merged_res-10:/values-as/values-as.xml",
+            "outputFile": "com.baseflow.geocoding.geocoding_android-mergeReleaseResources-23:/values-as/values-as.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/d08c73bfb05384f2e52578171dbd141e/transformed/core-1.6.0/res/values-as/values-as.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res/values-as/values-as.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,156,259,367,472,576,676,805",
+                        "endColumns": "100,102,107,104,103,99,128,100",
+                        "endOffsets": "151,254,362,467,571,671,800,901"
                     }
                 }
             ]

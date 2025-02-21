@@ -1,31 +1,31 @@
 {
     "logs": [
         {
-            "outputFile": "io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-8:/values-fr-rCA/values-fr-rCA.xml",
+            "outputFile": "io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-23:/values-fr-rCA/values-fr-rCA.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/d08c73bfb05384f2e52578171dbd141e/transformed/core-1.6.0/res/values-fr-rCA/values-fr-rCA.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res/values-fr-rCA/values-fr-rCA.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,255,354,456,560,664,778",
+                        "endColumns": "97,101,98,101,103,103,113,100",
+                        "endOffsets": "148,250,349,451,555,659,773,874"
                     }
                 }
             ]
         },
         {
-            "outputFile": "io.flutter.plugins.flutter_plugin_android_lifecycle-merged_res-10:/values-fr-rCA/values-fr-rCA.xml",
+            "outputFile": "io.flutter.plugins.flutter_plugin_android_lifecycle-merged_res-25:/values-fr-rCA/values-fr-rCA.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/d08c73bfb05384f2e52578171dbd141e/transformed/core-1.6.0/res/values-fr-rCA/values-fr-rCA.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res/values-fr-rCA/values-fr-rCA.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,255,354,456,560,664,778",
+                        "endColumns": "97,101,98,101,103,103,113,100",
+                        "endOffsets": "148,250,349,451,555,659,773,874"
                     }
                 }
             ]

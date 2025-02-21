@@ -1,31 +1,31 @@
 {
     "logs": [
         {
-            "outputFile": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-merged_res-12:/values-zu/values-zu.xml",
+            "outputFile": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-mergeReleaseResources-24:/values-zu/values-zu.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/010b79dbae0a8b74028aa5645158e6aa/transformed/core-1.7.0/res/values-zu/values-zu.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res/values-zu/values-zu.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,257,356,459,565,672,785",
+                        "endColumns": "97,103,98,102,105,106,112,100",
+                        "endOffsets": "148,252,351,454,560,667,780,881"
                     }
                 }
             ]
         },
         {
-            "outputFile": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-mergeReleaseResources-10:/values-zu/values-zu.xml",
+            "outputFile": "io.endigo.plugins.pdfviewflutter.flutter_pdfview-merged_res-26:/values-zu/values-zu.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/010b79dbae0a8b74028aa5645158e6aa/transformed/core-1.7.0/res/values-zu/values-zu.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res/values-zu/values-zu.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,257,356,459,565,672,785",
+                        "endColumns": "97,103,98,102,105,106,112,100",
+                        "endOffsets": "148,252,351,454,560,667,780,881"
                     }
                 }
             ]

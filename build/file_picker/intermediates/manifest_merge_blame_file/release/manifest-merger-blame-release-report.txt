@@ -2,31 +2,20 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.mr.flutter.plugin.filepicker" >
 4
-5    <uses-sdk
-6        android:minSdkVersion="16"
-6-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml
-7        android:targetSdkVersion="16" />
-7-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml
-8
-9    <uses-permission
-9-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:3:5-106
-10        android:name="android.permission.READ_EXTERNAL_STORAGE"
-10-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:3:22-77
-11        android:maxSdkVersion="32" />
-11-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:3:78-104
-12
-13    <queries>
-13-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:4:5-9:15
-14        <intent>
-14-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:5:6-8:14
-15            <action android:name="android.intent.action.GET_CONTENT" />
-15-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:6:9-68
-15-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:6:17-65
-16
-17            <data android:mimeType="*/*" />
-17-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:7:9-39
-17-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-6.2.0/android/src/main/AndroidManifest.xml:7:15-37
-18        </intent>
-19    </queries>
-20
-21</manifest>
+5    <uses-sdk android:minSdkVersion="21" />
+6
+7    <queries>
+7-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-8.1.7/android/src/main/AndroidManifest.xml:3:3-8:13
+8        <intent>
+8-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-8.1.7/android/src/main/AndroidManifest.xml:4:5-7:14
+9            <action android:name="android.intent.action.GET_CONTENT" />
+9-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-8.1.7/android/src/main/AndroidManifest.xml:5:7-66
+9-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-8.1.7/android/src/main/AndroidManifest.xml:5:15-63
+10
+11            <data android:mimeType="*/*" />
+11-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-8.1.7/android/src/main/AndroidManifest.xml:6:7-38
+11-->/Users/nigildharsan/.pub-cache/hosted/pub.dev/file_picker-8.1.7/android/src/main/AndroidManifest.xml:6:13-35
+12        </intent>
+13    </queries>
+14
+15</manifest>

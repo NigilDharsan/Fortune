@@ -1,3 +1,5 @@
+import 'package:fortune/Model/EditModel.dart';
+
 class ServiceModel {
   bool? success;
   Data? data;
@@ -118,107 +120,6 @@ class Executives {
     data['status'] = this.status;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Companies {
-  int? companyId;
-  String? name;
-  String? email;
-  String? logo;
-  String? qrScanner;
-  String? mobileNo;
-  String? accNo;
-  String? ifsc;
-  String? bankName;
-  String? branchName;
-  String? gstNo;
-  String? landlineNo;
-  String? websiteLink;
-  String? address;
-  String? city;
-  String? state;
-  String? pincode;
-  int? status;
-  String? createdAt;
-  String? updatedAt;
-  String? bankDetails;
-  String? companyBranch;
-
-  Companies(
-      {this.companyId,
-      this.name,
-      this.email,
-      this.logo,
-      this.qrScanner,
-      this.mobileNo,
-      this.accNo,
-      this.ifsc,
-      this.bankName,
-      this.branchName,
-      this.gstNo,
-      this.landlineNo,
-      this.websiteLink,
-      this.address,
-      this.city,
-      this.state,
-      this.pincode,
-      this.status,
-      this.createdAt,
-      this.updatedAt,
-      this.bankDetails,
-      this.companyBranch});
-
-  Companies.fromJson(Map<String, dynamic> json) {
-    companyId = json['company_id'];
-    name = json['name'];
-    email = json['email'];
-    logo = json['logo'];
-    qrScanner = json['qr_scanner'];
-    mobileNo = json['mobile_no'];
-    accNo = json['acc_no'];
-    ifsc = json['ifsc'];
-    bankName = json['bank_name'];
-    branchName = json['branch_name'];
-    gstNo = json['gst_no'];
-    landlineNo = json['landline_no'];
-    websiteLink = json['website_link'];
-    address = json['address'];
-    city = json['city'];
-    state = json['state'];
-    pincode = json['pincode'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    bankDetails = json['bank_details'];
-    companyBranch = json['company_branch'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['company_id'] = this.companyId;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['logo'] = this.logo;
-    data['qr_scanner'] = this.qrScanner;
-    data['mobile_no'] = this.mobileNo;
-    data['acc_no'] = this.accNo;
-    data['ifsc'] = this.ifsc;
-    data['bank_name'] = this.bankName;
-    data['branch_name'] = this.branchName;
-    data['gst_no'] = this.gstNo;
-    data['landline_no'] = this.landlineNo;
-    data['website_link'] = this.websiteLink;
-    data['address'] = this.address;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['pincode'] = this.pincode;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['bank_details'] = this.bankDetails;
-    data['company_branch'] = this.companyBranch;
     return data;
   }
 }

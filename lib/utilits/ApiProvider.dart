@@ -5,7 +5,11 @@ import 'package:fortune/Model/AttendanceLogsModel.dart';
 import 'package:fortune/Model/ClientsModel.dart';
 import 'package:fortune/Model/DailyActivitiesModel.dart';
 import 'package:fortune/Model/DashboardModel.dart';
+import 'package:fortune/Model/EditGeneralModel.dart';
 import 'package:fortune/Model/EditModel.dart';
+import 'package:fortune/Model/EditSpareModel.dart';
+import 'package:fortune/Model/ExectiveModel.dart';
+import 'package:fortune/Model/GeneralListModel.dart';
 import 'package:fortune/Model/ItemsEditModel.dart';
 import 'package:fortune/Model/ItemsModel.dart';
 import 'package:fortune/Model/MarketingEditModel.dart';
@@ -14,6 +18,7 @@ import 'package:fortune/Model/MarketingListModel.dart';
 import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Model/ServiceListModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
+import 'package:fortune/Model/SparesListModel.dart';
 import 'package:fortune/Model/StockItemModel.dart';
 import 'package:fortune/Model/StocksEditModel.dart';
 import 'package:fortune/Model/StocksModel.dart';
@@ -86,6 +91,36 @@ final marketingEditProvider = FutureProvider.autoDispose
 final marketingHistoryProvider = FutureProvider.autoDispose
     .family<MarketingHistoryModel?, String>((ref, id) async {
   return ref.watch(apiServiceProvider).getMarketingHistoryApi(id);
+});
+
+final generalListProvider =
+    FutureProvider.autoDispose<GeneralListModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getGeneralListApi();
+});
+
+final generalEditProvider = FutureProvider.autoDispose
+    .family<EditGeneralModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getGeneralEditApi(id);
+});
+
+final spareListProvider =
+    FutureProvider.autoDispose<SparesListModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getSparesListApi();
+});
+
+final sparesItemProvider =
+    FutureProvider.autoDispose<StockItemModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getSparesItemApi();
+});
+
+final sparesEditProvider =
+    FutureProvider.autoDispose.family<EditSpareModel?, String>((ref, id) async {
+  return ref.watch(apiServiceProvider).getSparesEditApi(id);
+});
+
+final exectiveListProvider =
+    FutureProvider.autoDispose<ExectiveModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getExecutiveListApi();
 });
 
 final activityListProvider =

@@ -1,42 +1,68 @@
-com.fortune.fortunepowerfastening.app-jetified-window-1.0.0-beta04-0 /Users/nigildharsan/.gradle/caches/transforms-3/076eb9235982ee06112d76594ea8585f/transformed/jetified-window-1.0.0-beta04/res
-com.fortune.fortunepowerfastening.app-jetified-lifecycle-process-2.4.1-1 /Users/nigildharsan/.gradle/caches/transforms-3/2fcf079b47bda1a88fe11485e860ed3d/transformed/jetified-lifecycle-process-2.4.1/res
-com.fortune.fortunepowerfastening.app-fragment-1.3.6-2 /Users/nigildharsan/.gradle/caches/transforms-3/375838037f7044f76f8cdf8e4cb766ee/transformed/fragment-1.3.6/res
-com.fortune.fortunepowerfastening.app-jetified-appcompat-resources-1.6.1-3 /Users/nigildharsan/.gradle/caches/transforms-3/3afee1f7f38fe9e01f236634b6d2e041/transformed/jetified-appcompat-resources-1.6.1/res
-com.fortune.fortunepowerfastening.app-jetified-core-ktx-1.10.1-4 /Users/nigildharsan/.gradle/caches/transforms-3/47085114ff49c80095b55db1e8d4ce63/transformed/jetified-core-ktx-1.10.1/res
-com.fortune.fortunepowerfastening.app-lifecycle-runtime-2.5.1-5 /Users/nigildharsan/.gradle/caches/transforms-3/487a370a58a5ac08bc091db7d63d46ec/transformed/lifecycle-runtime-2.5.1/res
-com.fortune.fortunepowerfastening.app-jetified-lifecycle-viewmodel-savedstate-2.5.1-6 /Users/nigildharsan/.gradle/caches/transforms-3/4fb525231d9724ef27fa1acb2afeead5/transformed/jetified-lifecycle-viewmodel-savedstate-2.5.1/res
-com.fortune.fortunepowerfastening.app-jetified-startup-runtime-1.1.1-7 /Users/nigildharsan/.gradle/caches/transforms-3/4fe6fe3fdff42ccd1f593df325030e89/transformed/jetified-startup-runtime-1.1.1/res
-com.fortune.fortunepowerfastening.app-jetified-play-services-basement-18.1.0-8 /Users/nigildharsan/.gradle/caches/transforms-3/55b4e390742817dc4b9653e42d791034/transformed/jetified-play-services-basement-18.1.0/res
-com.fortune.fortunepowerfastening.app-jetified-android-pdf-viewer-3.2.0-beta.3-9 /Users/nigildharsan/.gradle/caches/transforms-3/6d844eea2285e1a711aa51af9a352f42/transformed/jetified-android-pdf-viewer-3.2.0-beta.3/res
-com.fortune.fortunepowerfastening.app-jetified-annotation-experimental-1.3.0-10 /Users/nigildharsan/.gradle/caches/transforms-3/761929e091d544d9e6394773eda8bdee/transformed/jetified-annotation-experimental-1.3.0/res
-com.fortune.fortunepowerfastening.app-lifecycle-livedata-core-2.5.1-11 /Users/nigildharsan/.gradle/caches/transforms-3/78c99059ff3aead63d33a2776756887a/transformed/lifecycle-livedata-core-2.5.1/res
-com.fortune.fortunepowerfastening.app-lifecycle-viewmodel-2.5.1-12 /Users/nigildharsan/.gradle/caches/transforms-3/7971ea63672ea1a5b453d480fdfdb3d8/transformed/lifecycle-viewmodel-2.5.1/res
-com.fortune.fortunepowerfastening.app-jetified-emoji2-views-helper-1.2.0-13 /Users/nigildharsan/.gradle/caches/transforms-3/7a5daec76ff00ba475e11bc65106acab/transformed/jetified-emoji2-views-helper-1.2.0/res
-com.fortune.fortunepowerfastening.app-core-1.10.1-14 /Users/nigildharsan/.gradle/caches/transforms-3/889ce5bd12f1117e5357d5fcdb5e1305/transformed/core-1.10.1/res
-com.fortune.fortunepowerfastening.app-jetified-security-crypto-1.1.0-alpha06-15 /Users/nigildharsan/.gradle/caches/transforms-3/976c7994ef853ad3a632d5d116c2c96b/transformed/jetified-security-crypto-1.1.0-alpha06/res
-com.fortune.fortunepowerfastening.app-jetified-window-java-1.0.0-beta04-16 /Users/nigildharsan/.gradle/caches/transforms-3/99750bb863b6fe460a7b5da8686e778d/transformed/jetified-window-java-1.0.0-beta04/res
-com.fortune.fortunepowerfastening.app-jetified-activity-1.6.0-17 /Users/nigildharsan/.gradle/caches/transforms-3/9b57d401fe0349be108a25a0bc49a84f/transformed/jetified-activity-1.6.0/res
-com.fortune.fortunepowerfastening.app-jetified-emoji2-1.2.0-18 /Users/nigildharsan/.gradle/caches/transforms-3/a069e44d9c98fbecf8e5475010c3a44b/transformed/jetified-emoji2-1.2.0/res
-com.fortune.fortunepowerfastening.app-jetified-savedstate-1.2.0-19 /Users/nigildharsan/.gradle/caches/transforms-3/b102e51342020e3e490a868011b334cb/transformed/jetified-savedstate-1.2.0/res
-com.fortune.fortunepowerfastening.app-browser-1.5.0-20 /Users/nigildharsan/.gradle/caches/transforms-3/d9d38ec9344928c1b01c151ec647a95a/transformed/browser-1.5.0/res
-com.fortune.fortunepowerfastening.app-jetified-play-services-base-18.1.0-21 /Users/nigildharsan/.gradle/caches/transforms-3/e0a8793a7a85d6e071b7a743c9adf075/transformed/jetified-play-services-base-18.1.0/res
-com.fortune.fortunepowerfastening.app-appcompat-1.6.1-22 /Users/nigildharsan/.gradle/caches/transforms-3/e284401544ba482b40b90025405636f0/transformed/appcompat-1.6.1/res
-com.fortune.fortunepowerfastening.app-main-23 /Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/res
-com.fortune.fortunepowerfastening.app-release-24 /Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/release/res
-com.fortune.fortunepowerfastening.app-pngs-25 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/app/generated/res/pngs/release
-com.fortune.fortunepowerfastening.app-resValues-26 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/app/generated/res/resValues/release
-com.fortune.fortunepowerfastening.app-rs-27 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/app/generated/res/rs/release
-com.fortune.fortunepowerfastening.app-mergeReleaseResources-28 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/app/intermediates/incremental/release/mergeReleaseResources/merged.dir
-com.fortune.fortunepowerfastening.app-mergeReleaseResources-29 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/app/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-com.fortune.fortunepowerfastening.app-merged_res-30 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/app/intermediates/merged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-31 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/device_info_plus/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-32 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-33 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_pdfview/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-34 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_plugin_android_lifecycle/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-35 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_secure_storage/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-36 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/fluttertoast/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-37 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/geocoding_android/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-38 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/geolocator_android/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-39 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-40 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/path_provider_android/intermediates/packaged_res/release
-com.fortune.fortunepowerfastening.app-packaged_res-41 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/url_launcher_android/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-core-1.13.1-0 /Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res
+com.fortune.fortunepowerfastening.app-lifecycle-runtime-2.7.0-1 /Users/nigildharsan/.gradle/caches/transforms-3/09b8623f0ffea8a99b477c9260776512/transformed/lifecycle-runtime-2.7.0/res
+com.fortune.fortunepowerfastening.app-lifecycle-livedata-2.7.0-2 /Users/nigildharsan/.gradle/caches/transforms-3/150af82c24083fefc7f250cdd3bf6743/transformed/lifecycle-livedata-2.7.0/res
+com.fortune.fortunepowerfastening.app-lifecycle-livedata-core-2.7.0-3 /Users/nigildharsan/.gradle/caches/transforms-3/1b12f0198194d1c50fd2bd6421e16c7b/transformed/lifecycle-livedata-core-2.7.0/res
+com.fortune.fortunepowerfastening.app-jetified-emoji2-views-helper-1.2.0-4 /Users/nigildharsan/.gradle/caches/transforms-3/2986144962e65771e5924cd68642b4aa/transformed/jetified-emoji2-views-helper-1.2.0/res
+com.fortune.fortunepowerfastening.app-slidingpanelayout-1.2.0-5 /Users/nigildharsan/.gradle/caches/transforms-3/2d27e8ab011cce05fa8d776bd7c240fa/transformed/slidingpanelayout-1.2.0/res
+com.fortune.fortunepowerfastening.app-jetified-savedstate-ktx-1.2.1-6 /Users/nigildharsan/.gradle/caches/transforms-3/2d6c919d848e922e9c764afbd37fd056/transformed/jetified-savedstate-ktx-1.2.1/res
+com.fortune.fortunepowerfastening.app-jetified-lifecycle-viewmodel-ktx-2.7.0-7 /Users/nigildharsan/.gradle/caches/transforms-3/360f06216de58534593df46d344021dc/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/res
+com.fortune.fortunepowerfastening.app-fragment-1.7.1-8 /Users/nigildharsan/.gradle/caches/transforms-3/36b4a63940dece03535bc93d35505c0c/transformed/fragment-1.7.1/res
+com.fortune.fortunepowerfastening.app-jetified-startup-runtime-1.1.1-9 /Users/nigildharsan/.gradle/caches/transforms-3/3adc31d52d4d07d82d4366b83ccd3425/transformed/jetified-startup-runtime-1.1.1/res
+com.fortune.fortunepowerfastening.app-jetified-datastore-preferences-1.0.0-10 /Users/nigildharsan/.gradle/caches/transforms-3/3bf91dec7450ca15afe9d288d4164c5b/transformed/jetified-datastore-preferences-1.0.0/res
+com.fortune.fortunepowerfastening.app-jetified-profileinstaller-1.3.1-11 /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/res
+com.fortune.fortunepowerfastening.app-jetified-activity-ktx-1.8.1-12 /Users/nigildharsan/.gradle/caches/transforms-3/58d1bded9717792a5af0ac6328ee17d1/transformed/jetified-activity-ktx-1.8.1/res
+com.fortune.fortunepowerfastening.app-jetified-firebase-common-21.0.0-13 /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/res
+com.fortune.fortunepowerfastening.app-jetified-tracing-1.2.0-14 /Users/nigildharsan/.gradle/caches/transforms-3/653242592c12886be163865de87c653d/transformed/jetified-tracing-1.2.0/res
+com.fortune.fortunepowerfastening.app-jetified-play-services-base-18.3.0-15 /Users/nigildharsan/.gradle/caches/transforms-3/719e63fdcf9aea33e9fd8ef5112a766b/transformed/jetified-play-services-base-18.3.0/res
+com.fortune.fortunepowerfastening.app-jetified-lifecycle-livedata-core-ktx-2.7.0-16 /Users/nigildharsan/.gradle/caches/transforms-3/749e7ca34a4cd6e800eb53997ea52510/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/res
+com.fortune.fortunepowerfastening.app-core-runtime-2.2.0-17 /Users/nigildharsan/.gradle/caches/transforms-3/7bb8ed001028df1f6db6aaa2e9f64443/transformed/core-runtime-2.2.0/res
+com.fortune.fortunepowerfastening.app-jetified-fragment-ktx-1.7.1-18 /Users/nigildharsan/.gradle/caches/transforms-3/7d3c0341bfb22ac36d0ea27ffd5199b5/transformed/jetified-fragment-ktx-1.7.1/res
+com.fortune.fortunepowerfastening.app-jetified-window-1.2.0-19 /Users/nigildharsan/.gradle/caches/transforms-3/86151c6cd0e6814077c8e0f92c74ae41/transformed/jetified-window-1.2.0/res
+com.fortune.fortunepowerfastening.app-jetified-annotation-experimental-1.4.0-20 /Users/nigildharsan/.gradle/caches/transforms-3/8732ae8c3eb862053f0a51dab7116d84/transformed/jetified-annotation-experimental-1.4.0/res
+com.fortune.fortunepowerfastening.app-jetified-activity-1.8.1-21 /Users/nigildharsan/.gradle/caches/transforms-3/90c01f3e6c0d72329f30af667b5821d4/transformed/jetified-activity-1.8.1/res
+com.fortune.fortunepowerfastening.app-jetified-savedstate-1.2.1-22 /Users/nigildharsan/.gradle/caches/transforms-3/989d4f18f4346947ed50fe4bafdbad1f/transformed/jetified-savedstate-1.2.1/res
+com.fortune.fortunepowerfastening.app-jetified-lifecycle-viewmodel-savedstate-2.7.0-23 /Users/nigildharsan/.gradle/caches/transforms-3/9906f1b3f3752e553c001bd0ab89d12e/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/res
+com.fortune.fortunepowerfastening.app-coordinatorlayout-1.0.0-24 /Users/nigildharsan/.gradle/caches/transforms-3/9cc3e14524ab0bb973e709a532fe6816/transformed/coordinatorlayout-1.0.0/res
+com.fortune.fortunepowerfastening.app-jetified-android-pdf-viewer-3.2.0-beta.3-25 /Users/nigildharsan/.gradle/caches/transforms-3/9e6be162dfb9c0968d291b20afb803ef/transformed/jetified-android-pdf-viewer-3.2.0-beta.3/res
+com.fortune.fortunepowerfastening.app-jetified-firebase-messaging-24.1.0-26 /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/res
+com.fortune.fortunepowerfastening.app-appcompat-1.6.1-27 /Users/nigildharsan/.gradle/caches/transforms-3/c597f280415b43607621ab2a547b975d/transformed/appcompat-1.6.1/res
+com.fortune.fortunepowerfastening.app-jetified-window-java-1.2.0-28 /Users/nigildharsan/.gradle/caches/transforms-3/c9d04b1f05f929786b0d5778bc0f575c/transformed/jetified-window-java-1.2.0/res
+com.fortune.fortunepowerfastening.app-jetified-core-ktx-1.13.1-29 /Users/nigildharsan/.gradle/caches/transforms-3/cc82e8ab16fae462c65955934af980c1/transformed/jetified-core-ktx-1.13.1/res
+com.fortune.fortunepowerfastening.app-jetified-lifecycle-process-2.7.0-30 /Users/nigildharsan/.gradle/caches/transforms-3/cccccf49dc67acba0f95d8625c1e328e/transformed/jetified-lifecycle-process-2.7.0/res
+com.fortune.fortunepowerfastening.app-lifecycle-viewmodel-2.7.0-31 /Users/nigildharsan/.gradle/caches/transforms-3/cd4bcb406098ef194985583a823cb1ba/transformed/lifecycle-viewmodel-2.7.0/res
+com.fortune.fortunepowerfastening.app-jetified-appcompat-resources-1.6.1-32 /Users/nigildharsan/.gradle/caches/transforms-3/ceaad27ba32e1539ad1e88c8e843e3f3/transformed/jetified-appcompat-resources-1.6.1/res
+com.fortune.fortunepowerfastening.app-jetified-core-1.0.0-33 /Users/nigildharsan/.gradle/caches/transforms-3/ceb18bd0c7a80ee583f1b93f8b863e32/transformed/jetified-core-1.0.0/res
+com.fortune.fortunepowerfastening.app-jetified-datastore-1.0.0-34 /Users/nigildharsan/.gradle/caches/transforms-3/d051a2939e1a59ad20f6f40e1ff9c864/transformed/jetified-datastore-1.0.0/res
+com.fortune.fortunepowerfastening.app-jetified-lifecycle-runtime-ktx-2.7.0-35 /Users/nigildharsan/.gradle/caches/transforms-3/d2efc93aee3f75b862c619db2d328895/transformed/jetified-lifecycle-runtime-ktx-2.7.0/res
+com.fortune.fortunepowerfastening.app-jetified-security-crypto-1.1.0-alpha06-36 /Users/nigildharsan/.gradle/caches/transforms-3/d4edaccad4f4ea8cd0a9db9f3eb20c5f/transformed/jetified-security-crypto-1.1.0-alpha06/res
+com.fortune.fortunepowerfastening.app-recyclerview-1.0.0-37 /Users/nigildharsan/.gradle/caches/transforms-3/d5d0dd2262fdfedfca8824afc521abb9/transformed/recyclerview-1.0.0/res
+com.fortune.fortunepowerfastening.app-jetified-play-services-basement-18.3.0-38 /Users/nigildharsan/.gradle/caches/transforms-3/d755b840a2058d052a468f6767dffac0/transformed/jetified-play-services-basement-18.3.0/res
+com.fortune.fortunepowerfastening.app-jetified-emoji2-1.2.0-39 /Users/nigildharsan/.gradle/caches/transforms-3/dc7bea4d91e8fe76bc675447f0162202/transformed/jetified-emoji2-1.2.0/res
+com.fortune.fortunepowerfastening.app-localbroadcastmanager-1.1.0-40 /Users/nigildharsan/.gradle/caches/transforms-3/e6f6b4ce287574d307990d4fd2734419/transformed/localbroadcastmanager-1.1.0/res
+com.fortune.fortunepowerfastening.app-transition-1.4.1-41 /Users/nigildharsan/.gradle/caches/transforms-3/e9cb705bcd1aa35c1e301de8431e45e4/transformed/transition-1.4.1/res
+com.fortune.fortunepowerfastening.app-browser-1.8.0-42 /Users/nigildharsan/.gradle/caches/transforms-3/f3e9d91246c9f2d323accf5ce866e225/transformed/browser-1.8.0/res
+com.fortune.fortunepowerfastening.app-preference-1.2.1-43 /Users/nigildharsan/.gradle/caches/transforms-3/f48896615341ac9b32ddf14a1087bd2f/transformed/preference-1.2.1/res
+com.fortune.fortunepowerfastening.app-main-44 /Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/res
+com.fortune.fortunepowerfastening.app-release-45 /Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/release/res
+com.fortune.fortunepowerfastening.app-google-services-46 /Users/nigildharsan/Documents/Flutter Project/fortune/build/app/generated/res/google-services/release
+com.fortune.fortunepowerfastening.app-pngs-47 /Users/nigildharsan/Documents/Flutter Project/fortune/build/app/generated/res/pngs/release
+com.fortune.fortunepowerfastening.app-resValues-48 /Users/nigildharsan/Documents/Flutter Project/fortune/build/app/generated/res/resValues/release
+com.fortune.fortunepowerfastening.app-packageReleaseResources-49 /Users/nigildharsan/Documents/Flutter Project/fortune/build/app/intermediates/incremental/release/packageReleaseResources/merged.dir
+com.fortune.fortunepowerfastening.app-packageReleaseResources-50 /Users/nigildharsan/Documents/Flutter Project/fortune/build/app/intermediates/incremental/release/packageReleaseResources/stripped.dir
+com.fortune.fortunepowerfastening.app-merged-not-compiled-resources-51 /Users/nigildharsan/Documents/Flutter Project/fortune/build/app/intermediates/merged-not-compiled-resources/release
+com.fortune.fortunepowerfastening.app-merged_res-52 /Users/nigildharsan/Documents/Flutter Project/fortune/build/app/intermediates/merged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-53 /Users/nigildharsan/Documents/Flutter Project/fortune/build/device_info_plus/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-54 /Users/nigildharsan/Documents/Flutter Project/fortune/build/file_picker/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-55 /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_core/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-56 /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-57 /Users/nigildharsan/Documents/Flutter Project/fortune/build/flutter_pdfview/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-58 /Users/nigildharsan/Documents/Flutter Project/fortune/build/flutter_plugin_android_lifecycle/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-59 /Users/nigildharsan/Documents/Flutter Project/fortune/build/flutter_secure_storage/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-60 /Users/nigildharsan/Documents/Flutter Project/fortune/build/fluttertoast/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-61 /Users/nigildharsan/Documents/Flutter Project/fortune/build/geocoding_android/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-62 /Users/nigildharsan/Documents/Flutter Project/fortune/build/geolocator_android/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-63 /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-64 /Users/nigildharsan/Documents/Flutter Project/fortune/build/package_info_plus/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-65 /Users/nigildharsan/Documents/Flutter Project/fortune/build/path_provider_android/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-66 /Users/nigildharsan/Documents/Flutter Project/fortune/build/shared_preferences_android/intermediates/packaged_res/release
+com.fortune.fortunepowerfastening.app-packaged_res-67 /Users/nigildharsan/Documents/Flutter Project/fortune/build/url_launcher_android/intermediates/packaged_res/release

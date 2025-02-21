@@ -1,12 +1,27 @@
-io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-annotation-experimental-1.1.0-0 /Users/nigildharsan/.gradle/caches/transforms-3/02315cc9f75263553d2042718fc375ee/transformed/jetified-annotation-experimental-1.1.0/res
-io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-window-1.0.0-beta04-1 /Users/nigildharsan/.gradle/caches/transforms-3/076eb9235982ee06112d76594ea8585f/transformed/jetified-window-1.0.0-beta04/res
-io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-window-java-1.0.0-beta04-2 /Users/nigildharsan/.gradle/caches/transforms-3/99750bb863b6fe460a7b5da8686e778d/transformed/jetified-window-java-1.0.0-beta04/res
-io.flutter.plugins.flutter_plugin_android_lifecycle-core-1.6.0-3 /Users/nigildharsan/.gradle/caches/transforms-3/d08c73bfb05384f2e52578171dbd141e/transformed/core-1.6.0/res
-io.flutter.plugins.flutter_plugin_android_lifecycle-main-4 /Users/nigildharsan/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/android/src/main/res
-io.flutter.plugins.flutter_plugin_android_lifecycle-release-5 /Users/nigildharsan/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/android/src/release/res
-io.flutter.plugins.flutter_plugin_android_lifecycle-pngs-6 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_plugin_android_lifecycle/generated/res/pngs/release
-io.flutter.plugins.flutter_plugin_android_lifecycle-resValues-7 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_plugin_android_lifecycle/generated/res/resValues/release
-io.flutter.plugins.flutter_plugin_android_lifecycle-rs-8 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_plugin_android_lifecycle/generated/res/rs/release
-io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-9 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_plugin_android_lifecycle/intermediates/incremental/release/mergeReleaseResources/merged.dir
-io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-10 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_plugin_android_lifecycle/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-io.flutter.plugins.flutter_plugin_android_lifecycle-merged_res-11 /Users/nigildharsan/Documents/Flutter Project/Fortune/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release
+io.flutter.plugins.flutter_plugin_android_lifecycle-core-1.13.1-0 /Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-lifecycle-runtime-2.7.0-1 /Users/nigildharsan/.gradle/caches/transforms-3/09b8623f0ffea8a99b477c9260776512/transformed/lifecycle-runtime-2.7.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-lifecycle-livedata-2.7.0-2 /Users/nigildharsan/.gradle/caches/transforms-3/150af82c24083fefc7f250cdd3bf6743/transformed/lifecycle-livedata-2.7.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-lifecycle-livedata-core-2.7.0-3 /Users/nigildharsan/.gradle/caches/transforms-3/1b12f0198194d1c50fd2bd6421e16c7b/transformed/lifecycle-livedata-core-2.7.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-fragment-1.7.1-4 /Users/nigildharsan/.gradle/caches/transforms-3/36b4a63940dece03535bc93d35505c0c/transformed/fragment-1.7.1/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-startup-runtime-1.1.1-5 /Users/nigildharsan/.gradle/caches/transforms-3/3adc31d52d4d07d82d4366b83ccd3425/transformed/jetified-startup-runtime-1.1.1/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-profileinstaller-1.3.1-6 /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-tracing-1.2.0-7 /Users/nigildharsan/.gradle/caches/transforms-3/653242592c12886be163865de87c653d/transformed/jetified-tracing-1.2.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-lifecycle-livedata-core-ktx-2.7.0-8 /Users/nigildharsan/.gradle/caches/transforms-3/749e7ca34a4cd6e800eb53997ea52510/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-core-runtime-2.2.0-9 /Users/nigildharsan/.gradle/caches/transforms-3/7bb8ed001028df1f6db6aaa2e9f64443/transformed/core-runtime-2.2.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-window-1.2.0-10 /Users/nigildharsan/.gradle/caches/transforms-3/86151c6cd0e6814077c8e0f92c74ae41/transformed/jetified-window-1.2.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-annotation-experimental-1.4.0-11 /Users/nigildharsan/.gradle/caches/transforms-3/8732ae8c3eb862053f0a51dab7116d84/transformed/jetified-annotation-experimental-1.4.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-activity-1.8.1-12 /Users/nigildharsan/.gradle/caches/transforms-3/90c01f3e6c0d72329f30af667b5821d4/transformed/jetified-activity-1.8.1/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-savedstate-1.2.1-13 /Users/nigildharsan/.gradle/caches/transforms-3/989d4f18f4346947ed50fe4bafdbad1f/transformed/jetified-savedstate-1.2.1/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-lifecycle-viewmodel-savedstate-2.7.0-14 /Users/nigildharsan/.gradle/caches/transforms-3/9906f1b3f3752e553c001bd0ab89d12e/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-window-java-1.2.0-15 /Users/nigildharsan/.gradle/caches/transforms-3/c9d04b1f05f929786b0d5778bc0f575c/transformed/jetified-window-java-1.2.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-core-ktx-1.13.1-16 /Users/nigildharsan/.gradle/caches/transforms-3/cc82e8ab16fae462c65955934af980c1/transformed/jetified-core-ktx-1.13.1/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-lifecycle-process-2.7.0-17 /Users/nigildharsan/.gradle/caches/transforms-3/cccccf49dc67acba0f95d8625c1e328e/transformed/jetified-lifecycle-process-2.7.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-lifecycle-viewmodel-2.7.0-18 /Users/nigildharsan/.gradle/caches/transforms-3/cd4bcb406098ef194985583a823cb1ba/transformed/lifecycle-viewmodel-2.7.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-jetified-core-1.0.0-19 /Users/nigildharsan/.gradle/caches/transforms-3/ceb18bd0c7a80ee583f1b93f8b863e32/transformed/jetified-core-1.0.0/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-main-20 /Users/nigildharsan/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.24/android/src/main/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-release-21 /Users/nigildharsan/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.24/android/src/release/res
+io.flutter.plugins.flutter_plugin_android_lifecycle-pngs-22 /Users/nigildharsan/Documents/Flutter Project/fortune/build/flutter_plugin_android_lifecycle/generated/res/pngs/release
+io.flutter.plugins.flutter_plugin_android_lifecycle-resValues-23 /Users/nigildharsan/Documents/Flutter Project/fortune/build/flutter_plugin_android_lifecycle/generated/res/resValues/release
+io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-24 /Users/nigildharsan/Documents/Flutter Project/fortune/build/flutter_plugin_android_lifecycle/intermediates/incremental/release/mergeReleaseResources/merged.dir
+io.flutter.plugins.flutter_plugin_android_lifecycle-mergeReleaseResources-25 /Users/nigildharsan/Documents/Flutter Project/fortune/build/flutter_plugin_android_lifecycle/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+io.flutter.plugins.flutter_plugin_android_lifecycle-merged_res-26 /Users/nigildharsan/Documents/Flutter Project/fortune/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release

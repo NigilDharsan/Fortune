@@ -1,14 +1,14 @@
 <lint-module
     format="1"
-    dir="/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app"
+    dir="/Users/nigildharsan/Documents/Flutter Project/fortune/android/app"
     name=":app"
     type="APP"
     maven="android:app:"
-    gradle="7.3.0"
-    buildFolder="/Users/nigildharsan/Documents/Flutter Project/Fortune/build/app"
-    bootClassPath="/Users/nigildharsan/Library/Android/sdk/platforms/android-33/android.jar:/Users/nigildharsan/Library/Android/sdk/build-tools/30.0.3/core-lambda-stubs.jar"
+    agpVersion="8.2.1"
+    buildFolder="/Users/nigildharsan/Documents/Flutter Project/fortune/build/app"
+    bootClassPath="/Users/nigildharsan/Library/Android/sdk/platforms/android-34/android.jar:/Users/nigildharsan/Library/Android/sdk/build-tools/34.0.0/core-lambda-stubs.jar"
     javaSourceLevel="1.8"
-    compileTarget="android-33">
+    compileTarget="android-34">
   <lintOptions
       abortOnError="true"
       absolutePaths="true"

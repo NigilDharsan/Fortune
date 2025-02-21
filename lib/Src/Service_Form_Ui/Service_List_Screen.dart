@@ -27,8 +27,13 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
   SingleTon singleton = SingleTon();
   Filter? filter;
 
-  late ScrollController _scrollController;
-  late ValueNotifier<bool> _isLoadingMore;
+  ScrollController _scrollController = ScrollController();
+
+  var pageCount = 1;
+  var i = 0;
+  var isRefresh = false;
+
+  List<ServicesData> serviceData = [];
 
   @override
   void initState() {
@@ -39,46 +44,39 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
       "executive_id": "",
       "client_id": "",
       "status_id": "",
-      "daterange": ""
+      "daterange": "",
+      "page": 1
     });
     singleton.formData = formData;
 
-    _scrollController = ScrollController();
-    _isLoadingMore = ValueNotifier(false);
-
-    _scrollController.addListener(_onScroll);
+    _scrollController.addListener(_scrollListener);
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
-    _isLoadingMore.dispose();
     super.dispose();
   }
 
-  void _onScroll() {
-    print("object");
-    if (_scrollController.position.pixels ==
+  void _scrollListener() {
+    if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
-        !_isLoadingMore.value) {
-      _isLoadingMore.value = true;
+        !_scrollController.position.outOfRange) {
+      // Reach the bottom of the list
       // Fetch more data
-      // Call a function to load more data and update the provider
-      // For example, you might call a function like fetchMoreData()
-      print("object1");
-
-      fetchMoreData();
+      pageCount++;
+      formData = FormData.fromMap({
+        "executive_id": "",
+        "client_id": "",
+        "status_id": "",
+        "daterange": "",
+        "page": pageCount
+      });
+      singleton.formData = formData;
+      i = 0;
+      ref.refresh(
+          serviceListProvider); // Fetch more data with updated page count
     }
-  }
-
-  Future<void> fetchMoreData() async {
-    // Fetch more data and update the provider
-    // Example:
-    // final moreData = await fetchData(page: currentPage + 1);
-    // currentPage++;
-    // ref.read(serviceListProvider).data?.data?.services?.data?.addAll(moreData.data?.data?.services?.data);
-
-    _isLoadingMore.value = false;
   }
 
   @override
@@ -101,9 +99,13 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                       "executive_id": "",
                       "client_id": "",
                       "status_id": "",
-                      "daterange": ""
+                      "daterange": "",
+                      "page": 1
                     });
                     singleton.formData = formData;
+                    i = 0;
+                    isRefresh = true;
+                    serviceData = [];
 
                     ref.refresh(serviceListProvider);
                   });
@@ -135,9 +137,13 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                                   "client_id": singleton.filterClientnameID,
                                   "status_id": singleton.filterStatusID,
                                   "daterange": singleton.filterDaterange,
-                                  "company_id": singleton.filterCompanynameID
+                                  "company_id": singleton.filterCompanynameID,
+                                  "page": 1
                                 });
                                 singleton.formData = formData;
+                                i = 0;
+                                isRefresh = true;
+                                serviceData = [];
 
                                 ref.refresh(serviceListProvider);
                               });
@@ -165,8 +171,18 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                 isNav: true),
             body: _ServiceListData.when(
               data: (data) {
+                if (i != 0) {
+                  serviceData.addAll(data?.data?.services?.data ?? []);
+                } else {
+                  if (serviceData.length == 0 && !isRefresh) {
+                    serviceData.addAll(data?.data?.services?.data ?? []);
+                  }
+                }
+                isRefresh = false;
+                i = 1;
+
                 filter = data?.data?.filter ?? Filter();
-                return (data?.data?.services?.data?.length ?? 0) != 0
+                return (serviceData.length ?? 0) != 0
                     ? Padding(
                         padding: const EdgeInsets.only(
                             left: 20, right: 20, bottom: 30),
@@ -174,8 +190,7 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                             width: MediaQuery.sizeOf(context).width,
                             child: ListView.builder(
                               controller: _scrollController,
-                              itemCount:
-                                  data?.data?.services?.data?.length ?? 0,
+                              itemCount: serviceData.length ?? 0,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               // physics: const NeverScrollableScrollPhysics(),
@@ -190,16 +205,12 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                                               builder: (context) =>
                                                   Service_History_List_Screen(
                                                     service_id:
-                                                        "${data?.data?.services?.data?[index].serviceId ?? 0}",
+                                                        "${serviceData[index].serviceId ?? 0}",
                                                   )));
                                     },
                                     child: Service_List(context,
-                                        data: data?.data?.services
-                                                ?.data?[index] ??
-                                            ServicesData(),
-                                        isTag: data?.data?.services
-                                                ?.data?[index].status ??
-                                            "",
+                                        data: serviceData[index],
+                                        isTag: serviceData[index].status ?? "",
                                         isHistory: false,
                                         ref: ref),
                                   ),
@@ -241,9 +252,14 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                                   "client_id": singleton.filterClientnameID,
                                   "status_id": singleton.filterStatusID,
                                   "daterange": singleton.filterDaterange,
-                                  "company_id": singleton.filterCompanynameID
+                                  "company_id": singleton.filterCompanynameID,
+                                  "page": 1
                                 });
                                 singleton.formData = formData;
+
+                                i = 0;
+                                isRefresh = true;
+                                serviceData = [];
 
                                 ref.refresh(serviceListProvider);
                               });
@@ -271,7 +287,17 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                 isNav: true),
             body: _ServiceListData.when(
               data: (data) {
-                return (data?.data?.services?.data?.length ?? 0) == 0
+                if (i != 0) {
+                  serviceData.addAll(data?.data?.services?.data ?? []);
+                } else {
+                  if (serviceData.length == 0 && !isRefresh) {
+                    serviceData.addAll(data?.data?.services?.data ?? []);
+                  }
+                }
+                isRefresh = false;
+                i = 1;
+
+                return (serviceData.length ?? 0) == 0
                     ? Padding(
                         padding: const EdgeInsets.only(
                             left: 20, right: 20, bottom: 30),
@@ -286,8 +312,7 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                                 width: MediaQuery.sizeOf(context).width,
                                 child: ListView.builder(
                                   controller: _scrollController,
-                                  itemCount:
-                                      data?.data?.services?.data?.length ?? 0,
+                                  itemCount: serviceData.length ?? 0,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   physics: const NeverScrollableScrollPhysics(),
@@ -307,12 +332,9 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                                                       )));
                                         },
                                         child: Service_List(context,
-                                            data: data?.data?.services
-                                                    ?.data?[index] ??
-                                                ServicesData(),
-                                            isTag: data?.data?.services
-                                                    ?.data?[index].status ??
-                                                "",
+                                            data: serviceData[index],
+                                            isTag:
+                                                serviceData[index].status ?? "",
                                             isHistory: false,
                                             ref: ref),
                                       ),

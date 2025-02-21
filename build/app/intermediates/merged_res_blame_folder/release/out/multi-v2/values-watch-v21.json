@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.fortune.fortunepowerfastening.app-mergeReleaseResources-28:/values-watch-v21/values-watch-v21.xml",
+            "outputFile": "com.fortune.fortunepowerfastening.app-mergeReleaseResources-49:/values-watch-v21/values-watch-v21.xml",
             "map": [
                 {
-                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/e284401544ba482b40b90025405636f0/transformed/appcompat-1.6.1/res/values-watch-v21/values-watch-v21.xml",
+                    "source": "/Users/nigildharsan/.gradle/caches/transforms-3/c597f280415b43607621ab2a547b975d/transformed/appcompat-1.6.1/res/values-watch-v21/values-watch-v21.xml",
                     "from": {
                         "startLines": "2,6,10",
                         "startColumns": "4,4,4",

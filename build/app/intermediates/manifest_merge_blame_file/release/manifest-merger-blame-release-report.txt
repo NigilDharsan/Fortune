@@ -1,207 +1,456 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.fortune.fortunepowerfastening"
-4    android:versionCode="1"
+4    android:versionCode="3"
 5    android:versionName="1.0.0" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml
-9        android:targetSdkVersion="33" />
-9-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:3:5-66
-11-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:3:22-64
+11-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:3:5-66
+11-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:3:22-64
 12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-12-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:4:5-79
-12-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:4:22-76
+12-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:4:5-79
+12-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:4:22-76
 13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-13-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:5:5-81
-13-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:5:22-78
-14    <uses-permission
-14-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:9:5-11:38
-15        android:name="android.permission.READ_EXTERNAL_STORAGE"
-15-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-64
-16        android:maxSdkVersion="32" />
-16-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:11:9-35
-17
-18    <queries>
-18-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:13:5-19:15
-19        <intent>
-19-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:14:9-18:18
-20            <action android:name="android.intent.action.GET_CONTENT" />
-20-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-72
-20-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:15:21-69
-21
-22            <data android:mimeType="*/*" />
-22-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:17:13-44
-22-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:17:19-41
-23        </intent>
-24    </queries>
-25
-26    <permission
-26-->[androidx.core:core:1.10.1] /Users/nigildharsan/.gradle/caches/transforms-3/889ce5bd12f1117e5357d5fcdb5e1305/transformed/core-1.10.1/AndroidManifest.xml:22:5-24:47
-27        android:name="com.fortune.fortunepowerfastening.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-27-->[androidx.core:core:1.10.1] /Users/nigildharsan/.gradle/caches/transforms-3/889ce5bd12f1117e5357d5fcdb5e1305/transformed/core-1.10.1/AndroidManifest.xml:23:9-81
-28        android:protectionLevel="signature" />
-28-->[androidx.core:core:1.10.1] /Users/nigildharsan/.gradle/caches/transforms-3/889ce5bd12f1117e5357d5fcdb5e1305/transformed/core-1.10.1/AndroidManifest.xml:24:9-44
-29
-30    <uses-permission android:name="com.fortune.fortunepowerfastening.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-30-->[androidx.core:core:1.10.1] /Users/nigildharsan/.gradle/caches/transforms-3/889ce5bd12f1117e5357d5fcdb5e1305/transformed/core-1.10.1/AndroidManifest.xml:26:5-97
-30-->[androidx.core:core:1.10.1] /Users/nigildharsan/.gradle/caches/transforms-3/889ce5bd12f1117e5357d5fcdb5e1305/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
+13-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:5:5-81
+13-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:5:22-78
+14
+15    <queries>
+15-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:7:5-13:15
+16        <intent>
+16-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:8:9-12:18
+17            <action android:name="android.intent.action.GET_CONTENT" />
+17-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-72
+17-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:9:21-69
+18
+19            <data android:mimeType="*/*" />
+19-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-44
+19-->[:file_picker] /Users/nigildharsan/Documents/Flutter Project/fortune/build/file_picker/intermediates/merged_manifest/release/AndroidManifest.xml:11:19-41
+20        </intent>
+21    </queries>
+22
+23    <uses-permission android:name="android.permission.WAKE_LOCK" />
+23-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:8:5-68
+23-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:8:22-65
+24    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permissions options for the `notification` group -->
+24-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:9:5-79
+24-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:9:22-76
+25    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+25-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:11:5-77
+25-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:11:22-74
+26    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+26-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:26:5-82
+26-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:26:22-79
+27
+28    <permission
+28-->[androidx.core:core:1.13.1] /Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+29        android:name="com.fortune.fortunepowerfastening.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+29-->[androidx.core:core:1.13.1] /Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+30        android:protectionLevel="signature" />
+30-->[androidx.core:core:1.13.1] /Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
 31
-32    <application
-33        android:name="android.app.Application"
-33-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:10:9-42
-34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-34-->[androidx.core:core:1.10.1] /Users/nigildharsan/.gradle/caches/transforms-3/889ce5bd12f1117e5357d5fcdb5e1305/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
-35        android:icon="@mipmap/ic_launcher"
-35-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:11:9-43
-36        android:label="fortune"
-36-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:9:9-32
-37        android:usesCleartextTraffic="true" >
-37-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:8:9-44
-38        <activity
-38-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:12:9-32:20
-39            android:name="com.fortune.fortunepowerfastening.MainActivity"
-39-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:13:13-41
-40            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-40-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:17:13-163
-41            android:exported="true"
-41-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:14:13-36
-42            android:hardwareAccelerated="true"
-42-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:18:13-47
-43            android:launchMode="singleTop"
-43-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:15:13-43
-44            android:theme="@style/LaunchTheme"
-44-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:16:13-47
-45            android:windowSoftInputMode="adjustResize" >
-45-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:19:13-55
-46
-47            <!--
-48                 Specifies an Android theme to apply to this Activity as soon as
-49                 the Android process has started. This theme is visible to the user
-50                 while the Flutter UI initializes. After that, this theme continues
-51                 to determine the Window background behind the Flutter UI.
-52            -->
-53            <meta-data
-53-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:24:13-27:17
-54                android:name="io.flutter.embedding.android.NormalTheme"
-54-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:25:15-70
-55                android:resource="@style/NormalTheme" />
-55-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:26:15-52
-56
-57            <intent-filter>
-57-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:28:13-31:29
-58                <action android:name="android.intent.action.MAIN" />
-58-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:29:17-68
-58-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:29:25-66
+32    <uses-permission android:name="com.fortune.fortunepowerfastening.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+32-->[androidx.core:core:1.13.1] /Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+32-->[androidx.core:core:1.13.1] /Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+33
+34    <application
+35        android:name="android.app.Application"
+35-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:10:9-42
+36        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+36-->[androidx.core:core:1.13.1] /Users/nigildharsan/.gradle/caches/transforms-3/00e63b89d110df004dbdf1891d049c7a/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+37        android:extractNativeLibs="true"
+38        android:icon="@mipmap/ic_launcher"
+38-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:11:9-43
+39        android:label="fortune"
+39-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:9:9-32
+40        android:usesCleartextTraffic="true" >
+40-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:8:9-44
+41        <activity
+41-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:12:9-32:20
+42            android:name="com.fortune.fortunepowerfastening.MainActivity"
+42-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:13:13-41
+43            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+43-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:17:13-163
+44            android:exported="true"
+44-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:14:13-36
+45            android:hardwareAccelerated="true"
+45-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:18:13-47
+46            android:launchMode="singleTop"
+46-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:15:13-43
+47            android:theme="@style/LaunchTheme"
+47-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:16:13-47
+48            android:windowSoftInputMode="adjustResize" >
+48-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:19:13-55
+49
+50            <!--
+51                 Specifies an Android theme to apply to this Activity as soon as
+52                 the Android process has started. This theme is visible to the user
+53                 while the Flutter UI initializes. After that, this theme continues
+54                 to determine the Window background behind the Flutter UI.
+55            -->
+56            <meta-data
+56-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:24:13-27:17
+57                android:name="io.flutter.embedding.android.NormalTheme"
+57-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:25:15-70
+58                android:resource="@style/NormalTheme" />
+58-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:26:15-52
 59
-60                <category android:name="android.intent.category.LAUNCHER" />
-60-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:30:17-76
-60-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:30:27-74
-61            </intent-filter>
-62        </activity>
-63        <!--
-64             Don't delete the meta-data below.
-65             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-66        -->
-67        <meta-data
-67-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:35:9-37:33
-68            android:name="flutterEmbedding"
-68-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:36:13-44
-69            android:value="2" />
-69-->/Users/nigildharsan/Documents/Flutter Project/Fortune/android/app/src/main/AndroidManifest.xml:37:13-30
-70
-71        <service
-71-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-14:56
-72            android:name="com.baseflow.geolocator.GeolocatorLocationService"
-72-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-77
-73            android:enabled="true"
-73-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-35
-74            android:exported="false"
-74-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-37
-75            android:foregroundServiceType="location" />
-75-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:14:13-53
-76
-77        <provider
-77-->[:open_file] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/merged_manifest/release/AndroidManifest.xml:11:9-20:20
-78            android:name="com.crazecoder.openfile.FileProvider"
-78-->[:open_file] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-64
-79            android:authorities="com.fortune.fortunepowerfastening.fileProvider.com.crazecoder.openfile"
-79-->[:open_file] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-88
-80            android:exported="false"
-80-->[:open_file] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/merged_manifest/release/AndroidManifest.xml:14:13-37
-81            android:grantUriPermissions="true" >
-81-->[:open_file] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-47
-82            <meta-data
-82-->[:open_file] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/merged_manifest/release/AndroidManifest.xml:17:13-19:53
-83                android:name="android.support.FILE_PROVIDER_PATHS"
-83-->[:open_file] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/merged_manifest/release/AndroidManifest.xml:18:17-67
-84                android:resource="@xml/filepaths" />
-84-->[:open_file] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/open_file/intermediates/merged_manifest/release/AndroidManifest.xml:19:17-50
-85        </provider>
-86
-87        <activity
-87-->[:url_launcher_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-13:74
-88            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
-88-->[:url_launcher_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-74
-89            android:exported="false"
-89-->[:url_launcher_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-37
-90            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-90-->[:url_launcher_android] /Users/nigildharsan/Documents/Flutter Project/Fortune/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-71
-91
-92        <uses-library
-92-->[androidx.window:window:1.0.0-beta04] /Users/nigildharsan/.gradle/caches/transforms-3/076eb9235982ee06112d76594ea8585f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
-93            android:name="androidx.window.extensions"
-93-->[androidx.window:window:1.0.0-beta04] /Users/nigildharsan/.gradle/caches/transforms-3/076eb9235982ee06112d76594ea8585f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
-94            android:required="false" />
-94-->[androidx.window:window:1.0.0-beta04] /Users/nigildharsan/.gradle/caches/transforms-3/076eb9235982ee06112d76594ea8585f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
-95        <uses-library
-95-->[androidx.window:window:1.0.0-beta04] /Users/nigildharsan/.gradle/caches/transforms-3/076eb9235982ee06112d76594ea8585f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
-96            android:name="androidx.window.sidecar"
-96-->[androidx.window:window:1.0.0-beta04] /Users/nigildharsan/.gradle/caches/transforms-3/076eb9235982ee06112d76594ea8585f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
-97            android:required="false" />
-97-->[androidx.window:window:1.0.0-beta04] /Users/nigildharsan/.gradle/caches/transforms-3/076eb9235982ee06112d76594ea8585f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
-98
-99        <activity
-99-->[com.google.android.gms:play-services-base:18.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/e0a8793a7a85d6e071b7a743c9adf075/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:9-22:45
-100            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-100-->[com.google.android.gms:play-services-base:18.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/e0a8793a7a85d6e071b7a743c9adf075/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:19-85
-101            android:exported="false"
-101-->[com.google.android.gms:play-services-base:18.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/e0a8793a7a85d6e071b7a743c9adf075/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:22:19-43
-102            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-102-->[com.google.android.gms:play-services-base:18.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/e0a8793a7a85d6e071b7a743c9adf075/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:21:19-78
-103
-104        <meta-data
-104-->[com.google.android.gms:play-services-basement:18.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/55b4e390742817dc4b9653e42d791034/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
-105            android:name="com.google.android.gms.version"
-105-->[com.google.android.gms:play-services-basement:18.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/55b4e390742817dc4b9653e42d791034/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
-106            android:value="@integer/google_play_services_version" />
-106-->[com.google.android.gms:play-services-basement:18.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/55b4e390742817dc4b9653e42d791034/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
-107
-108        <provider
-108-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/a069e44d9c98fbecf8e5475010c3a44b/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-109            android:name="androidx.startup.InitializationProvider"
-109-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/a069e44d9c98fbecf8e5475010c3a44b/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
-110            android:authorities="com.fortune.fortunepowerfastening.androidx-startup"
-110-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/a069e44d9c98fbecf8e5475010c3a44b/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
-111            android:exported="false" >
-111-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/a069e44d9c98fbecf8e5475010c3a44b/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
-112            <meta-data
-112-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/a069e44d9c98fbecf8e5475010c3a44b/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-113                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-113-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/a069e44d9c98fbecf8e5475010c3a44b/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
-114                android:value="androidx.startup" />
-114-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/a069e44d9c98fbecf8e5475010c3a44b/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
-115            <meta-data
-115-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/nigildharsan/.gradle/caches/transforms-3/2fcf079b47bda1a88fe11485e860ed3d/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
-116                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-116-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/nigildharsan/.gradle/caches/transforms-3/2fcf079b47bda1a88fe11485e860ed3d/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
-117                android:value="androidx.startup" />
-117-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/nigildharsan/.gradle/caches/transforms-3/2fcf079b47bda1a88fe11485e860ed3d/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
-118        </provider>
-119    </application>
-120
-121</manifest>
+60            <intent-filter>
+60-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:28:13-31:29
+61                <action android:name="android.intent.action.MAIN" />
+61-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:29:17-68
+61-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:29:25-66
+62
+63                <category android:name="android.intent.category.LAUNCHER" />
+63-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:30:17-76
+63-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:30:27-74
+64            </intent-filter>
+65        </activity>
+66        <!--
+67             Don't delete the meta-data below.
+68             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+69        -->
+70        <meta-data
+70-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:35:9-37:33
+71            android:name="flutterEmbedding"
+71-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:36:13-44
+72            android:value="2" />
+72-->/Users/nigildharsan/Documents/Flutter Project/fortune/android/app/src/main/AndroidManifest.xml:37:13-30
+73
+74        <service
+74-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:14:9-17:72
+75            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
+75-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-107
+76            android:exported="false"
+76-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:16:13-37
+77            android:permission="android.permission.BIND_JOB_SERVICE" />
+77-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:17:13-69
+78        <service
+78-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:18:9-24:19
+79            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
+79-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:19:13-97
+80            android:exported="false" >
+80-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:20:13-37
+81            <intent-filter>
+81-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:21:13-23:29
+82                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+82-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:22:17-78
+82-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:22:25-75
+83            </intent-filter>
+84        </service>
+85
+86        <receiver
+86-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:26:9-33:20
+87            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+87-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:27:13-98
+88            android:exported="true"
+88-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:28:13-36
+89            android:permission="com.google.android.c2dm.permission.SEND" >
+89-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:29:13-73
+90            <intent-filter>
+90-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:30:13-32:29
+91                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+91-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:31:17-81
+91-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:31:25-78
+92            </intent-filter>
+93        </receiver>
+94
+95        <service
+95-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:35:9-39:19
+96            android:name="com.google.firebase.components.ComponentDiscoveryService"
+96-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:35:18-89
+97            android:directBootAware="true"
+97-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:32:13-43
+98            android:exported="false" >
+98-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:56:13-37
+99            <meta-data
+99-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:36:13-38:85
+100                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
+100-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:37:17-128
+101                android:value="com.google.firebase.components.ComponentRegistrar" />
+101-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:38:17-82
+102            <meta-data
+102-->[:firebase_core] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_core/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-11:85
+103                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+103-->[:firebase_core] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_core/intermediates/merged_manifest/release/AndroidManifest.xml:10:17-124
+104                android:value="com.google.firebase.components.ComponentRegistrar" />
+104-->[:firebase_core] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_core/intermediates/merged_manifest/release/AndroidManifest.xml:11:17-82
+105            <meta-data
+105-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:57:13-59:85
+106                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar"
+106-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:58:17-122
+107                android:value="com.google.firebase.components.ComponentRegistrar" />
+107-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:59:17-82
+108            <meta-data
+108-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:60:13-62:85
+109                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+109-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:61:17-119
+110                android:value="com.google.firebase.components.ComponentRegistrar" />
+110-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:62:17-82
+111            <meta-data
+111-->[com.google.firebase:firebase-installations:18.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/07bcd8e1fc54e82ba80fb604c9f0572d/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:15:13-17:85
+112                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
+112-->[com.google.firebase:firebase-installations:18.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/07bcd8e1fc54e82ba80fb604c9f0572d/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:16:17-130
+113                android:value="com.google.firebase.components.ComponentRegistrar" />
+113-->[com.google.firebase:firebase-installations:18.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/07bcd8e1fc54e82ba80fb604c9f0572d/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:17:17-82
+114            <meta-data
+114-->[com.google.firebase:firebase-installations:18.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/07bcd8e1fc54e82ba80fb604c9f0572d/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:18:13-20:85
+115                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+115-->[com.google.firebase:firebase-installations:18.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/07bcd8e1fc54e82ba80fb604c9f0572d/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:19:17-127
+116                android:value="com.google.firebase.components.ComponentRegistrar" />
+116-->[com.google.firebase:firebase-installations:18.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/07bcd8e1fc54e82ba80fb604c9f0572d/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:20:17-82
+117            <meta-data
+117-->[com.google.firebase:firebase-common-ktx:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/e9dde7f973399fc46735ef2ea3a273b8/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:12:13-14:85
+118                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+118-->[com.google.firebase:firebase-common-ktx:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/e9dde7f973399fc46735ef2ea3a273b8/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:13:17-116
+119                android:value="com.google.firebase.components.ComponentRegistrar" />
+119-->[com.google.firebase:firebase-common-ktx:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/e9dde7f973399fc46735ef2ea3a273b8/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:14:17-82
+120            <meta-data
+120-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:35:13-37:85
+121                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+121-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:36:17-109
+122                android:value="com.google.firebase.components.ComponentRegistrar" />
+122-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:37:17-82
+123            <meta-data
+123-->[com.google.firebase:firebase-datatransport:18.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/80461b6d4cd8f45bb6643d2f32b833ed/transformed/jetified-firebase-datatransport-18.2.0/AndroidManifest.xml:25:13-27:85
+124                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+124-->[com.google.firebase:firebase-datatransport:18.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/80461b6d4cd8f45bb6643d2f32b833ed/transformed/jetified-firebase-datatransport-18.2.0/AndroidManifest.xml:26:17-115
+125                android:value="com.google.firebase.components.ComponentRegistrar" />
+125-->[com.google.firebase:firebase-datatransport:18.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/80461b6d4cd8f45bb6643d2f32b833ed/transformed/jetified-firebase-datatransport-18.2.0/AndroidManifest.xml:27:17-82
+126        </service>
+127
+128        <provider
+128-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:41:9-45:38
+129            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
+129-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:42:13-102
+130            android:authorities="com.fortune.fortunepowerfastening.flutterfirebasemessaginginitprovider"
+130-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:43:13-88
+131            android:exported="false"
+131-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:44:13-37
+132            android:initOrder="99" />
+132-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:45:13-35
+133
+134        <service
+134-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:8:9-12:56
+135            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+135-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-77
+136            android:enabled="true"
+136-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:10:13-35
+137            android:exported="false"
+137-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-37
+138            android:foregroundServiceType="location" />
+138-->[:geolocator_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-53
+139
+140        <provider
+140-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:9:9-19:20
+141            android:name="com.crazecoder.openfile.FileProvider"
+141-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:10:13-64
+142            android:authorities="com.fortune.fortunepowerfastening.fileProvider.com.crazecoder.openfile"
+142-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-88
+143            android:exported="false"
+143-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-37
+144            android:grantUriPermissions="true"
+144-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-47
+145            android:requestLegacyExternalStorage="true" >
+145-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:14:13-56
+146            <meta-data
+146-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:16:13-18:53
+147                android:name="android.support.FILE_PROVIDER_PATHS"
+147-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:17:17-67
+148                android:resource="@xml/filepaths" />
+148-->[:open_file_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/open_file_android/intermediates/merged_manifest/release/AndroidManifest.xml:18:17-50
+149        </provider>
+150
+151        <activity
+151-->[:url_launcher_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:8:9-11:74
+152            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+152-->[:url_launcher_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-74
+153            android:exported="false"
+153-->[:url_launcher_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:10:13-37
+154            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+154-->[:url_launcher_android] /Users/nigildharsan/Documents/Flutter Project/fortune/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-71
+155
+156        <uses-library
+156-->[androidx.window:window:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/86151c6cd0e6814077c8e0f92c74ae41/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
+157            android:name="androidx.window.extensions"
+157-->[androidx.window:window:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/86151c6cd0e6814077c8e0f92c74ae41/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
+158            android:required="false" />
+158-->[androidx.window:window:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/86151c6cd0e6814077c8e0f92c74ae41/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
+159        <uses-library
+159-->[androidx.window:window:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/86151c6cd0e6814077c8e0f92c74ae41/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
+160            android:name="androidx.window.sidecar"
+160-->[androidx.window:window:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/86151c6cd0e6814077c8e0f92c74ae41/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
+161            android:required="false" />
+161-->[androidx.window:window:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/86151c6cd0e6814077c8e0f92c74ae41/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
+162
+163        <receiver
+163-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:29:9-40:20
+164            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+164-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:30:13-78
+165            android:exported="true"
+165-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:31:13-36
+166            android:permission="com.google.android.c2dm.permission.SEND" >
+166-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:32:13-73
+167            <intent-filter>
+167-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:30:13-32:29
+168                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+168-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:31:17-81
+168-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:31:25-78
+169            </intent-filter>
+170
+171            <meta-data
+171-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:37:13-39:40
+172                android:name="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED"
+172-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:38:17-92
+173                android:value="true" />
+173-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:39:17-37
+174        </receiver>
+175        <!--
+176             FirebaseMessagingService performs security checks at runtime,
+177             but set to not exported to explicitly avoid allowing another app to call it.
+178        -->
+179        <service
+179-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:46:9-53:19
+180            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+180-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:47:13-82
+181            android:directBootAware="true"
+181-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:48:13-43
+182            android:exported="false" >
+182-->[com.google.firebase:firebase-messaging:24.1.0] /Users/nigildharsan/.gradle/caches/transforms-3/b565935748c7ea84cfdbd01b55f7cad5/transformed/jetified-firebase-messaging-24.1.0/AndroidManifest.xml:49:13-37
+183            <intent-filter android:priority="-500" >
+183-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:21:13-23:29
+184                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+184-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:22:17-78
+184-->[:firebase_messaging] /Users/nigildharsan/Documents/Flutter Project/fortune/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:22:25-75
+185            </intent-filter>
+186        </service>
+187
+188        <activity
+188-->[com.google.android.gms:play-services-base:18.3.0] /Users/nigildharsan/.gradle/caches/transforms-3/719e63fdcf9aea33e9fd8ef5112a766b/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:9-22:45
+189            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+189-->[com.google.android.gms:play-services-base:18.3.0] /Users/nigildharsan/.gradle/caches/transforms-3/719e63fdcf9aea33e9fd8ef5112a766b/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:19-85
+190            android:exported="false"
+190-->[com.google.android.gms:play-services-base:18.3.0] /Users/nigildharsan/.gradle/caches/transforms-3/719e63fdcf9aea33e9fd8ef5112a766b/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:22:19-43
+191            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+191-->[com.google.android.gms:play-services-base:18.3.0] /Users/nigildharsan/.gradle/caches/transforms-3/719e63fdcf9aea33e9fd8ef5112a766b/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:21:19-78
+192
+193        <provider
+193-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:23:9-28:39
+194            android:name="com.google.firebase.provider.FirebaseInitProvider"
+194-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:24:13-77
+195            android:authorities="com.fortune.fortunepowerfastening.firebaseinitprovider"
+195-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:25:13-72
+196            android:directBootAware="true"
+196-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:26:13-43
+197            android:exported="false"
+197-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:27:13-37
+198            android:initOrder="100" />
+198-->[com.google.firebase:firebase-common:21.0.0] /Users/nigildharsan/.gradle/caches/transforms-3/5ddfbf5507e88fd48987b1bff90d8e67/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:28:13-36
+199        <provider
+199-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/dc7bea4d91e8fe76bc675447f0162202/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+200            android:name="androidx.startup.InitializationProvider"
+200-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/dc7bea4d91e8fe76bc675447f0162202/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+201            android:authorities="com.fortune.fortunepowerfastening.androidx-startup"
+201-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/dc7bea4d91e8fe76bc675447f0162202/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+202            android:exported="false" >
+202-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/dc7bea4d91e8fe76bc675447f0162202/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+203            <meta-data
+203-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/dc7bea4d91e8fe76bc675447f0162202/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+204                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+204-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/dc7bea4d91e8fe76bc675447f0162202/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+205                android:value="androidx.startup" />
+205-->[androidx.emoji2:emoji2:1.2.0] /Users/nigildharsan/.gradle/caches/transforms-3/dc7bea4d91e8fe76bc675447f0162202/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+206            <meta-data
+206-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/nigildharsan/.gradle/caches/transforms-3/cccccf49dc67acba0f95d8625c1e328e/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+207                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+207-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/nigildharsan/.gradle/caches/transforms-3/cccccf49dc67acba0f95d8625c1e328e/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+208                android:value="androidx.startup" />
+208-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/nigildharsan/.gradle/caches/transforms-3/cccccf49dc67acba0f95d8625c1e328e/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+209            <meta-data
+209-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+210                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+210-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+211                android:value="androidx.startup" />
+211-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+212        </provider>
+213
+214        <meta-data
+214-->[com.google.android.gms:play-services-basement:18.3.0] /Users/nigildharsan/.gradle/caches/transforms-3/d755b840a2058d052a468f6767dffac0/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:21:9-23:69
+215            android:name="com.google.android.gms.version"
+215-->[com.google.android.gms:play-services-basement:18.3.0] /Users/nigildharsan/.gradle/caches/transforms-3/d755b840a2058d052a468f6767dffac0/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:22:13-58
+216            android:value="@integer/google_play_services_version" />
+216-->[com.google.android.gms:play-services-basement:18.3.0] /Users/nigildharsan/.gradle/caches/transforms-3/d755b840a2058d052a468f6767dffac0/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:23:13-66
+217
+218        <receiver
+218-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+219            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+219-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+220            android:directBootAware="false"
+220-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+221            android:enabled="true"
+221-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+222            android:exported="true"
+222-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+223            android:permission="android.permission.DUMP" >
+223-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+224            <intent-filter>
+224-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+225                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+225-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+225-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+226            </intent-filter>
+227            <intent-filter>
+227-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+228                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+228-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+228-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+229            </intent-filter>
+230            <intent-filter>
+230-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+231                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+231-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+231-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+232            </intent-filter>
+233            <intent-filter>
+233-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+234                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+234-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+234-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/nigildharsan/.gradle/caches/transforms-3/536c280e0d977379c2cd5ed09bbf41af/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+235            </intent-filter>
+236        </receiver>
+237
+238        <service
+238-->[com.google.android.datatransport:transport-backend-cct:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/d5242b9a55f926f2b8f37d7934467d25/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:28:9-34:19
+239            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+239-->[com.google.android.datatransport:transport-backend-cct:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/d5242b9a55f926f2b8f37d7934467d25/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:29:13-103
+240            android:exported="false" >
+240-->[com.google.android.datatransport:transport-backend-cct:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/d5242b9a55f926f2b8f37d7934467d25/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:30:13-37
+241            <meta-data
+241-->[com.google.android.datatransport:transport-backend-cct:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/d5242b9a55f926f2b8f37d7934467d25/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:31:13-33:39
+242                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+242-->[com.google.android.datatransport:transport-backend-cct:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/d5242b9a55f926f2b8f37d7934467d25/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:32:17-94
+243                android:value="cct" />
+243-->[com.google.android.datatransport:transport-backend-cct:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/d5242b9a55f926f2b8f37d7934467d25/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:33:17-36
+244        </service>
+245        <service
+245-->[com.google.android.datatransport:transport-runtime:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/b5da555572306a8bede63930b3dc1edf/transformed/jetified-transport-runtime-3.1.9/AndroidManifest.xml:26:9-30:19
+246            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+246-->[com.google.android.datatransport:transport-runtime:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/b5da555572306a8bede63930b3dc1edf/transformed/jetified-transport-runtime-3.1.9/AndroidManifest.xml:27:13-117
+247            android:exported="false"
+247-->[com.google.android.datatransport:transport-runtime:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/b5da555572306a8bede63930b3dc1edf/transformed/jetified-transport-runtime-3.1.9/AndroidManifest.xml:28:13-37
+248            android:permission="android.permission.BIND_JOB_SERVICE" >
+248-->[com.google.android.datatransport:transport-runtime:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/b5da555572306a8bede63930b3dc1edf/transformed/jetified-transport-runtime-3.1.9/AndroidManifest.xml:29:13-69
+249        </service>
+250
+251        <receiver
+251-->[com.google.android.datatransport:transport-runtime:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/b5da555572306a8bede63930b3dc1edf/transformed/jetified-transport-runtime-3.1.9/AndroidManifest.xml:32:9-34:40
+252            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+252-->[com.google.android.datatransport:transport-runtime:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/b5da555572306a8bede63930b3dc1edf/transformed/jetified-transport-runtime-3.1.9/AndroidManifest.xml:33:13-132
+253            android:exported="false" />
+253-->[com.google.android.datatransport:transport-runtime:3.1.9] /Users/nigildharsan/.gradle/caches/transforms-3/b5da555572306a8bede63930b3dc1edf/transformed/jetified-transport-runtime-3.1.9/AndroidManifest.xml:34:13-37
+254    </application>
+255
+256</manifest>

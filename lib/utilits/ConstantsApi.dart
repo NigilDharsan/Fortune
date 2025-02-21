@@ -42,6 +42,37 @@ class ConstantApi {
 
   static String usersLogListUrl = SERVER_ONE + "log_hours/list";
 
+//Spares
+
+  static String sparesListUrl = SERVER_ONE + "spares/ViewAllAssignedSpares";
+  static String sparesItemUrl = SERVER_ONE + "spares/GetItemSpareList";
+  static String addSparesItemUrl = SERVER_ONE + "spares/AddAssignSpare";
+  static String editSparesItemUrl = SERVER_ONE + "spares/GetSpecificSpare";
+  static String updateSparesItemUrl = SERVER_ONE + "spares/UpdateAssignSpare";
+  static String getExecutiveListUrl = SERVER_ONE + "clients/GetExecutiveList";
+
+// https://fortunepowerfastening.com/erp/api/spares/AddAssignSpare
+// https://fortunepowerfastening.com/erp/api/spares/UpdateAssignSpare
+// https://fortunepowerfastening.com/erp/api/spares/ViewAllAssignedSpares
+// https://fortunepowerfastening.com/erp/api/spares/GetSpecificSpare
+// https://fortunepowerfastening.com/erp/api/spares/GetItemSpareList
+// https://fortunepowerfastening.com/erp/api/clients/GetExecutiveList
+
+// General
+
+  static String generalListUrl = SERVER_ONE + "general/ViewAlGeneralActivity";
+  static String addGeneralUrl = SERVER_ONE + "general/AddGeneralActivity";
+  static String editGeneralUrl = SERVER_ONE + "general/EditFollowUp";
+  static String updateGeneralUrl = SERVER_ONE + "general/UpdateGeneralActivity";
+
+// https://fortunepowerfastening.com/erp/api/general/AddGeneralActivity
+// https://fortunepowerfastening.com/erp/api/general/UpdateGeneralActivity
+// https://fortunepowerfastening.com/erp/api/general/ViewAlGeneralActivity
+// https://fortunepowerfastening.com/erp/api/general/EditFollowUp
+// https://fortunepowerfastening.com/erp/api/clients/GetClientList
+// https://fortunepowerfastening.com/erp/api/clients/GetClientById
+// https://fortunepowerfastening.com/erp/api/clients/GetExecutiveList
+
   static String SOMETHING_WRONG = "Some thing wrong";
   static String NO_INTERNET = "No internet Connection";
   static String BAD_RESPONSE = "Bad Response";

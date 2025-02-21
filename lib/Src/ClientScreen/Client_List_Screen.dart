@@ -24,19 +24,50 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
   Filter? filter;
   var formData;
   SingleTon singleton = SingleTon();
+  ScrollController _scrollController = ScrollController();
+
+  List<ClientsDataObject> clientData = [];
+
+  var pageCount = 1;
+  var i = 0;
+  var isRefresh = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    formData = FormData.fromMap({"cus_first_name": "", "gst_no": ""});
+    formData =
+        FormData.fromMap({"cus_first_name": "", "gst_no": "", "page": 1});
     singleton.formData = formData;
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      // Reach the bottom of the list
+      // Fetch more data
+      pageCount++;
+      formData = FormData.fromMap(
+          {"cus_first_name": "", "gst_no": "", "page": pageCount});
+      singleton.formData = formData;
+      i = 0;
+      ref.refresh(
+          clientsListProvider); // Fetch more data with updated page count
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _StocksListData = ref.watch(clientsListProvider);
+    final _ClientListData = ref.watch(clientsListProvider);
     SingleTon singleton = SingleTon();
 
     return singleton.permissionList.contains("customer-create") == true
@@ -51,11 +82,15 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                           ))).then((value) {
                 if (value == true) {
                   setState(() {
-                    formData =
-                        FormData.fromMap({"cus_first_name": "", "gst_no": ""});
+                    formData = FormData.fromMap(
+                        {"cus_first_name": "", "gst_no": "", "page": 1});
                     singleton.formData = formData;
 
-                    ref.refresh(stocksListProvider);
+                    i = 0;
+                    isRefresh = true;
+                    clientData = [];
+
+                    ref.refresh(clientsListProvider);
                   });
                 }
               });
@@ -82,10 +117,14 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                               setState(() {
                                 formData = FormData.fromMap({
                                   "cus_first_name": singleton.filterClientname,
-                                  "gst_no": singleton.filterClientnameID
+                                  "gst_no": singleton.filterClientnameID,
+                                  "page": 1
                                 });
 
                                 singleton.formData = formData;
+                                i = 0;
+                                isRefresh = true;
+                                clientData = [];
 
                                 ref.refresh(clientsListProvider);
                               });
@@ -111,11 +150,21 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                 ],
                 isGreen: false,
                 isNav: true),
-            body: _StocksListData.when(
+            body: _ClientListData.when(
               data: (data) {
+                if (i != 0) {
+                  clientData.addAll(data?.data?.clients?.data ?? []);
+                } else {
+                  if (clientData.length == 0 && !isRefresh) {
+                    clientData.addAll(data?.data?.clients?.data ?? []);
+                  }
+                }
+                isRefresh = false;
+                i = 1;
                 filter = data?.data?.filter;
 
                 return SingleChildScrollView(
+                  controller: _scrollController,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
@@ -126,8 +175,7 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                           padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: _Clients_List(
-                                context, data?.data?.clients?.data ?? [], ref),
+                            child: _Clients_List(context, clientData, ref),
                           ),
                         ),
                       ],
@@ -167,6 +215,9 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                                   "gst_no": singleton.filterClientnameID
                                 });
                                 singleton.formData = formData;
+                                i = 0;
+                                isRefresh = true;
+                                clientData = [];
 
                                 ref.refresh(stocksListProvider);
                               });
@@ -192,8 +243,18 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                 ],
                 isGreen: false,
                 isNav: true),
-            body: _StocksListData.when(
+            body: _ClientListData.when(
               data: (data) {
+                if (i != 0) {
+                  clientData.addAll(data?.data?.clients?.data ?? []);
+                } else {
+                  if (clientData.length == 0 && !isRefresh) {
+                    clientData.addAll(data?.data?.clients?.data ?? []);
+                  }
+                }
+                isRefresh = false;
+                i = 1;
+
                 filter = data?.data?.filter ?? Filter();
 
                 return SingleChildScrollView(
@@ -207,8 +268,7 @@ class _ClientListScreenState extends ConsumerState<ClientListScreen> {
                           padding: const EdgeInsets.only(top: 20, bottom: 30),
                           child: Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: _Clients_List(
-                                context, data?.data?.clients?.data ?? [], ref),
+                            child: _Clients_List(context, clientData, ref),
                           ),
                         ),
                       ],

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fortune/Common_Widgets/Common_Button.dart';
 import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Common_Widgets/Text_Form_Field.dart';
+import 'package:fortune/Model/EditModel.dart';
 import 'package:fortune/Model/ServiceModel.dart';
 import 'package:fortune/Model/SuccessModel.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
@@ -165,7 +166,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             return null;
                           },
                           hintText: 'Search Client name',
-                          initValue: '',
+                          initValue: _ClientName.text,
                         ),
                         // dropDownField1(
                         //   context,

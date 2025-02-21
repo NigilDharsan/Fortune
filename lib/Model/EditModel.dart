@@ -29,8 +29,16 @@ class Data {
   List<Executives>? executives;
   Status? status;
   List<EditData>? data;
+  List<SpareItem>? spareItem;
+  List<ServiceSpare>? serviceSpare;
 
-  Data({this.companies, this.status, this.data, this.executives});
+  Data(
+      {this.companies,
+      this.status,
+      this.data,
+      this.executives,
+      this.spareItem,
+      this.serviceSpare});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['companies'] != null) {
@@ -53,6 +61,18 @@ class Data {
         data!.add(new EditData.fromJson(v));
       });
     }
+    if (json['spare_item'] != null) {
+      spareItem = <SpareItem>[];
+      json['spare_item'].forEach((v) {
+        spareItem!.add(new SpareItem.fromJson(v));
+      });
+    }
+    if (json['service_spare'] != null) {
+      serviceSpare = <ServiceSpare>[];
+      json['service_spare'].forEach((v) {
+        serviceSpare!.add(new ServiceSpare.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +88,13 @@ class Data {
     }
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    if (this.spareItem != null) {
+      data['spare_item'] = this.spareItem!.map((v) => v.toJson()).toList();
+    }
+    if (this.serviceSpare != null) {
+      data['service_spare'] =
+          this.serviceSpare!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -388,6 +415,147 @@ class EditData {
     data['updated_at'] = this.updatedAt;
     data['requirement'] = this.requirement;
 
+    return data;
+  }
+}
+
+class SpareItem {
+  int? spareId;
+  String? itemName;
+  int? quantity;
+
+  SpareItem({this.spareId, this.itemName, this.quantity});
+
+  SpareItem.fromJson(Map<String, dynamic> json) {
+    spareId = json['spare_id'];
+    itemName = json['item_name'];
+    quantity = json['quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['spare_id'] = this.spareId;
+    data['item_name'] = this.itemName;
+    data['quantity'] = this.quantity;
+    return data;
+  }
+}
+
+class ServiceSpare {
+  int? id;
+  int? spareId;
+  int? quantity;
+  Spare? spare;
+
+  ServiceSpare({this.id, this.spareId, this.quantity, this.spare});
+
+  ServiceSpare.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    spareId = json['spare_id'];
+    quantity = json['quantity'];
+    spare = json['spare'] != null ? new Spare.fromJson(json['spare']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['spare_id'] = this.spareId;
+    data['quantity'] = this.quantity;
+    if (this.spare != null) {
+      data['spare'] = this.spare!.toJson();
+    }
+    return data;
+  }
+}
+
+class Spare {
+  int? id;
+  int? servicerepsInvolved;
+  int? itemId;
+  int? quantity;
+  String? createdAt;
+  String? updatedAt;
+  Null? deletedAt;
+  Item? item;
+
+  Spare(
+      {this.id,
+      this.servicerepsInvolved,
+      this.itemId,
+      this.quantity,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt,
+      this.item});
+
+  Spare.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    servicerepsInvolved = json['servicereps_involved'];
+    itemId = json['item_id'];
+    quantity = json['quantity'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+    item = json['item'] != null ? new Item.fromJson(json['item']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['servicereps_involved'] = this.servicerepsInvolved;
+    data['item_id'] = this.itemId;
+    data['quantity'] = this.quantity;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['deleted_at'] = this.deletedAt;
+    if (this.item != null) {
+      data['item'] = this.item!.toJson();
+    }
+    return data;
+  }
+}
+
+class Item {
+  int? id;
+  int? itemId;
+  String? itemName;
+  String? itemType;
+  String? itemCategory;
+  Null? addedBy;
+  String? createdAt;
+  String? updatedAt;
+
+  Item(
+      {this.id,
+      this.itemId,
+      this.itemName,
+      this.itemType,
+      this.itemCategory,
+      this.addedBy,
+      this.createdAt,
+      this.updatedAt});
+
+  Item.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    itemId = json['item_id'];
+    itemName = json['item_name'];
+    itemType = json['item_type'];
+    itemCategory = json['item_category'];
+    addedBy = json['added_by'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['item_id'] = this.itemId;
+    data['item_name'] = this.itemName;
+    data['item_type'] = this.itemType;
+    data['item_category'] = this.itemCategory;
+    data['added_by'] = this.addedBy;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

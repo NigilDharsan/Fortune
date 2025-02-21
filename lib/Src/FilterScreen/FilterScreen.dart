@@ -128,7 +128,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                       .firstWhere(
                                           (item) => item.name == newValue);
                                   singleton.filterSalesrepID =
-                                      "${item?.companyId ?? 0}";
+                                      "${item?.id ?? 0}";
                                 },
                               ),
                             ],
@@ -148,9 +148,9 @@ class _FilterScreenState extends State<FilterScreen> {
                           selectdaterangetype = newValue;
                           singleton.filterDaterangeType = newValue;
                           singleton.filterDaterangeTypeID =
-                              selectStatus == "Marketing Created"
+                              selectdaterangetype == "Marketing Created"
                                   ? "1"
-                                  : selectStatus == "Next Followup"
+                                  : selectdaterangetype == "Next Followup"
                                       ? "2"
                                       : "";
                         });
@@ -237,11 +237,12 @@ class _FilterScreenState extends State<FilterScreen> {
                         setState(() {
                           selectnextfollowup = newValue;
 
-                          singleton.filterNextFollowUp = selectStatus == "Today"
-                              ? "1"
-                              : selectStatus == "Tomorrow"
-                                  ? "2"
-                                  : "";
+                          singleton.filterNextFollowUp =
+                              selectnextfollowup == "Today"
+                                  ? "1"
+                                  : selectnextfollowup == "Tomorrow"
+                                      ? "2"
+                                      : "";
                         });
                       },
                     ),

@@ -123,7 +123,7 @@ class _FilterServiceScreenState extends State<FilterServiceScreen> {
                                       .firstWhere(
                                           (item) => item.name == newValue);
                                   singleton.filterSalesrepID =
-                                      "${item?.companyId ?? 0}";
+                                      "${item?.id ?? 0}";
                                 },
                               ),
                             ],
