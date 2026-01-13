@@ -20,6 +20,7 @@ import 'package:fortune/utilits/ConstantsApi.dart';
 import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Loading_Overlay.dart';
 import 'package:fortune/utilits/Text_Style.dart';
+import 'package:intl/intl.dart';
 
 class Service_Form_Screen extends ConsumerStatefulWidget {
   const Service_Form_Screen({super.key});
@@ -30,6 +31,7 @@ class Service_Form_Screen extends ConsumerStatefulWidget {
 }
 
 class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
+  TextEditingController _DatePicker = TextEditingController();
   TextEditingController _StatusNote = TextEditingController();
   TextEditingController _ClientName = TextEditingController();
   TextEditingController _ContactNumber = TextEditingController();
@@ -37,7 +39,17 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
   TextEditingController _Requirement = TextEditingController();
 
   List<File> _selectedFiles = [];
-  List<Executives> _selectedItems = [];
+  Executives? _selectedItems;
+
+  String? selectStatus;
+  String selectStatus_id = "";
+
+  List<String> _selectState = [
+    'completed',
+    'pending',
+    'processing',
+    "cancelled",
+  ];
 
   Future<void> _pickFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -147,7 +159,7 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                             return null;
                           },
                           hintText: 'Search Client name',
-                          initValue: _ClientName.text,
+                          initValue: clientName ?? "",
                         ),
                         // dropDownField1(
                         //   context,
@@ -275,8 +287,31 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                               return null;
                             }),
 
+//SELECT STATUS
+                        Title_Style(Title: "Select Status", isStatus: true),
+                        dropDownField(
+                          context,
+                          hintT: 'Select Status',
+                          value: selectStatus,
+                          listValue: _selectState,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectStatus = newValue;
+
+                              selectStatus_id = selectStatus == "completed"
+                                  ? "1"
+                                  : selectStatus == "pending"
+                                      ? "2"
+                                      : selectStatus == "processing"
+                                          ? "3"
+                                          : selectStatus == "cancelled"
+                                              ? "4"
+                                              : "5";
+                            });
+                          },
+                        ),
                         //STATUS NOTE
-                        Title_Style(Title: 'Status Note', isStatus: true),
+                        Title_Style(Title: 'Status Note', isStatus: false),
                         textfieldDescription(
                             readOnly: false,
                             Controller: _StatusNote,
@@ -291,6 +326,53 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                               return null;
                             }),
 
+                        Title_Style(
+                            Title: 'Next Followup date', isStatus: true),
+                        TextFieldDatePicker(
+                            Controller: _DatePicker,
+                            onChanged: null,
+                            validating: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please select Date';
+                              } else {
+                                return null;
+                              }
+                            },
+                            onTap: () async {
+                              FocusScope.of(context).unfocus();
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime(2050));
+                              if (pickedDate != null) {
+                                final TimeOfDay? pickedTime =
+                                    await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                );
+                                if (pickedTime != null) {
+                                  final DateTime selectedDateTime = DateTime(
+                                    pickedDate.year,
+                                    pickedDate.month,
+                                    pickedDate.day,
+                                    pickedTime.hour,
+                                    pickedTime.minute,
+                                  );
+
+                                  String formatdate =
+                                      DateFormat("yyyy-MM-dd hh:mm a")
+                                          .format(selectedDateTime);
+                                  if (mounted) {
+                                    setState(() {
+                                      _DatePicker.text = formatdate;
+                                      print(_DatePicker.text);
+                                    });
+                                  }
+                                }
+                              }
+                            },
+                            hintText: 'yyyy-MM-dd'),
                         Title_Style(Title: 'Spare Used List', isStatus: true),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -391,11 +473,10 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                   //     });
                                   //   },
                                   // ),
-                                  MultiSelectDropdown(
+                                  SingleSelectDropdown(
                                     items: data?.data?.executives ?? [],
-                                    selectedItems: _selectedItems,
-                                    onChanged:
-                                        (List<Executives> selectedItems) {
+                                    selectedItem: _selectedItems,
+                                    onChanged: (Executives? selectedItems) {
                                       setState(() {
                                         _selectedItems = selectedItems;
                                       });
@@ -419,13 +500,13 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                             } else if (singleton.permissionList
                                         .contains("service-assign") ==
                                     true &&
-                                _selectedItems.length == 0 &&
+                                _selectedItems == null &&
                                 (data?.data?.executives?.length ?? 0) != 0) {
                               ShowToastMessage("Select executive");
+                            } else if (selectStatus_id == "") {
+                              ShowToastMessage("Select Status");
                             } else {
-                              List<String> idList = _selectedItems
-                                  .map((item) => "${item.id ?? 0}")
-                                  .toList();
+                              String idList = "${_selectedItems?.id ?? ""}";
 
                               LoadingOverlay.show(context);
 
@@ -437,7 +518,9 @@ class _Service_Form_ScreenState extends ConsumerState<Service_Form_Screen> {
                                 "cus_mobile_no": _ContactNumber.text,
                                 "cus_first_name": _ClientName.text,
                                 "address": _ClientAddress.text,
+                                "status": selectStatus_id,
                                 "status_note": _StatusNote.text,
+                                "next_followup_date": _DatePicker.text,
                                 for (var i = 0; i < idList.length; i++)
                                   'assign_executive[$i]': idList[i],
                                 "company_id": company_id,

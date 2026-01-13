@@ -269,51 +269,52 @@ class EditData {
   String? createdAt;
   String? updatedAt;
   String? requirement;
+  String? nextFollowupDate;
 
-  EditData({
-    this.serviceId,
-    this.companyId,
-    this.servicerepsInvolved,
-    this.billeddoc,
-    this.branchId,
-    this.unitId,
-    this.customerId,
-    this.cusType,
-    this.hsn,
-    this.ticketNo,
-    this.cusFirstName,
-    this.cusState,
-    this.cusLastName,
-    this.gstVerified,
-    this.gstNo,
-    this.address,
-    this.landmark,
-    this.city,
-    this.contactPerson,
-    this.cusMobileNo,
-    this.typeOfUnit,
-    this.unitCapacity,
-    this.unitLocation,
-    this.typeOfService,
-    this.natureOfComplaint,
-    this.reportUpload,
-    this.reportDescription,
-    this.technicianId,
-    this.reportFromTechnician,
-    this.callTakenDate,
-    this.technicianAllocateDate,
-    this.technicianReportDate,
-    this.addedby,
-    this.status,
-    this.paidStatus,
-    this.advAmount,
-    this.typeOfWork,
-    this.serviceType,
-    this.amount,
-    this.createdAt,
-    this.updatedAt,
-    this.requirement,
-  });
+  EditData(
+      {this.serviceId,
+      this.companyId,
+      this.servicerepsInvolved,
+      this.billeddoc,
+      this.branchId,
+      this.unitId,
+      this.customerId,
+      this.cusType,
+      this.hsn,
+      this.ticketNo,
+      this.cusFirstName,
+      this.cusState,
+      this.cusLastName,
+      this.gstVerified,
+      this.gstNo,
+      this.address,
+      this.landmark,
+      this.city,
+      this.contactPerson,
+      this.cusMobileNo,
+      this.typeOfUnit,
+      this.unitCapacity,
+      this.unitLocation,
+      this.typeOfService,
+      this.natureOfComplaint,
+      this.reportUpload,
+      this.reportDescription,
+      this.technicianId,
+      this.reportFromTechnician,
+      this.callTakenDate,
+      this.technicianAllocateDate,
+      this.technicianReportDate,
+      this.addedby,
+      this.status,
+      this.paidStatus,
+      this.advAmount,
+      this.typeOfWork,
+      this.serviceType,
+      this.amount,
+      this.createdAt,
+      this.updatedAt,
+      this.requirement,
+      this.nextFollowupDate});
 
   EditData.fromJson(Map<String, dynamic> json) {
     serviceId = json['service_id'];
@@ -368,6 +369,7 @@ class EditData {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     requirement = json['requirement'];
+    nextFollowupDate = json['next_followup_date'];
   }
 
   Map<String, dynamic> toJson() {
@@ -414,6 +416,7 @@ class EditData {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['requirement'] = this.requirement;
+    data['next_followup_date'] = this.nextFollowupDate;
 
     return data;
   }

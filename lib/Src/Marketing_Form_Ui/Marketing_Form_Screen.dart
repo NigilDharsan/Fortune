@@ -42,12 +42,13 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
     'completed',
     'pending',
     'processing',
-    "cancelled"
+    "cancelled",
+    "not matching"
   ];
 
   List<String> _selectMarketingType = [
-    'Sales',
-    'Leads',
+    'sales',
+    'leads',
   ];
 
   String TimeVal = '';
@@ -80,7 +81,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
   List<String> _AssignExecutive = ['Arun', 'Madhesh', 'Naveen', "Nivas"];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  List<Executives> _selectedItems = [];
+  Executives? _selectedItems;
   String client_id = "";
   String company_id = "";
   bool? isAddNewClient;
@@ -166,7 +167,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             return null;
                           },
                           hintText: 'Search Client name',
-                          initValue: _ClientName.text,
+                          initValue: clientName ?? "",
                         ),
                         // dropDownField1(
                         //   context,
@@ -409,7 +410,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                                           ? "3"
                                           : selectStatus == "cancelled"
                                               ? "4"
-                                              : "";
+                                              : "5";
                             });
                           },
                         ),
@@ -434,11 +435,10 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                                 children: [
                                   Title_Style(
                                       Title: "Assign to", isStatus: true),
-                                  MultiSelectDropdown(
+                                  SingleSelectDropdown(
                                     items: data?.data?.executives ?? [],
-                                    selectedItems: _selectedItems,
-                                    onChanged:
-                                        (List<Executives> selectedItems) {
+                                    selectedItem: _selectedItems,
+                                    onChanged: (Executives? selectedItems) {
                                       setState(() {
                                         _selectedItems = selectedItems;
                                       });
@@ -462,7 +462,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                             } else if (singleton.permissionList
                                         .contains("lead-assign") ==
                                     true &&
-                                _selectedItems.length == 0 &&
+                                _selectedItems == null &&
                                 (data?.data?.executives?.length ?? 0) != 0) {
                               ShowToastMessage("Select executive");
                             } else if (selectStatus_id == "") {
@@ -471,9 +471,7 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                                 selectMarketing_Type == null) {
                               ShowToastMessage("Select Type");
                             } else {
-                              List<int> idList = _selectedItems
-                                  .map((item) => item.id ?? 0)
-                                  .toList();
+                              String idList = "${_selectedItems?.id ?? ""}";
 
                               Map<String, dynamic> data = {
                                 "is_new_client":
@@ -486,7 +484,8 @@ class _Post_Job_ScreenState extends ConsumerState<Marketing_Form_Screen> {
                                 "cus_first_name": _ClientName.text,
                                 "address": _ClientAddress.text,
                                 "status_note": _StatusNote.text,
-                                "assign_executive": idList,
+                                for (var i = 0; i < idList.length; i++)
+                                  'assign_executive[$i]': idList[i],
                                 "company_id": company_id,
                                 "status": selectStatus_id,
                                 "plan_for_next_meet": _PlanofAction.text,

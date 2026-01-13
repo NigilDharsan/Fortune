@@ -454,7 +454,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                                   return null;
                                 },
                                 hintText: 'Search Items',
-                                initValue: '',
+                                initValue: itemsData[i]["productName"] == ""
+                                    ? ""
+                                    : itemsData[i]["productName"] ?? "",
                               ),
 
                               // dropDownField7(

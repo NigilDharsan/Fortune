@@ -91,7 +91,7 @@ Future<dynamic> requestPOST(
       case 201:
         final jsonResponse = {'success': true, 'response': response.data};
         return jsonResponse;
-      // case 400:
+      // case 400:2321
       //   final result = jsonDee.body);
       //   final jsonResponse = {'success': false, 'response': result};
       //   return jsonResponse;
@@ -145,7 +145,7 @@ Future<dynamic> requestPOST(
     } else {
       final jsonResponse = {
         'success': false,
-        'response': ConstantApi.SOMETHING_WRONG //Server not responding
+        'response': e.response?.data //Server not responding
       };
       return jsonResponse;
     }

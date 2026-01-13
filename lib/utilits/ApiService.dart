@@ -604,9 +604,11 @@ class ApiService {
       } catch (e) {
         print(result["response"]);
         // Toast.show(result["response"], context);
+        var resultval = MarketingListModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        return resultval;
       }
     }
-    return MarketingListModel();
   }
 
   Future<MarketingEditModel> getMarketingEditApi(String service_id) async {

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,11 +70,12 @@ class _Marketing_Form_Edit_ScreenState
     'completed',
     'pending',
     'processing',
-    "cancelled"
+    "cancelled",
+    "not matching"
   ];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  List<Executives> _selectedItems = [];
+  Executives? _selectedItems;
   String client_id = "";
   String company_id = "";
   bool? isAddNewClient;
@@ -91,8 +93,8 @@ class _Marketing_Form_Edit_ScreenState
   String? status;
 
   List<String> _selectMarketingType = [
-    'Sales',
-    'Leads',
+    'sales',
+    'leads',
   ];
 
   SingleTon singleton = SingleTon();
@@ -147,10 +149,9 @@ class _Marketing_Form_Edit_ScreenState
                     List<int> servicerepsIntArray =
                         servicerepsList.map(int.parse).toList();
 
-                    _selectedItems = data.data!.executives!
-                        .where((executive) =>
-                            servicerepsIntArray.contains(executive.id))
-                        .toList();
+                    _selectedItems = data.data!.executives!.firstWhereOrNull(
+                        (executive) =>
+                            servicerepsIntArray.contains(executive.id));
 
                     isvalueUpdated = true;
                     selectStatus_id = data.data?.data?.status ?? "";
@@ -166,7 +167,7 @@ class _Marketing_Form_Edit_ScreenState
                                 ? "processing"
                                 : selectStatus_id == "4"
                                     ? "cancelled"
-                                    : "";
+                                    : "not matching";
                   }
 
                   return Padding(
@@ -221,7 +222,7 @@ class _Marketing_Form_Edit_ScreenState
                         dropDownField(
                           context,
                           hintT: 'Select Type',
-                          value: selectMarketing_Type,
+                          value: selectMarketing_Type?.toLowerCase(),
                           listValue: _selectMarketingType,
                           onChanged: (String? newValue) {
                             setState(() {
@@ -349,7 +350,7 @@ class _Marketing_Form_Edit_ScreenState
                                   );
                                   setState(() {
                                     _DatePicker.text =
-                                        DateFormat('dd/MM/yyyy hh:mm a')
+                                        DateFormat('yyyy-MM-dd hh:mm a')
                                             .format(selectedDateTime);
                                   });
                                 }
@@ -386,7 +387,7 @@ class _Marketing_Form_Edit_ScreenState
                               //   }
                               // }
                             },
-                            hintText: 'dd/MM/yyyy'),
+                            hintText: 'yyyy-MM-dd'),
 
                         //STATUS NOTE
                         Title_Style(Title: 'Status Note', isStatus: false),
@@ -445,11 +446,10 @@ class _Marketing_Form_Edit_ScreenState
                                   //     });
                                   //   },
                                   // ),
-                                  MultiSelectDropdown(
+                                  SingleSelectDropdown(
                                     items: data.data?.executives ?? [],
-                                    selectedItems: _selectedItems,
-                                    onChanged:
-                                        (List<Executives> selectedItems) {
+                                    selectedItem: _selectedItems,
+                                    onChanged: (Executives? selectedItems) {
                                       setState(() {
                                         _selectedItems = selectedItems;
                                       });
@@ -467,16 +467,14 @@ class _Marketing_Form_Edit_ScreenState
                             if (singleton.permissionList
                                         .contains("service-assign") ==
                                     true &&
-                                _selectedItems.length == 0 &&
+                                _selectedItems == null &&
                                 (data.data?.executives?.length ?? 0) != 0) {
                               ShowToastMessage("Select executive");
                             } else if (selectMarketing_Type == "" ||
                                 selectMarketing_Type == null) {
                               ShowToastMessage("Select Type");
                             } else {
-                              List<String> idList = _selectedItems
-                                  .map((item) => "${item.id ?? 0}")
-                                  .toList();
+                              String idList = "${_selectedItems?.id ?? ""}";
                               var formData = FormData.fromMap({
                                 "status_note": _StatusNote.text,
                                 "status": selectStatus_id,

@@ -39,6 +39,7 @@ class _FilterServiceScreenState extends State<FilterServiceScreen> {
   var dateRange = "";
 
   SingleTon singleton = SingleTon();
+  var focus = FocusNode();
 
   @override
   void initState() {
@@ -218,6 +219,40 @@ class _FilterServiceScreenState extends State<FilterServiceScreen> {
                     //     singleton.filterClientnameID = "${item?.clientId ?? 0}";
                     //   },
                     // ),
+
+                    Title_Style(Title: 'Select Client', isStatus: false),
+                    dropDownClientSearchField(
+                      context,
+                      listValue: widget.filter?.clients ?? [],
+                      onChanged: ((x) {
+                        focus.unfocus();
+
+                        setState(() {
+                          if (x.searchKey == "Add New") {
+                          } else {
+                            clientName = x.searchKey;
+                            singleton.filterClientname = x.searchKey;
+                            int index = widget.filter!.clients!.indexWhere(
+                                (st) => st.cusFirstName == x.searchKey);
+
+                            singleton.filterClientnameID =
+                                "${widget.filter!.clients![index].customerId ?? 0}";
+                          }
+                        });
+                      }),
+                      focus: focus,
+                      validator: (x) {
+                        int index = widget.filter!.clients!
+                            .indexWhere((st) => st.cusFirstName == x);
+
+                        if (index == -1) {
+                          return 'Please Choose Client';
+                        }
+                        return null;
+                      },
+                      hintText: 'Search Client name',
+                      initValue: clientName ?? "",
+                    ),
 
                     singleton.permissionList
                                 .contains("service-filter-company") ==

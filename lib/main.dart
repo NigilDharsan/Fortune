@@ -36,12 +36,12 @@ Future<void> main() async {
     }
   });
 
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print('Message also contained a notification: ${fcmToken}');
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
+  // print('Message also contained a notification: ${fcmToken}');
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  await prefs.setString('fcmToken', fcmToken ?? "");
+  await prefs.setString('fcmToken', "fcmToken" ?? "");
 
   runApp(ProviderScope(child: const MyApp()));
 }

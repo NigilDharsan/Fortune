@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:fortune/Model/ActivityEditModel.dart';
 import 'package:fortune/Model/AttendanceLogsModel.dart';
 import 'package:fortune/Model/ClientsModel.dart';

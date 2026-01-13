@@ -11,6 +11,7 @@ import 'package:fortune/Model/ServiceHistoryModel.dart';
 import 'package:fortune/Src/ClientScreen/Client_List_Screen.dart';
 import 'package:fortune/Src/GeneralActivity/GeneralActivityList.dart';
 import 'package:fortune/Src/ItemsScreen/Items_List_Screen.dart';
+import 'package:fortune/Src/Leave/LeaveListScreen.dart';
 import 'package:fortune/Src/Login_Ui/Login_Screen.dart';
 import 'package:fortune/Src/Logs/AttendanceLogs.dart';
 import 'package:fortune/Src/Marketing_Form_Ui/Marketing_List_Screen.dart';
@@ -442,6 +443,29 @@ class _Home_DashBoard_ScreenState extends ConsumerState<Home_DashBoard_Screen> {
                               isWhite: true,
                               color: black1),
                         )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LeaveManagementPage())).then(
+                                (value) => ref.refresh(dashboardProvider));
+                          },
+                          child: _ActivityCard(
+                              iconFile: Icons.hotel_class,
+                              cardName: " Leave ",
+                              isWhite: true,
+                              color: brown2),
+                        ),
                       ],
                     ),
                     //TODAY LIST

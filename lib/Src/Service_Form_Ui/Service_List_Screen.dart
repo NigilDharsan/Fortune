@@ -182,8 +182,16 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                 i = 1;
 
                 filter = data?.data?.filter ?? Filter();
-                return (serviceData.length ?? 0) != 0
-                    ? Padding(
+                return serviceData.isEmpty && data?.data == null
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          data?.message ?? "No data found!",
+                          textAlign: TextAlign.center,
+                        ),
+                      ))
+                    : Padding(
                         padding: const EdgeInsets.only(
                             left: 20, right: 20, bottom: 30),
                         child: Container(
@@ -217,8 +225,7 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                                 );
                               },
                             )),
-                      )
-                    : Center(child: Text("No Data Found"));
+                      );
               },
               error: (Object error, StackTrace stackTrace) {
                 return Text(error.toString());
@@ -297,8 +304,16 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                 isRefresh = false;
                 i = 1;
 
-                return (serviceData.length ?? 0) == 0
-                    ? Padding(
+                return serviceData.isEmpty && data?.data == null
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          data?.message ?? "No data found!",
+                          textAlign: TextAlign.center,
+                        ),
+                      ))
+                    : Padding(
                         padding: const EdgeInsets.only(
                             left: 20, right: 20, bottom: 30),
                         child: Column(
@@ -346,8 +361,7 @@ class _Service_List_ScreenState extends ConsumerState<Service_List_Screen> {
                                 ),
                           ],
                         ),
-                      )
-                    : Center(child: Text("No Data Fount!"));
+                      );
               },
               error: (Object error, StackTrace stackTrace) {
                 return Center(

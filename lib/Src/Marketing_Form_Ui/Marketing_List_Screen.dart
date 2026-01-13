@@ -131,6 +131,7 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                             if (value == true) {
                               formData = FormData.fromMap({
                                 "executive_id": singleton.filterSalesrepID,
+                                "client_id": singleton.filterClientnameID,
                                 "status_id": singleton.filterStatusID,
                                 "daterange": singleton.filterDaterange,
                                 "company_id": singleton.filterCompanynameID,
@@ -179,32 +180,42 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                 i = 1;
                 filter = data?.data?.filter ?? Filter();
 
-                return SingleChildScrollView(
-                  controller:
-                      _scrollController, // Attach the scroll controller here
+                return data?.data == null
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          data?.message ?? "No data found!",
+                          textAlign: TextAlign.center,
+                        ),
+                      ))
+                    : // Display the list of marketing data
 
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 20,
+                    SingleChildScrollView(
+                        controller:
+                            _scrollController, // Attach the scroll controller here
+
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, bottom: 30),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                child: _Marketing_List(ref, marketingData),
+                              ),
+                            ],
+                          ),
                         ),
-                        Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          child: _Marketing_List(ref, marketingData),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                      );
               },
               error: (Object error, StackTrace stackTrace) {
-                return Center(
-                    child: Text("Connection closed, Please try again!"));
+                return Center(child: Text(error.toString()));
               },
               loading: () => Center(child: CircularProgressIndicator()),
             ),
@@ -268,26 +279,35 @@ class _Marketing_List_ScreenState extends ConsumerState<Marketing_List_Screen> {
                 isNav: true),
             body: _MarketingListData.when(
               data: (data) {
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 30),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 20,
+                return data?.data == null
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          data?.message ?? "No data found!",
+                          textAlign: TextAlign.center,
                         ),
-                        Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          child: _Marketing_List(
-                              ref, data?.data?.marketings?.data ?? []),
+                      ))
+                    : SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, bottom: 30),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                child: _Marketing_List(
+                                    ref, data?.data?.marketings?.data ?? []),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                );
+                      );
               },
               error: (Object error, StackTrace stackTrace) {
                 return Center(child: Text("No data found!"));

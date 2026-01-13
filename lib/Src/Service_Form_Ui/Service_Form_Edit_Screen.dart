@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ import 'package:fortune/utilits/Generic.dart';
 import 'package:fortune/utilits/Loading_Overlay.dart';
 import 'package:fortune/utilits/Text_Style.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -35,6 +37,7 @@ class Service_Form_Edit_Screen extends ConsumerStatefulWidget {
 
 class _Service_Form_Edit_ScreenState
     extends ConsumerState<Service_Form_Edit_Screen> {
+  TextEditingController _DatePicker = TextEditingController();
   TextEditingController _StatusNote = TextEditingController();
   TextEditingController _ClientName = TextEditingController();
   TextEditingController _ContactNumber = TextEditingController();
@@ -42,7 +45,7 @@ class _Service_Form_Edit_ScreenState
   TextEditingController _Requirement = TextEditingController();
 
   List<File> _selectedFiles = [];
-  List<Executives> _selectedItems = [];
+  Executives? _selectedItems;
   List<FocusNode> focus = [];
   List<Map<String, dynamic>> itemsData = [];
   List<int> itemsDeleteID = [];
@@ -180,10 +183,9 @@ class _Service_Form_Edit_ScreenState
                       List<int> servicerepsIntArray =
                           servicerepsList.map(int.parse).toList();
 
-                      _selectedItems = data.data!.executives!
-                          .where((executive) =>
-                              servicerepsIntArray.contains(executive.id))
-                          .toList();
+                      _selectedItems = data.data!.executives!.firstWhereOrNull(
+                          (executive) =>
+                              servicerepsIntArray.contains(executive.id));
 
                       _StatusNote.text =
                           data.data?.data?[0].reportDescription ?? "";
@@ -200,6 +202,9 @@ class _Service_Form_Edit_ScreenState
                                   : selectStatus_id == "4"
                                       ? "cancelled"
                                       : "";
+                      _DatePicker.text =
+                          data?.data?.data?[0].nextFollowupDate ?? "";
+
                       getImagePath(data.data?.data?[0].reportUpload ?? []);
                     }
 
@@ -301,6 +306,53 @@ class _Service_Form_Edit_ScreenState
                               hintText: 'Enter Status Note',
                               validating: null),
 
+                          Title_Style(
+                              Title: 'Next Followup date', isStatus: true),
+                          TextFieldDatePicker(
+                              Controller: _DatePicker,
+                              onChanged: null,
+                              validating: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please select Date';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onTap: () async {
+                                FocusScope.of(context).unfocus();
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(2050));
+                                if (pickedDate != null) {
+                                  final TimeOfDay? pickedTime =
+                                      await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  );
+                                  if (pickedTime != null) {
+                                    final DateTime selectedDateTime = DateTime(
+                                      pickedDate.year,
+                                      pickedDate.month,
+                                      pickedDate.day,
+                                      pickedTime.hour,
+                                      pickedTime.minute,
+                                    );
+
+                                    String formatdate =
+                                        DateFormat("yyyy-MM-dd hh:mm a")
+                                            .format(selectedDateTime);
+                                    if (mounted) {
+                                      setState(() {
+                                        _DatePicker.text = formatdate;
+                                        print(_DatePicker.text);
+                                      });
+                                    }
+                                  }
+                                }
+                              },
+                              hintText: 'yyyy-MM-dd'),
                           Title_Style(Title: 'Spare Used List', isStatus: true),
                           Padding(
                             padding: const EdgeInsets.only(
@@ -425,11 +477,10 @@ class _Service_Form_Edit_ScreenState
                                     //     });
                                     //   },
                                     // ),
-                                    MultiSelectDropdown(
+                                    SingleSelectDropdown(
                                       items: data.data?.executives ?? [],
-                                      selectedItems: _selectedItems,
-                                      onChanged:
-                                          (List<Executives> selectedItems) {
+                                      selectedItem: _selectedItems,
+                                      onChanged: (Executives? selectedItems) {
                                         setState(() {
                                           _selectedItems = selectedItems;
                                         });
@@ -690,13 +741,11 @@ class _Service_Form_Edit_ScreenState
                               if (singleton.permissionList
                                           .contains("service-assign") ==
                                       true &&
-                                  _selectedItems.length == 0 &&
+                                  _selectedItems == null &&
                                   (data.data?.executives?.length ?? 0) != 0) {
                                 ShowToastMessage("Select executive");
                               } else {
-                                List<String> idList = _selectedItems
-                                    .map((item) => "${item.id ?? 0}")
-                                    .toList();
+                                String idList = "${_selectedItems?.id ?? ""}";
 
                                 final spareData = itemsData
                                     .where(
@@ -708,6 +757,7 @@ class _Service_Form_Edit_ScreenState
                                     "status": selectStatus_id,
                                     "requirement": _Requirement.text,
                                     "status_note": _StatusNote.text,
+                                    "next_followup_date": _DatePicker.text,
                                     for (var i = 0; i < idList.length; i++)
                                       'assign_executive[$i]': idList[i],
                                     "_method": "PUT",
@@ -724,6 +774,7 @@ class _Service_Form_Edit_ScreenState
                                     "status": selectStatus_id,
                                     "requirement": _Requirement.text,
                                     "status_note": _StatusNote.text,
+                                    "next_followup_date": _DatePicker.text,
                                     for (var i = 0; i < idList.length; i++)
                                       'assign_executive[$i]': idList[i],
                                     "_method": "PUT",

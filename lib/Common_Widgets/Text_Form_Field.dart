@@ -1108,6 +1108,64 @@ Widget dropDownClientGSTSearchField(
   );
 }
 
+class SingleSelectDropdown extends StatefulWidget {
+  final List<Executives> items;
+  final Executives? selectedItem;
+  final ValueChanged<Executives?> onChanged;
+
+  SingleSelectDropdown({
+    required this.items,
+    required this.selectedItem,
+    required this.onChanged,
+  });
+
+  @override
+  _SingleSelectDropdownState createState() => _SingleSelectDropdownState();
+}
+
+class _SingleSelectDropdownState extends State<SingleSelectDropdown> {
+  int? _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.selectedItem != null) {
+      _selectedIndex = widget.items.indexOf(widget.selectedItem!);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InputDecorator(
+      decoration: InputDecoration(
+        labelText: 'Select Executive',
+        border: OutlineInputBorder(),
+      ),
+      child: SizedBox(
+        height: 200,
+        child: SingleChildScrollView(
+          child: Column(
+            children: List<Widget>.generate(widget.items.length, (int index) {
+              return RadioListTile<int>(
+                title: Text(widget.items[index].name ?? ""),
+                value: index,
+                groupValue: _selectedIndex,
+                onChanged: (int? value) {
+                  setState(() {
+                    _selectedIndex = value;
+                    widget
+                        .onChanged(value != null ? widget.items[value] : null);
+                  });
+                },
+              );
+            }),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class MultiSelectDropdown extends StatefulWidget {
   final List<Executives> items;
   final List<Executives> selectedItems;

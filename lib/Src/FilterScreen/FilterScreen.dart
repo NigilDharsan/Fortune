@@ -50,6 +50,7 @@ class _FilterScreenState extends State<FilterScreen> {
 
   SingleTon singleton = SingleTon();
   final GlobalKey<FormFieldState> _formKey = GlobalKey<FormFieldState>();
+  var focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,9 @@ class _FilterScreenState extends State<FilterScreen> {
                           right: 16.0), // Adjust the padding as needed
                       child: InkWell(
                           onTap: () {
+                            singleton.filterClientname = null;
+                            singleton.filterClientnameID = null;
+
                             singleton.filterSalesrep = null;
                             singleton.filterSalesrepID = null;
 
@@ -245,6 +249,41 @@ class _FilterScreenState extends State<FilterScreen> {
                                       : "";
                         });
                       },
+                    ),
+
+                    //CLIENT NAME
+
+                    Title_Style(Title: 'Select Client', isStatus: false),
+                    dropDownClientSearchField(
+                      context,
+                      listValue: widget.filter?.clients ?? [],
+                      onChanged: ((x) {
+                        focus.unfocus();
+                        setState(() {
+                          if (x.searchKey == "Add New") {
+                          } else {
+                            clientName = x.searchKey;
+                            singleton.filterClientname = x.searchKey;
+                            int index = widget.filter!.clients!.indexWhere(
+                                (st) => st.cusFirstName == x.searchKey);
+
+                            singleton.filterClientnameID =
+                                "${widget.filter!.clients![index].customerId ?? 0}";
+                          }
+                        });
+                      }),
+                      focus: focus,
+                      validator: (x) {
+                        int index = widget.filter!.clients!
+                            .indexWhere((st) => st.cusFirstName == x);
+
+                        if (index == -1) {
+                          return 'Please Choose Client';
+                        }
+                        return null;
+                      },
+                      hintText: 'Search Client name',
+                      initValue: clientName ?? "",
                     ),
 
                     singleton.permissionList.contains("lead-company-filter") ==
