@@ -13,6 +13,9 @@ import 'package:fortune/Model/ExectiveModel.dart';
 import 'package:fortune/Model/GeneralListModel.dart';
 import 'package:fortune/Model/ItemsEditModel.dart';
 import 'package:fortune/Model/ItemsModel.dart';
+import 'package:fortune/Model/LeaveBalanceModel.dart';
+import 'package:fortune/Model/LeaveRequestListModel.dart';
+import 'package:fortune/Model/LeaveTypeModel.dart';
 import 'package:fortune/Model/LoginModel.dart';
 import 'package:fortune/Model/MarketingEditModel.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
@@ -882,5 +885,146 @@ class ApiService {
       }
     }
     return ItemsEditModel();
+  }
+
+  Future<LeaveTypeModel> getLeaveTypeApi() async {
+    final result = await requestGET(url: ConstantApi.leaveTypeURL, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return LeaveTypeModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = LeaveTypeModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LeaveTypeModel();
+  }
+
+  Future<LeaveBalanceModel> getLeaveBalanceApi(int leaveTypeID) async {
+    final result = await requestGET(
+        url: "${ConstantApi.leavebalanceseURL}?leave_type=$leaveTypeID",
+        dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return LeaveBalanceModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = LeaveBalanceModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LeaveBalanceModel();
+  }
+
+  Future<LeaveRequestListModel> getLeaveRequestListApi() async {
+    final result =
+        await requestGET(url: ConstantApi.leaveRequestsURL, dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return LeaveRequestListModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = LeaveRequestListModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LeaveRequestListModel();
+  }
+
+  Future<SuccessModel> postLeaveRequestApi(FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.leaveRequestsURL, dio: _dio, formData: formData);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
+  Future<SuccessModel> updateLeaveRequestApi(String leaveRequestId) async {
+    SingleTon singleTon = SingleTon();
+
+    final result = await requestPUT(
+      url: "${ConstantApi.leaveRequestsURL}/$leaveRequestId",
+      formData: singleTon.formData,
+      dio: _dio,
+    );
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
+  }
+
+  Future<SuccessModel> deleteLeaveRequestApi(String leaveRequestId) async {
+    SingleTon singleTon = SingleTon();
+
+    final result = await requestDelete(
+        url: "${ConstantApi.leaveRequestsURL}/$leaveRequestId",
+        formData: singleTon.formData,
+        dio: _dio);
+
+    if (result["success"] == true) {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return SuccessModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = SuccessModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+        // Toast.show(result["response"], context);
+      }
+    }
+    return SuccessModel();
   }
 }

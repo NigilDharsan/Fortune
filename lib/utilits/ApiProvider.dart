@@ -13,6 +13,9 @@ import 'package:fortune/Model/ExectiveModel.dart';
 import 'package:fortune/Model/GeneralListModel.dart';
 import 'package:fortune/Model/ItemsEditModel.dart';
 import 'package:fortune/Model/ItemsModel.dart';
+import 'package:fortune/Model/LeaveBalanceModel.dart';
+import 'package:fortune/Model/LeaveRequestListModel.dart';
+import 'package:fortune/Model/LeaveTypeModel.dart';
 import 'package:fortune/Model/MarketingEditModel.dart';
 import 'package:fortune/Model/MarketingHistoryModel.dart';
 import 'package:fortune/Model/MarketingListModel.dart';
@@ -236,4 +239,33 @@ final itemListFutureProvider = FutureProvider<List<ServicesData>>((ref) async {
     ..addAll(fetchedItems);
 
   return updatedList;
+});
+
+final leaveTypeProvider = FutureProvider<LeaveTypeModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getLeaveTypeApi();
+});
+
+final leaveRequestListProvider =
+    FutureProvider.autoDispose<LeaveRequestListModel?>((ref) async {
+  return ref.watch(apiServiceProvider).getLeaveRequestListApi();
+});
+
+final leaveBalance =
+    FutureProvider.family<LeaveBalanceModel?, int>((ref, leaveTypeID) async {
+  return ref.watch(apiServiceProvider).getLeaveBalanceApi(leaveTypeID);
+});
+
+final leaveRequestPost = FutureProvider.autoDispose
+    .family<SuccessModel?, FormData>((ref, formData) async {
+  return ref.watch(apiServiceProvider).postLeaveRequestApi(formData);
+});
+
+final leaveRequestUpdate = FutureProvider.autoDispose
+    .family<SuccessModel?, String>((ref, leaveRequestID) async {
+  return ref.watch(apiServiceProvider).updateLeaveRequestApi(leaveRequestID);
+});
+
+final leaveRequestDelete = FutureProvider.autoDispose
+    .family<SuccessModel?, String>((ref, leaveRequestID) async {
+  return ref.watch(apiServiceProvider).deleteLeaveRequestApi(leaveRequestID);
 });

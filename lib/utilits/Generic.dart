@@ -150,6 +150,7 @@ class SingleTon {
   bool isLoading = true;
   List<String> permissionList = [];
   FormData formData = FormData();
+  Map<String, dynamic> formData1 = {};
 
   String? filterSalesrep;
   String? filterSalesrepID;

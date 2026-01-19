@@ -1,36 +1,22 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Model/LeaveRequestListModel.dart';
 import 'package:fortune/Src/Leave/LeaveRequest.dart';
+import 'package:fortune/utilits/ApiProvider.dart';
+import 'package:fortune/utilits/Generic.dart';
 
-/// ---------------- MODEL ----------------
-class LeaveModel {
-  final String type;
-  final String subType;
-  final DateTime from;
-  final DateTime to;
-  final String reason;
-  final String status;
-
-  LeaveModel({
-    required this.type,
-    required this.subType,
-    required this.from,
-    required this.to,
-    required this.reason,
-    required this.status,
-  });
-}
-
-class LeaveManagementPage extends StatefulWidget {
+class LeaveManagementPage extends ConsumerStatefulWidget {
   const LeaveManagementPage({super.key});
 
   @override
-  State<LeaveManagementPage> createState() => _LeaveManagementPageState();
+  ConsumerState<LeaveManagementPage> createState() =>
+      _LeaveManagementPageState();
 }
 
-class _LeaveManagementPageState extends State<LeaveManagementPage> {
+class _LeaveManagementPageState extends ConsumerState<LeaveManagementPage> {
   /// DATA
-  List<LeaveModel> leaveList = [];
+  List<RequestListData> leaveList = [];
 
   int selectedYear = DateTime.now().year;
 
@@ -45,9 +31,9 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
   String? filterType;
   String? filterStatus;
 
-  List<LeaveModel> get filteredLeaveList {
+  List<RequestListData> get filteredLeaveList {
     return leaveList.where((e) {
-      if (filterType != null && e.type != filterType) return false;
+      if (filterType != null && e.recordType != filterType) return false;
       if (filterStatus != null && e.status != filterStatus) return false;
       return true;
     }).toList();
@@ -59,7 +45,7 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
 
   @override
   Widget build(BuildContext context) {
-    final list = filteredLeaveList;
+    final leaveRequestData = ref.watch(leaveRequestListProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -103,13 +89,11 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
                     final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => ViewDetailsPage(
-                          leaveList: leaveList, // pass current list if needed
-                        ),
+                        builder: (_) => ViewDetailsPage(),
                       ),
                     );
 
-                    if (result != null && result is LeaveModel) {
+                    if (result != null && result is RequestListData) {
                       // Add new leave
                       setState(() {
                         leaveList.add(result);
@@ -122,26 +106,33 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
             ),
 
             const SizedBox(height: 15),
-            if (list.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(20),
-                child: Text("No Records Found"),
-              )
-            else
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: list.length,
-                itemBuilder: (_, i) => _leaveRow(list[i], i),
-              ),
+            leaveRequestData.when(data: (data) {
+              // Process data and populate leaveList
+              if (data?.data?.data?.isEmpty ?? true) {
+                return const Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text("No Records Found"),
+                );
+              } else {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: data?.data?.data?.length ?? 0,
+                  itemBuilder: (_, i) => _leaveRow(data!.data!.data![i], i),
+                );
+              }
+            }, loading: () {
+              return const Center(child: CircularProgressIndicator());
+            }, error: (err, stack) {
+              return Center(child: Text('Error: $err'));
+            }),
           ],
         ),
       ),
     );
   }
 
-  Widget _leaveRow(LeaveModel item, int index) {
-    final actualIndex = leaveList.indexOf(item);
+  Widget _leaveRow(RequestListData item, int index) {
     return Card(
       margin: const EdgeInsets.only(bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -162,7 +153,7 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
                             "Type",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          _cell(item.subType),
+                          _cell(item.recordType ?? ""),
                         ],
                       ),
                     ),
@@ -171,10 +162,10 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            "Remarks",
+                            "Status",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          _cell(item.status),
+                          _cell(item.status ?? ""),
                         ],
                       ),
                     ),
@@ -191,7 +182,7 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
                             "From Date",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          _cell(item.from.toString()),
+                          _cell(item.fromDate.toString()),
                         ],
                       ),
                     ),
@@ -203,39 +194,21 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
                             "To Date",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          _cell(item.to.toString()),
+                          _cell(item.toDate.toString()),
                         ],
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Reason",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          _cell(item.reason),
-                        ],
-                      ),
+                    const Text(
+                      "Reason",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Status",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          _cell(item.status),
-                        ],
-                      ),
-                    ),
+                    _cell(item.reason ?? ""),
                   ],
                 ),
               ],
@@ -248,11 +221,12 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.edit, size: 20),
-                  onPressed: () => _editLeave(actualIndex),
+                  onPressed: () => _editLeave(item, index),
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete, size: 20, color: Colors.red),
-                  onPressed: () => _deleteLeave(actualIndex),
+                  onPressed: () =>
+                      _deleteLeave(item.recordType ?? "", item.id ?? "", ref),
                 ),
               ],
             ),
@@ -262,24 +236,22 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
     );
   }
 
-  void _editLeave(int index) async {
-    final item = leaveList[index];
-
+  void _editLeave(RequestListData item, int index) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => ViewDetailsPage(leaveList: leaveList, editLeave: item),
+        builder: (_) => ViewDetailsPage(editLeave: item),
       ),
     );
 
-    if (result != null && result is LeaveModel) {
+    if (result != null && result is RequestListData) {
       setState(() {
         leaveList[index] = result; // update the leave
       });
     }
   }
 
-  void _deleteLeave(int index) {
+  void _deleteLeave(String type, String index, WidgetRef ref) {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -291,9 +263,14 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
             child: const Text("Cancel"),
           ),
           ElevatedButton(
-            onPressed: () {
-              setState(() => leaveList.removeAt(index));
+            onPressed: () async {
               Navigator.pop(context);
+
+              SingleTon singleTon = SingleTon();
+              singleTon.formData1 = {"type": type == "PERMISSION" ? 2 : 1};
+
+              await ref.read(leaveRequestDelete(index).future);
+              ref.refresh(leaveRequestListProvider);
             },
             child: const Text("Delete"),
           ),
@@ -414,7 +391,9 @@ class _LeaveManagementPageState extends State<LeaveManagementPage> {
 
   Widget _cell(String text) {
     return SizedBox(
-      child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis),
+      child: Text(
+        text,
+      ),
     );
   }
 }

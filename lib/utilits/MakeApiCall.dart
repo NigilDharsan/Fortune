@@ -216,6 +216,168 @@ Future<dynamic> requestPOST2(
   }
 }
 
+Future<dynamic> requestPUT(
+    {required String url, required Object formData, required Dio dio}) async {
+  String? accessToken = await getToken();
+
+  try {
+    dio.options.headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    dio.options.baseUrl = url;
+
+    print("Url: $url, AccessToken: $accessToken");
+    final response = await dio.put(url, data: formData);
+    print(response);
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+        final jsonResponse = {'success': true, 'response': response.data};
+        return jsonResponse;
+      // case 400:2321
+      //   final result = jsonDee.body);
+      //   final jsonResponse = {'success': false, 'response': result};
+      //   return jsonResponse;
+      case 401:
+        final jsonResponse = {
+          'success': false,
+          'response': ConstantApi.UNAUTHORIZED
+        };
+        print("Api call Succeed, with 401 Status code");
+        return jsonResponse;
+      // case 500:
+      // case 501:
+      // case 502:
+      //   final jsonResponse = {
+      //     'success': false,
+      //     'response': ConstantApi.SOMETHING_WRONG
+      //   };
+      //   return jsonResponse;
+      default:
+        final jsonResponse = {'success': false, 'response': response.data};
+        return jsonResponse;
+    }
+  } on SocketException {
+    final jsonResponse = {
+      'success': false,
+      'response': ConstantApi.NO_INTERNET
+    };
+    return jsonResponse;
+  } on FormatException {
+    final jsonResponse = {
+      'success': false,
+      'response': ConstantApi.BAD_RESPONSE
+    };
+    return jsonResponse;
+  } on HttpException {
+    final jsonResponse = {
+      'success': false,
+      'response': ConstantApi.SOMETHING_WRONG //Server not responding
+    };
+    return jsonResponse;
+  } on DioError catch (e) {
+    if (e.response?.statusCode == 400) {
+      print(e.response?.statusCode);
+      print(e.response?.data);
+
+      final jsonResponse = {
+        'success': false,
+        'response': e.response?.data //Server not responding
+      };
+      return jsonResponse;
+    } else {
+      final jsonResponse = {
+        'success': false,
+        'response': e.response?.data //Server not responding
+      };
+      return jsonResponse;
+    }
+  }
+}
+
+Future<dynamic> requestDelete(
+    {required String url, required Object formData, required Dio dio}) async {
+  String? accessToken = await getToken();
+
+  try {
+    dio.options.headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    dio.options.baseUrl = url;
+
+    print("Url: $url, AccessToken: $accessToken");
+    final response = await dio.delete(url, data: formData);
+    print(response);
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+        final jsonResponse = {'success': true, 'response': response.data};
+        return jsonResponse;
+      // case 400:2321
+      //   final result = jsonDee.body);
+      //   final jsonResponse = {'success': false, 'response': result};
+      //   return jsonResponse;
+      case 401:
+        final jsonResponse = {
+          'success': false,
+          'response': ConstantApi.UNAUTHORIZED
+        };
+        print("Api call Succeed, with 401 Status code");
+        return jsonResponse;
+      // case 500:
+      // case 501:
+      // case 502:
+      //   final jsonResponse = {
+      //     'success': false,
+      //     'response': ConstantApi.SOMETHING_WRONG
+      //   };
+      //   return jsonResponse;
+      default:
+        final jsonResponse = {'success': false, 'response': response.data};
+        return jsonResponse;
+    }
+  } on SocketException {
+    final jsonResponse = {
+      'success': false,
+      'response': ConstantApi.NO_INTERNET
+    };
+    return jsonResponse;
+  } on FormatException {
+    final jsonResponse = {
+      'success': false,
+      'response': ConstantApi.BAD_RESPONSE
+    };
+    return jsonResponse;
+  } on HttpException {
+    final jsonResponse = {
+      'success': false,
+      'response': ConstantApi.SOMETHING_WRONG //Server not responding
+    };
+    return jsonResponse;
+  } on DioError catch (e) {
+    if (e.response?.statusCode == 400) {
+      print(e.response?.statusCode);
+      print(e.response?.data);
+
+      final jsonResponse = {
+        'success': false,
+        'response': e.response?.data //Server not responding
+      };
+      return jsonResponse;
+    } else {
+      final jsonResponse = {
+        'success': false,
+        'response': e.response?.data //Server not responding
+      };
+      return jsonResponse;
+    }
+  }
+}
+
 Future<dynamic> requestMultiPart({
   required String url,
   required FormData formData,

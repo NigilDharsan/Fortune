@@ -42,6 +42,12 @@ class ConstantApi {
 
   static String usersLogListUrl = SERVER_ONE + "log_hours/list";
 
+  //Leave
+
+  static String leaveTypeURL = SERVER_ONE + "leave-types";
+  static String leaveRequestsURL = SERVER_ONE + "leave-requests";
+  static String leavebalanceseURL = SERVER_ONE + "leave-balances";
+
 //Spares
 
   static String sparesListUrl = SERVER_ONE + "spares/ViewAllAssignedSpares";
