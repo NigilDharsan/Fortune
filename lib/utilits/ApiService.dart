@@ -980,7 +980,7 @@ class ApiService {
 
     final result = await requestPUT(
       url: "${ConstantApi.leaveRequestsURL}/$leaveRequestId",
-      formData: singleTon.formData,
+      formData: singleTon.formData1,
       dio: _dio,
     );
 
@@ -1007,7 +1007,7 @@ class ApiService {
 
     final result = await requestDelete(
         url: "${ConstantApi.leaveRequestsURL}/$leaveRequestId",
-        formData: singleTon.formData,
+        formData: singleTon.formData1,
         dio: _dio);
 
     if (result["success"] == true) {

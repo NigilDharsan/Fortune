@@ -46,7 +46,7 @@ class _ViewDetailsPageState extends ConsumerState<ViewDetailsPage> {
     final date = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
     if (date != null) {
@@ -69,11 +69,17 @@ class _ViewDetailsPageState extends ConsumerState<ViewDetailsPage> {
     if (widget.editLeave != null) {
       final e = widget.editLeave!;
       applyType = e.recordType ?? "";
-      leaveType = "PERMISSION"; //e.subType != "Permission" ? e.subType : null;
+      leaveType = e.leaveTypeName ?? "";
+      leaveTypeID = e.leaveTypeName == "Sick Leave"
+          ? 1
+          : e.leaveTypeName == "Casual Leave"
+              ? 2
+              : null;
       fromDate =
           e.fromDate != null ? getFormattedDateTime(e.fromDate ?? "") : null;
       toDate = e.toDate != null ? getFormattedDateTime(e.toDate!) : null;
       reasonController.text = e.reason ?? "";
+
       if (e.fromTime != null && e.fromTime!.isNotEmpty) {
         final fromParts = e.fromTime!.split(":");
         fromTime = TimeOfDay(
@@ -91,11 +97,17 @@ class _ViewDetailsPageState extends ConsumerState<ViewDetailsPage> {
     if (applyType == null) return;
 
     if (applyType == "LEAVE" &&
-        (leaveType == null || fromDate == null || toDate == null)) {
+        (leaveType == null ||
+            fromDate == null ||
+            toDate == null ||
+            reasonController.text == "")) {
       return;
     }
     if (applyType == "PERMISSION" &&
-        (fromDate == null || fromTime == null || toTime == null)) {
+        (fromDate == null ||
+            fromTime == null ||
+            toTime == null ||
+            reasonController.text == "")) {
       return;
     }
 
@@ -111,8 +123,6 @@ class _ViewDetailsPageState extends ConsumerState<ViewDetailsPage> {
         "to_date": toDate != null
             ? convertDateFormat("${toDate!.toLocal()}".split(' ')[0])
             : "",
-        "from_time": fromTime != null ? fromTime!.format(context) : "",
-        "to_time": toTime != null ? toTime!.format(context) : "",
         "reason": reasonController.text,
       });
     } else {
@@ -133,11 +143,13 @@ class _ViewDetailsPageState extends ConsumerState<ViewDetailsPage> {
     if (widget.editLeave != null) {
       SingleTon singleTon = SingleTon();
 
-      singleTon.formData = formdata;
+      for (var entry in formdata.fields) {
+        singleTon.formData1[entry.key] = entry.value;
+      }
 
       final results =
           await ref.read(leaveRequestUpdate(widget.editLeave?.id ?? "").future);
-      if (results == null) {
+      if (results != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(results!.message ?? 'Leave request submitted.')),
@@ -149,7 +161,7 @@ class _ViewDetailsPageState extends ConsumerState<ViewDetailsPage> {
       }
     } else {
       final results = await ref.read(leaveRequestPost(formdata).future);
-      if (results == null) {
+      if (results != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(results!.message ?? 'Leave request submitted.')),
@@ -161,7 +173,7 @@ class _ViewDetailsPageState extends ConsumerState<ViewDetailsPage> {
       }
     }
 
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   String convertDateFormat(String dateStr) {

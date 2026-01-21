@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fortune/Common_Widgets/Custom_App_Bar.dart';
 import 'package:fortune/Model/LeaveRequestListModel.dart';
 import 'package:fortune/Src/Leave/LeaveRequest.dart';
 import 'package:fortune/utilits/ApiProvider.dart';
@@ -48,67 +49,83 @@ class _LeaveManagementPageState extends ConsumerState<LeaveManagementPage> {
     final leaveRequestData = ref.watch(leaveRequestListProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Leave Management"),
-        backgroundColor: Colors.blue,
+      appBar: Custom_AppBar(
+          title: "Leave Management", actions: [], isGreen: false, isNav: true),
+      // AppBar(
+      //   title: const Text("Leave Management"),
+      //   backgroundColor: Colors.blue,
+      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          // Navigate to ViewDetailsPage and wait for result
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ViewDetailsPage(),
+            ),
+          ).then((onValue) {
+            ref.refresh(leaveRequestListProvider);
+          });
+        },
+        child: const Icon(Icons.add),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
             /// TOP BAR
-            Row(
-              children: [
-                _box(
-                  child: InkWell(
-                    onTap: _pickYear,
-                    child: Text("Select Month/Year"),
-                  ),
-                ),
-                SizedBox(width: 5),
-                Row(
-                  children: [
-                    Material(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
-                        onTap: _openFilterSheet,
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Icon(Icons.filter_list, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                ElevatedButton(
-                  onPressed: () async {
-                    // Navigate to ViewDetailsPage and wait for result
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ViewDetailsPage(),
-                      ),
-                    );
+            // Row(
+            //   children: [
+            //     _box(
+            //       child: InkWell(
+            //         onTap: _pickYear,
+            //         child: Text("Select Month/Year"),
+            //       ),
+            //     ),
+            //     SizedBox(width: 5),
+            //     Row(
+            //       children: [
+            //         Material(
+            //           color: Colors.blue,
+            //           borderRadius: BorderRadius.circular(10),
+            //           child: InkWell(
+            //             borderRadius: BorderRadius.circular(10),
+            //             onTap: _openFilterSheet,
+            //             child: Padding(
+            //               padding: EdgeInsets.all(8),
+            //               child: Icon(Icons.filter_list, color: Colors.white),
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //     const Spacer(),
+            //     ElevatedButton(
+            //       onPressed: () async {
+            //         // Navigate to ViewDetailsPage and wait for result
+            //         final result = await Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (_) => ViewDetailsPage(),
+            //           ),
+            //         );
 
-                    if (result != null && result is RequestListData) {
-                      // Add new leave
-                      setState(() {
-                        leaveList.add(result);
-                      });
-                    }
-                  },
-                  child: const Text("Apply Leave"),
-                ),
-              ],
-            ),
+            //         if (result != null && result is RequestListData) {
+            //           // Add new leave
+            //           setState(() {
+            //             leaveList.add(result);
+            //           });
+            //         }
+            //       },
+            //       child: const Text("Apply Leave"),
+            //     ),
+            //   ],
+            // ),
 
             const SizedBox(height: 15),
             leaveRequestData.when(data: (data) {
               // Process data and populate leaveList
-              if (data?.data?.data?.isEmpty ?? true) {
+              if (data?.data?.isEmpty ?? true) {
                 return const Padding(
                   padding: EdgeInsets.all(20),
                   child: Text("No Records Found"),
@@ -117,8 +134,8 @@ class _LeaveManagementPageState extends ConsumerState<LeaveManagementPage> {
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: data?.data?.data?.length ?? 0,
-                  itemBuilder: (_, i) => _leaveRow(data!.data!.data![i], i),
+                  itemCount: data?.data?.length ?? 0,
+                  itemBuilder: (_, i) => _leaveRow(data!.data![i], i),
                 );
               }
             }, loading: () {
@@ -214,41 +231,40 @@ class _LeaveManagementPageState extends ConsumerState<LeaveManagementPage> {
               ],
             ),
           ),
-          Positioned(
-            right: 10,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit, size: 20),
-                  onPressed: () => _editLeave(item, index),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete, size: 20, color: Colors.red),
-                  onPressed: () =>
-                      _deleteLeave(item.recordType ?? "", item.id ?? "", ref),
-                ),
-              ],
-            ),
-          ),
+          item.status == "PENDING"
+              ? Positioned(
+                  right: 10,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit, size: 20),
+                        onPressed: () => _editLeave(item, index),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete,
+                            size: 20, color: Colors.red),
+                        onPressed: () => _deleteLeave(
+                            item.recordType ?? "", item.id ?? "", ref),
+                      ),
+                    ],
+                  ),
+                )
+              : SizedBox.shrink(),
         ],
       ),
     );
   }
 
   void _editLeave(RequestListData item, int index) async {
-    final result = await Navigator.push(
+    Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => ViewDetailsPage(editLeave: item),
       ),
-    );
-
-    if (result != null && result is RequestListData) {
-      setState(() {
-        leaveList[index] = result; // update the leave
-      });
-    }
+    ).then((onValue) {
+      ref.refresh(leaveRequestListProvider);
+    });
   }
 
   void _deleteLeave(String type, String index, WidgetRef ref) {
